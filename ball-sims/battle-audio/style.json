@@ -1,0 +1,77 @@
+{
+  "prop": "battle-audio",
+  "format": {
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "channels": "stereo mix (assets/ are mono)",
+    "noise_seed": 7
+  },
+  "master": {
+    "normalise": "peak",
+    "drive": 1.25,
+    "soft_clip": "tanh",
+    "ceiling": 0.92,
+    "end_fade_s": 0.4,
+    "pan": "equal-power, x position -> pan * 0.6"
+  },
+  "music": {
+    "battle": {
+      "bpm": 152,
+      "key": "A minor",
+      "progression": [
+        "Am",
+        "F",
+        "C",
+        "G"
+      ],
+      "parts": {
+        "bass": "triangle 8ths root/octave vol 0.42",
+        "arp": "pluck square 16ths vol 0.075",
+        "lead": "square, every other 4-bar phrase, vol 0.07",
+        "drums": "kick 1+3, snare 2+4, hats 8ths, crash every 4 bars"
+      },
+      "mix_gain": 0.85
+    },
+    "suspense": {
+      "bpm": 152,
+      "notes": "triangle A2/A#2 8ths + offbeat hats",
+      "mix_gain": 1.15
+    },
+    "outro": {
+      "bpm": 118,
+      "key": "C major",
+      "progression": [
+        "C",
+        "Am",
+        "F",
+        "G"
+      ],
+      "mix_gain": 1.1
+    },
+    "fanfare": "C5-E5-G5-C6 square arpeggio + C major triangle chord + crash + kick",
+    "slowmo": "music ducked to 0.65 of a 500 Hz low-pass copy; cut 0.06 s at the final blow"
+  },
+  "sfx": {
+    "tick": "roulette needle passing a ball",
+    "ding": "roulette stops",
+    "whoosh": "sword flies to the chosen ball",
+    "shing": "sword attaches (metal ring + air)",
+    "pop": "small sword pops on / UI pop",
+    "taiko": "FIGHT! / FINAL DUEL! hit",
+    "crash": "cymbal crash",
+    "clash_small": "two small swords clash",
+    "clash_big": "a clash involving the BIG sword",
+    "hit_small": "small sword hits a ball",
+    "hit_big": "BIG sword hits a ball",
+    "boom": "ball knocked out",
+    "boom_final": "final knockout",
+    "heartbeat": "slow-mo heartbeat (repeat every 0.75 s)",
+    "riser": "slow-mo build-up (set length to the slow-mo)",
+    "click": "cursor clicks SUBSCRIBE",
+    "bell": "notification bell after the click",
+    "kick": "drum kick",
+    "snare": "drum snare",
+    "hat": "closed hi-hat"
+  },
+  "slowmo_sfx": "events inside slow motion are played slower/lower: factor 1/max(rate, 0.45), capped at 1.9"
+}
