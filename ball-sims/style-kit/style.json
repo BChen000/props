@@ -1,0 +1,119 @@
+{
+  "prop": "style-kit",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "origin": "top-left, y down, px"
+  },
+  "ball_palette": {
+    "order": [
+      "RED",
+      "BLUE",
+      "GREEN",
+      "YELLOW",
+      "PURPLE",
+      "ORANGE"
+    ],
+    "colors": {
+      "RED": "#ec4144",
+      "BLUE": "#3d83f7",
+      "GREEN": "#32c664",
+      "YELLOW": "#fbc932",
+      "PURPLE": "#a75bed",
+      "ORANGE": "#f78b2c"
+    }
+  },
+  "background_gradient": [
+    {
+      "stop": 0.0,
+      "color": "#1e0c33"
+    },
+    {
+      "stop": 0.3,
+      "color": "#190a2b"
+    },
+    {
+      "stop": 1.0,
+      "color": "#090414"
+    }
+  ],
+  "ui_colors": {
+    "title_pink": "#fb7fd3",
+    "title_outline": "#1b0930",
+    "title_shadow": "#080212",
+    "subtitle": "#efe4fb",
+    "status_blue": "#9bd9fb",
+    "status_pink": "#f472d0",
+    "highlight_yellow": "#ffd650",
+    "gold": "#ffcd46",
+    "white": "#ffffff",
+    "text_outline": "#0a0414"
+  },
+  "fonts": {
+    "source": {
+      "family": "Poppins",
+      "license": "SIL Open Font License 1.1",
+      "get": [
+        "https://fonts.google.com/specimen/Poppins",
+        "https://github.com/google/fonts/tree/main/ofl/poppins",
+        "npm @fontsource/poppins@5.3.0 (woff2, converted to ttf by get_fonts.py)"
+      ],
+      "installer": "ball-sims/style-kit/get_fonts.py"
+    },
+    "used": [
+      {
+        "name": "Poppins ExtraBold",
+        "weight": 800,
+        "file": "Poppins-ExtraBold.ttf",
+        "key": "xb"
+      },
+      {
+        "name": "Poppins Black",
+        "weight": 900,
+        "file": "Poppins-Black.ttf",
+        "key": "blk"
+      },
+      {
+        "name": "Poppins Bold",
+        "weight": 700,
+        "file": "Poppins-Bold.ttf",
+        "key": "b"
+      },
+      {
+        "name": "Poppins SemiBold",
+        "weight": 600,
+        "file": "Poppins-SemiBold.ttf",
+        "key": "sb"
+      },
+      {
+        "name": "Poppins Regular",
+        "weight": 400,
+        "file": "Poppins-Regular.ttf",
+        "key": "r"
+      }
+    ]
+  },
+  "font_check": {
+    "string": "SWORD ROULETTE",
+    "size": 100,
+    "expected_advance_px": {
+      "xb": 903.0,
+      "blk": 915.0,
+      "b": 894.0,
+      "sb": 883.0,
+      "r": 868.0
+    }
+  },
+  "text_rules": {
+    "vertical_anchor": "cap height of 'H' centred on y",
+    "outline": "stroke of width 2*ow under the fill (round joins)",
+    "kerning": "none (cairo toy text API)"
+  },
+  "easing": {
+    "ease_out": "1-(1-u)^3",
+    "ease_out_back": "back overshoot, s=1.9 default",
+    "ease_in_out": "u*u*(3-2u)",
+    "u": "clamped to 0..1"
+  }
+}

@@ -1,0 +1,187 @@
+{
+  "prop": "battle-fx",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "origin": "top-left, y down, px"
+  },
+  "particle_seed": "random.Random(1000 + event_index)",
+  "clash": {
+    "sparks": {
+      "small": 10,
+      "big": 14
+    },
+    "speed": [
+      300,
+      750
+    ],
+    "life_s": [
+      0.15,
+      0.32
+    ],
+    "width": [
+      2.5,
+      4.5
+    ],
+    "colors": {
+      "spark": "#ffec96",
+      "share": 0.6,
+      "other": "#ffffff"
+    },
+    "drag": 7,
+    "streak_s": 0.035,
+    "flash": {
+      "color": "#fff2b2",
+      "alpha": 0.85,
+      "radius": "10 -> 56",
+      "life_s": 0.14
+    }
+  },
+  "hit": {
+    "particles": {
+      "small": 10,
+      "big": 16
+    },
+    "speed": {
+      "small": [
+        250,
+        460
+      ],
+      "big": [
+        250,
+        620
+      ]
+    },
+    "life_s": [
+      0.25,
+      0.5
+    ],
+    "size": {
+      "small": [
+        4,
+        6
+      ],
+      "big": [
+        4,
+        8
+      ]
+    },
+    "colors": "victim colour 70 %, white 30 %",
+    "drag": 6,
+    "big_ring": {
+      "color": "#ffe680",
+      "alpha": 0.75,
+      "radius": "20 -> 110",
+      "width": 6,
+      "life_s": 0.2
+    }
+  },
+  "ko": {
+    "particles": 46,
+    "speed": [
+      150,
+      820
+    ],
+    "life_s": [
+      0.45,
+      0.95
+    ],
+    "size": [
+      5,
+      12
+    ],
+    "drag": 3.2,
+    "gravity": "160*age^2",
+    "colors": "victim colour 75 %, lighten(colour, 0.6) 25 %",
+    "shockwave": {
+      "radius": "ball_r -> ball_r+230",
+      "life_s": 0.6,
+      "color": "lighten(victim, 0.4)",
+      "alpha": 0.8
+    },
+    "white_flash": {
+      "radius": "1 -> 2.6 ball_r",
+      "life_s": 0.18,
+      "alpha": 0.9
+    }
+  },
+  "damage_numbers": {
+    "big": {
+      "font": "Poppins ExtraBold",
+      "size": 52,
+      "color": "#ffd650",
+      "outline": "#280a0a",
+      "outline_width": 5,
+      "y_offset": -30
+    },
+    "small": {
+      "font": "Poppins ExtraBold",
+      "size": 38,
+      "color": "#ffffff",
+      "outline": "#1e0a28",
+      "outline_width": 4,
+      "y_offset": -26
+    },
+    "life_s": 0.75,
+    "rise_px": 70,
+    "pop": "1.5x -> 1 over 0.12 s",
+    "fade": "0.45 -> 0.75 s",
+    "clock": "video time"
+  },
+  "shake": {
+    "ko": {
+      "amp": 13,
+      "decay_s": 0.45
+    },
+    "big_hit": {
+      "amp": 7,
+      "decay_s": 0.2
+    },
+    "small_hit": {
+      "amp": 2.5,
+      "decay_s": 0.2
+    },
+    "motion": "dx = A sin(2.1 f + 0.3), dy = A cos(2.7 f + 1.1), f = frame"
+  },
+  "final_zoom": {
+    "zoom": 1.18,
+    "about": "final-blow point",
+    "in": "ease_in_out over the final slow-mo",
+    "hitstop_bump": 0.05,
+    "out_s": 0.85
+  },
+  "slowmo_vignette": {
+    "inner": "0.35 r",
+    "edge_alpha": 0.6,
+    "color": "#000000"
+  },
+  "sword_flyoff": {
+    "life_s": 0.9,
+    "outward_px_s": 140,
+    "up_px_s": 260,
+    "gravity": "420*age^2",
+    "spin_rad_s": 9,
+    "shrink": "1 - 0.3 age"
+  },
+  "fonts": {
+    "source": {
+      "family": "Poppins",
+      "license": "SIL Open Font License 1.1",
+      "get": [
+        "https://fonts.google.com/specimen/Poppins",
+        "https://github.com/google/fonts/tree/main/ofl/poppins",
+        "npm @fontsource/poppins@5.3.0 (woff2, converted to ttf by get_fonts.py)"
+      ],
+      "installer": "ball-sims/style-kit/get_fonts.py"
+    },
+    "used": [
+      {
+        "name": "Poppins ExtraBold",
+        "weight": 800,
+        "file": "Poppins-ExtraBold.ttf",
+        "key": "xb"
+      }
+    ]
+  }
+}

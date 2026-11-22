@@ -1,0 +1,211 @@
+{
+  "prop": "sword-roulette",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "origin": "top-left, y down, px"
+  },
+  "video": {
+    "duration_s": 39.667,
+    "frames": 1190,
+    "codec": "H.264 libx264 -preset veryfast -crf 18 yuv420p",
+    "audio": "AAC 192 kb/s from a 44.1 kHz 16-bit stereo WAV",
+    "chunks": "4 parts rendered 2 at a time, concat -c copy"
+  },
+  "episode": {
+    "seed": 3993,
+    "big_sword": "RED",
+    "winner": "GREEN",
+    "ko_order": [
+      [
+        "YELLOW",
+        "by",
+        "RED",
+        12.05
+      ],
+      [
+        "ORANGE",
+        "by",
+        "RED",
+        17.64
+      ],
+      [
+        "BLUE",
+        "by",
+        "RED",
+        20.58
+      ],
+      [
+        "PURPLE",
+        "by",
+        "RED",
+        23.75
+      ],
+      [
+        "RED",
+        "by",
+        "GREEN",
+        33.11
+      ]
+    ]
+  },
+  "text": {
+    "TITLE": "SWORD ROULETTE",
+    "SUBTITLE": "One random ball gets the BIG sword!",
+    "INTRO_PROMPT": "Comment who you think will win!",
+    "GOT_SWORD": "{name} GETS THE BIG SWORD!",
+    "FIGHT_PROMPT": "Can anyone stop the BIG sword?",
+    "AFTER_BIG_DOWN_PROMPT": "Comment your color!",
+    "OUT_MSG": "{name} IS OUT!",
+    "WIN_TITLE": "{name} WINS!",
+    "WIN_SUB_BIG": "The BIG sword took them all!",
+    "WIN_SUB_KILLER": "Took down the BIG sword!",
+    "WIN_SUB_SURVIVOR": "Survived the BIG sword!",
+    "BIG_TAG": "BIG SWORD",
+    "BANNER_FIGHT": "FIGHT!",
+    "BANNER_DUEL": "FINAL DUEL!",
+    "SUBSCRIBE_LABEL": "SUBSCRIBE",
+    "NEXT_LINES": [
+      "What do you want to see next?",
+      "Tell me in the comments!"
+    ]
+  },
+  "timing_s": {
+    "spin": [
+      0.75,
+      4.55
+    ],
+    "spin_turns": 4,
+    "fly": [
+      4.85,
+      5.35
+    ],
+    "pop_start": 5.35,
+    "pop_step": 0.06,
+    "fight_banner": 5.85,
+    "fight_start": 6.0,
+    "ko_message": 1.7,
+    "duel_banner_delay": 0.85,
+    "final_blow": 33.108,
+    "reveal_after_final": 1.15,
+    "winner_and_subscribe": 34.258,
+    "outro": 5.4
+  },
+  "slow_motion": {
+    "around_each_ko": {
+      "before": 0.1,
+      "after": 0.22,
+      "rate": 0.35
+    },
+    "before_final": {
+      "sim_s": 0.85,
+      "rate": 0.28
+    },
+    "after_final": {
+      "sim_s": 0.5,
+      "rate": 0.45
+    },
+    "hit_stop_s": 0.32,
+    "final_zoom": 1.18
+  },
+  "physics": {
+    "dt": 0.008333333333333333,
+    "ball_r": 40.0,
+    "hp": 100,
+    "speed": 380.0,
+    "relax": 0.55,
+    "small": {
+      "grip": 18.0,
+      "blade": 100.0,
+      "width": 18.0,
+      "dmg": 15,
+      "omega": 4.2,
+      "knock": 240.0
+    },
+    "big": {
+      "grip": 28.0,
+      "blade": 200.0,
+      "width": 34.0,
+      "dmg": 30,
+      "omega": 2.4,
+      "knock": 340.0
+    },
+    "hit_cd": 0.4,
+    "clash_cd": 0.22,
+    "clash_push": 150.0,
+    "max_time": 60.0,
+    "seek": {
+      "6": 0.0,
+      "5": 0.2,
+      "4": 0.5,
+      "3": 1.0,
+      "2": 1.8
+    }
+  },
+  "layering": [
+    "background+title (arena-board)",
+    "zoom transform",
+    "floor",
+    "slow-mo vignette",
+    "rim",
+    "roulette (intro) or shake transform + fight arena: sword fly-offs, trails, swords, balls, particles, damage numbers, banners",
+    "winner reveal",
+    "color chips",
+    "status row",
+    "bottom message",
+    "confetti",
+    "winner box",
+    "subscribe CTA"
+  ],
+  "uses_props": [
+    "style-kit",
+    "arena-board",
+    "color-chips",
+    "glossy-ball",
+    "sword",
+    "roulette-spinner",
+    "battle-fx",
+    "winner-card",
+    "subscribe-cta",
+    "battle-audio"
+  ],
+  "fonts": {
+    "source": {
+      "family": "Poppins",
+      "license": "SIL Open Font License 1.1",
+      "get": [
+        "https://fonts.google.com/specimen/Poppins",
+        "https://github.com/google/fonts/tree/main/ofl/poppins",
+        "npm @fontsource/poppins@5.3.0 (woff2, converted to ttf by get_fonts.py)"
+      ],
+      "installer": "ball-sims/style-kit/get_fonts.py"
+    },
+    "used": [
+      {
+        "name": "Poppins ExtraBold",
+        "weight": 800,
+        "file": "Poppins-ExtraBold.ttf",
+        "key": "xb"
+      },
+      {
+        "name": "Poppins Black",
+        "weight": 900,
+        "file": "Poppins-Black.ttf",
+        "key": "blk"
+      },
+      {
+        "name": "Poppins Bold",
+        "weight": 700,
+        "file": "Poppins-Bold.ttf",
+        "key": "b"
+      },
+      {
+        "name": "Poppins Regular",
+        "weight": 400,
+        "file": "Poppins-Regular.ttf",
+        "key": "r"
+      }
+    ]
+  }
+}

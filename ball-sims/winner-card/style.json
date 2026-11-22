@@ -1,0 +1,170 @@
+{
+  "prop": "winner-card",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "origin": "top-left, y down, px"
+  },
+  "ball": {
+    "target": [
+      540,
+      875
+    ],
+    "radius": [
+      40,
+      100
+    ],
+    "grow_s": 0.55,
+    "easing": "ease_out",
+    "label": "HP, then colour name after 0.30 s (ExtraBold 30 -> 48)"
+  },
+  "glow": {
+    "inner": "0.5 r",
+    "outer": "3.6 r",
+    "alpha": 0.6,
+    "color": "winner colour"
+  },
+  "crown": {
+    "fill": "#ffd33c",
+    "ink": "#784600",
+    "gems": "#ffeb8c",
+    "ink_width": 4,
+    "scale": 0.95,
+    "points": [
+      [
+        -44,
+        22
+      ],
+      [
+        -50,
+        -26
+      ],
+      [
+        -22,
+        0
+      ],
+      [
+        0,
+        -38
+      ],
+      [
+        22,
+        0
+      ],
+      [
+        50,
+        -26
+      ],
+      [
+        44,
+        22
+      ]
+    ],
+    "start_s": 0.35,
+    "drop_s": 0.4,
+    "drop_px": 90,
+    "gap_above_ball": 34
+  },
+  "box": {
+    "center": [
+      540.0,
+      1620
+    ],
+    "size": [
+      960,
+      180
+    ],
+    "radius": 28,
+    "fill": "#000005",
+    "fill_alpha": 0.92,
+    "border": "winner colour, 5 px",
+    "pop": "ease_out_back(t/0.35, 1.6)",
+    "title": {
+      "text": "<COLOR> WINS!",
+      "font": "Poppins ExtraBold",
+      "size": 84,
+      "color": "winner colour",
+      "y": -30
+    },
+    "subtitle": {
+      "font": "Poppins Bold",
+      "size": 44,
+      "color": "#ffffff",
+      "y": 45,
+      "texts": [
+        "The BIG sword took them all!",
+        "Took down the BIG sword!",
+        "Survived the BIG sword!"
+      ]
+    }
+  },
+  "confetti": {
+    "seed": 77,
+    "count": 150,
+    "spawn_x": [
+      80,
+      1000
+    ],
+    "spawn_y": [
+      470,
+      640
+    ],
+    "vx": [
+      -160,
+      160
+    ],
+    "vy": [
+      -260,
+      60
+    ],
+    "gravity": 520,
+    "delay_s": [
+      0,
+      0.5
+    ],
+    "size": [
+      9,
+      16
+    ],
+    "piece": "0.6 x 1.4 size rectangle, flips with |cos(6t)|",
+    "fade_after_s": 4.0,
+    "floor_y": 1500,
+    "colors": [
+      "#ec4144",
+      "#3d83f7",
+      "#32c664",
+      "#fbc932",
+      "#a75bed",
+      "#f78b2c",
+      "#ffffff",
+      "#ffd650"
+    ]
+  },
+  "fonts": {
+    "source": {
+      "family": "Poppins",
+      "license": "SIL Open Font License 1.1",
+      "get": [
+        "https://fonts.google.com/specimen/Poppins",
+        "https://github.com/google/fonts/tree/main/ofl/poppins",
+        "npm @fontsource/poppins@5.3.0 (woff2, converted to ttf by get_fonts.py)"
+      ],
+      "installer": "ball-sims/style-kit/get_fonts.py"
+    },
+    "used": [
+      {
+        "name": "Poppins ExtraBold",
+        "weight": 800,
+        "file": "Poppins-ExtraBold.ttf",
+        "key": "xb"
+      },
+      {
+        "name": "Poppins Bold",
+        "weight": 700,
+        "file": "Poppins-Bold.ttf",
+        "key": "b"
+      }
+    ]
+  }
+}

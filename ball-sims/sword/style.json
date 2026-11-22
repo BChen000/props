@@ -1,0 +1,177 @@
+{
+  "prop": "sword",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "origin": "top-left, y down, px"
+  },
+  "small": {
+    "grip": 18.0,
+    "blade": 100.0,
+    "width": 18.0
+  },
+  "big": {
+    "grip": 28.0,
+    "blade": 200.0,
+    "width": 34.0
+  },
+  "attach": {
+    "r_off": "ball_r - 2 = 38",
+    "pommel_x": "r_off - 8",
+    "guard_x": "r_off + grip",
+    "tip_x": "r_off + grip + blade",
+    "blade_shoulder": {
+      "small": 0.76,
+      "big": 0.8
+    }
+  },
+  "spin_rad_per_s": {
+    "small": 4.2,
+    "big": 2.4,
+    "clash": "both swords reverse direction"
+  },
+  "grip": {
+    "fill": "#4c3024",
+    "fill_exact": [
+      0.3,
+      0.19,
+      0.14
+    ],
+    "ink": "#140d1f",
+    "ink_width": 2.2,
+    "wrap_lines": {
+      "color": "#1f120d",
+      "alpha": 0.9,
+      "width": 1.6,
+      "spacing": {
+        "small": 6,
+        "big": 7
+      }
+    },
+    "thickness": {
+      "small": "0.62 width",
+      "big": "0.5 width"
+    }
+  },
+  "blade": {
+    "gradient_across": [
+      {
+        "stop": 0.0,
+        "color": "#f7faff",
+        "exact": [
+          0.97,
+          0.98,
+          1.0
+        ]
+      },
+      {
+        "stop": 0.48,
+        "color": "#d6def0",
+        "exact": [
+          0.84,
+          0.87,
+          0.94
+        ]
+      },
+      {
+        "stop": 0.52,
+        "color": "#b2bdd6",
+        "exact": [
+          0.7,
+          0.74,
+          0.84
+        ]
+      },
+      {
+        "stop": 1.0,
+        "color": "#8f99b8",
+        "exact": [
+          0.56,
+          0.6,
+          0.72
+        ]
+      }
+    ],
+    "ink": "#1a122e",
+    "ink_width": {
+      "small": 2.4,
+      "big": 3.0
+    },
+    "fuller": {
+      "color": "#8c99bd",
+      "alpha": 0.9,
+      "width": "0.16 width",
+      "length": {
+        "small": 0.55,
+        "big": 0.62
+      }
+    }
+  },
+  "crossguard": {
+    "half_length": {
+      "small": "1.15 width",
+      "big": "1.3 width"
+    },
+    "thickness": {
+      "small": 8,
+      "big": 11
+    },
+    "color": {
+      "small": "lighten(owner colour, 0.1)",
+      "big": "#ffcd46"
+    },
+    "ink": "#1a0f24",
+    "big_gem": {
+      "radius": 7.5,
+      "color": "owner colour"
+    }
+  },
+  "pommel": {
+    "radius": "0.62 grip thickness",
+    "color": {
+      "small": "lighten(owner colour, 0.1)",
+      "big": "#ffcd46"
+    }
+  },
+  "big_aura": {
+    "color": "#ffd959",
+    "strokes": [
+      {
+        "width": 34,
+        "alpha": 0.07
+      },
+      {
+        "width": 22,
+        "alpha": 0.11
+      },
+      {
+        "width": 12,
+        "alpha": 0.18
+      }
+    ]
+  },
+  "trail": {
+    "samples": 9,
+    "spacing_sim_s": 0.014,
+    "from": "0.45 blade",
+    "to": "tip - 2",
+    "fill": {
+      "small": "#c8e1ff",
+      "big": "#ffd66e"
+    },
+    "fill_alpha": {
+      "small": 0.22,
+      "big": 0.3
+    },
+    "falloff": "(1-k/n)^1.5",
+    "edge": {
+      "color": "#ffffff",
+      "alpha": 0.55,
+      "width": {
+        "small": 3.5,
+        "big": 5
+      }
+    }
+  }
+}

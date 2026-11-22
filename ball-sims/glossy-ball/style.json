@@ -1,0 +1,105 @@
+{
+  "prop": "glossy-ball",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "origin": "top-left, y down, px"
+  },
+  "radius": {
+    "fight": 40.0,
+    "winner": 100,
+    "roulette_highlight": "1.12x"
+  },
+  "colors": {
+    "RED": "#ec4144",
+    "BLUE": "#3d83f7",
+    "GREEN": "#32c664",
+    "YELLOW": "#fbc932",
+    "PURPLE": "#a75bed",
+    "ORANGE": "#f78b2c"
+  },
+  "body_gradient": {
+    "type": "radial",
+    "focus_offset": [
+      -0.32,
+      -0.38
+    ],
+    "focus_radius": 0.05,
+    "outer_radius": 1.05,
+    "stops": [
+      {
+        "stop": 0.0,
+        "color": "lighten(colour, 0.55)"
+      },
+      {
+        "stop": 0.45,
+        "color": "colour"
+      },
+      {
+        "stop": 1.0,
+        "color": "darken(colour, 0.38)"
+      }
+    ]
+  },
+  "rim": {
+    "color": "#ffffff",
+    "alpha": 0.95,
+    "radius": "r - 1.5",
+    "width": "max(2.5, 0.075 r)"
+  },
+  "shadow": {
+    "offset_y": "0.22 r",
+    "scale_y": 0.9,
+    "inner": "0.6 r",
+    "outer": "1.25 r",
+    "alpha": 0.45
+  },
+  "specular": {
+    "center": [
+      "-0.33 r",
+      "-0.45 r"
+    ],
+    "scale_y": 0.6,
+    "radius": "0.42 r",
+    "alpha": 0.55
+  },
+  "label": {
+    "font": "Poppins ExtraBold",
+    "size": 30,
+    "color": "#ffffff",
+    "outline": "#1e0e28",
+    "outline_width": "0.13 * size",
+    "y_offset": 1
+  },
+  "hit_flash": {
+    "color": "#ffffff",
+    "alpha": 0.85,
+    "decay_s": 0.16
+  },
+  "sprites": {
+    "radius": 80,
+    "size_px": 216,
+    "label": "none"
+  },
+  "fonts": {
+    "source": {
+      "family": "Poppins",
+      "license": "SIL Open Font License 1.1",
+      "get": [
+        "https://fonts.google.com/specimen/Poppins",
+        "https://github.com/google/fonts/tree/main/ofl/poppins",
+        "npm @fontsource/poppins@5.3.0 (woff2, converted to ttf by get_fonts.py)"
+      ],
+      "installer": "ball-sims/style-kit/get_fonts.py"
+    },
+    "used": [
+      {
+        "name": "Poppins ExtraBold",
+        "weight": 800,
+        "file": "Poppins-ExtraBold.ttf",
+        "key": "xb"
+      }
+    ]
+  }
+}

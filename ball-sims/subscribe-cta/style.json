@@ -1,0 +1,123 @@
+{
+  "prop": "subscribe-cta",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "origin": "top-left, y down, px"
+  },
+  "button": {
+    "center": [
+      540.0,
+      1090
+    ],
+    "size": [
+      480,
+      104
+    ],
+    "radius": "height/2",
+    "gradient": [
+      "#ff3838",
+      "#d1000d"
+    ],
+    "border": {
+      "color": "#ffffff",
+      "alpha": 0.9,
+      "width": 3
+    },
+    "shadow": {
+      "offset": [
+        4,
+        9
+      ],
+      "alpha": 0.45
+    },
+    "label": {
+      "text": "SUBSCRIBE",
+      "font": "Poppins ExtraBold",
+      "size": 50,
+      "color": "#ffffff",
+      "x": 38
+    },
+    "bell": {
+      "x": -150,
+      "scale": 1.55,
+      "color": "#ffffff"
+    },
+    "pop": "ease_out_back(t/0.4, 2.0)",
+    "idle_pulse": "1 + 0.025 sin(2*pi*1.4*(t-0.5)) after 0.5 s"
+  },
+  "timing_s": {
+    "appears": "same frame as the winner",
+    "cursor_in": 0.55,
+    "cursor_glide": 0.5,
+    "tap": 1.05,
+    "squish": "0.22 s, -8 %",
+    "ripple": "0.5 s, radius 20 -> 160",
+    "bell_wobble": "0.45 sin(26t) e^-3.2t",
+    "ring_lines": 0.9,
+    "prompt_in": 1.35,
+    "cursor_fade_out": "3.2 s after it appears"
+  },
+  "cursor": {
+    "from": [
+      860,
+      1330
+    ],
+    "to": "button centre + (120, 18)",
+    "scale": 2.0,
+    "press_scale": 0.9,
+    "fill": "#ffffff",
+    "ink": "#0d0d14",
+    "shadow_alpha": 0.35
+  },
+  "prompt": {
+    "lines": [
+      "What do you want to see next?",
+      "Tell me in the comments!"
+    ],
+    "y": [
+      1222,
+      1282
+    ],
+    "line1": {
+      "font": "Poppins ExtraBold",
+      "size": 44,
+      "color": "#ffd650"
+    },
+    "line2": {
+      "font": "Poppins Bold",
+      "size": 40,
+      "color": "#ffffff"
+    },
+    "outline": "#0a0414",
+    "outline_width": 4,
+    "pop": "1.2x -> 1 over 0.25 s"
+  },
+  "fonts": {
+    "source": {
+      "family": "Poppins",
+      "license": "SIL Open Font License 1.1",
+      "get": [
+        "https://fonts.google.com/specimen/Poppins",
+        "https://github.com/google/fonts/tree/main/ofl/poppins",
+        "npm @fontsource/poppins@5.3.0 (woff2, converted to ttf by get_fonts.py)"
+      ],
+      "installer": "ball-sims/style-kit/get_fonts.py"
+    },
+    "used": [
+      {
+        "name": "Poppins ExtraBold",
+        "weight": 800,
+        "file": "Poppins-ExtraBold.ttf",
+        "key": "xb"
+      },
+      {
+        "name": "Poppins Bold",
+        "weight": 700,
+        "file": "Poppins-Bold.ttf",
+        "key": "b"
+      }
+    ]
+  }
+}

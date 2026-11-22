@@ -1,0 +1,58 @@
+{
+  "prop": "roulette-spinner",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "origin": "top-left, y down, px"
+  },
+  "ring": {
+    "center": [
+      540.0,
+      1010.0
+    ],
+    "radius": 250.0,
+    "first_ball": "top, then clockwise",
+    "balls": 6
+  },
+  "needle": {
+    "sword": "big",
+    "pivot": "arena centre",
+    "r_off": "-grip - 6",
+    "hub": {
+      "radius": 11,
+      "fill": "#ffcd46",
+      "ink": "#1a0f24",
+      "ink_width": 3
+    },
+    "rest_angle_rad": -1.0207963267948965,
+    "idle_wobble": "0.12 rad * sin(2*pi*0.9*t), fading out by spin start",
+    "motion_blur": "6 ghosts 0.011 s apart, alpha 0.10*(7-k)/6"
+  },
+  "timing_s": {
+    "spin_start": 0.75,
+    "spin_end": 4.55,
+    "turns": 4,
+    "easing": "cubic ease-out",
+    "fly_start": 4.85,
+    "fly_end": 5.35,
+    "fly_spin": "1.5 turns, ease_in_out",
+    "pop_start": 5.35,
+    "pop_step": 0.06,
+    "pop_easing": "ease_out_back over 0.28 s",
+    "chosen_glow_until": 6.3
+  },
+  "highlight": {
+    "pointer": "#ffffff",
+    "landed": "#ffd650",
+    "ball_scale": 1.12,
+    "halo": "radial 0.8r -> 2.1r alpha 0.55",
+    "ring": "r + 9, width 4, alpha 0.9",
+    "landed_pulse": "2.2 Hz, scale 1.12 + 0.05*pulse"
+  },
+  "attach_flash": {
+    "ring": "r -> r+160 over 0.45 s, colour #ffdb66",
+    "white_disc": "1.6 r, 0.2 s"
+  },
+  "ticks": "one click each time the needle crosses a gap between balls (Sword Roulette: 29)"
+}
