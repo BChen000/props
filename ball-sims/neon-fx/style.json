@@ -1,0 +1,104 @@
+{
+  "prop": "neon-fx",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "renderer": "skia-python"
+  },
+  "randomness": "stateless: neon_kit.hrand(seed, i, k) (FNV-1a hash -> 0..1); age in seconds",
+  "burst": {
+    "when": "a marble breaks a ring",
+    "life_s": 0.7,
+    "particles": 18,
+    "speed_px_s": [
+      180,
+      560
+    ],
+    "drag": "dist = v (1 - e^(-3.5 t)) / 3.5",
+    "radius": "5.5 a + 1",
+    "color": "lerp(marble colour, white, 0.3)",
+    "alpha": "a = 1 - t/life"
+  },
+  "sparks": {
+    "when": "marble-marble hit faster than 160 px/s",
+    "life_s": 0.3,
+    "count": 5,
+    "speed_px_s": [
+      120,
+      380
+    ],
+    "drag": 6,
+    "radius": "2.6 a + 0.6",
+    "color": "#ffffff",
+    "alpha": "0.9 a"
+  },
+  "edge_sparks": {
+    "when": "a marble clips a gap edge (near miss)",
+    "life_s": 0.45,
+    "count": 9,
+    "speed_px_s": [
+      160,
+      490
+    ],
+    "drag": 5,
+    "radius": "3.4 a + 0.6",
+    "color": "#ffdc78",
+    "glow": {
+      "color": "#fff0b4",
+      "alpha": "0.75 a",
+      "radius": "22 a + 4",
+      "blur_sigma": 10
+    }
+  },
+  "shockwave": {
+    "when": "the win",
+    "life_s": 0.6,
+    "radius": "30 + 260 ease_out(k)",
+    "stroke": "16 (1 - k) + 2",
+    "color": "#ffe68c",
+    "alpha": "0.9 (1 - k)",
+    "blur_sigma": 6
+  },
+  "confetti": {
+    "when": "the win, from the winner",
+    "life_s": 2.6,
+    "count": 150,
+    "size_px": [
+      12,
+      6
+    ],
+    "speed_px_s": [
+      300,
+      1200
+    ],
+    "drag": 2.6,
+    "gravity": "260 t^2",
+    "spin_deg_s": "+-200",
+    "fade": "1.4 -> 2.6 s",
+    "colors": "the 8 marble colours + #ffffff, #ffd646"
+  },
+  "start_ring": {
+    "when": "frame 0",
+    "life_s": 0.5,
+    "radius": "62 -> 262 px (ease_out)",
+    "stroke": "10 (1 - x) + 1",
+    "color": "#ffffff",
+    "alpha": "0.7 (1 - x)^1.5",
+    "blur_sigma": 4
+  },
+  "shake": {
+    "ring_break": {
+      "amp_px": 7.0,
+      "life_s": 0.35
+    },
+    "win": {
+      "amp_px": 11.0,
+      "life_s": 0.5
+    },
+    "falloff": "amp (1 - t/life)^2",
+    "motion": "break: sin(90 t + 7 seed), cos(77 t + 3 seed); win: sin(70 t), cos(63 t)",
+    "applies_to": "the arena layer only (HUD stays still)"
+  },
+  "slowmo_vignette": "../battle-fx draw_slowmo_vignette_skia (shared with Sword Roulette)"
+}

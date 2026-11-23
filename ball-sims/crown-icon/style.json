@@ -1,0 +1,121 @@
+{
+  "prop": "crown-icon",
+  "units": "px at s = 1.0, origin = crown centre (x right, y down); everything scales with s",
+  "renderers": {
+    "draw_crown": "skia-python",
+    "draw_crown_cairo": "pycairo (same geometry and colours)"
+  },
+  "size_at_s1": {
+    "width_px": 56,
+    "height_px": 35,
+    "note": "including the jewels, band and outline; the gold polygon alone is 49 x 27.5"
+  },
+  "outline_points": [
+    [
+      -24.0,
+      9.9
+    ],
+    [
+      -24.48,
+      -12.1
+    ],
+    [
+      -12.0,
+      -0.44
+    ],
+    [
+      0,
+      -17.6
+    ],
+    [
+      12.0,
+      -0.44
+    ],
+    [
+      24.48,
+      -12.1
+    ],
+    [
+      24.0,
+      9.9
+    ]
+  ],
+  "fill": {
+    "type": "vertical linear gradient",
+    "top": "#ffec78",
+    "top_y": -22,
+    "bottom": "#f6a814",
+    "bottom_y": 14
+  },
+  "outline": {
+    "color": "#965a0a",
+    "alpha": 0.9,
+    "width": 2.2,
+    "join": "round"
+  },
+  "band": {
+    "rect": [
+      -24,
+      7,
+      48,
+      6
+    ],
+    "corner_radius": 2,
+    "fill": "#ffd646",
+    "outline_width": 2.0,
+    "outline": "#965a0a"
+  },
+  "jewels": [
+    {
+      "x": -24.5,
+      "y": -12,
+      "color": "#ff505a"
+    },
+    {
+      "x": 0,
+      "y": -17.6,
+      "color": "#50aaff"
+    },
+    {
+      "x": 24.5,
+      "y": -12,
+      "color": "#ff505a"
+    }
+  ],
+  "jewel_radius": 3.6,
+  "glow": {
+    "color": "#ffd246",
+    "alpha": "0.55 * glow * alpha",
+    "skia": "disc of radius 30 s, blur sigma 14 s",
+    "cairo": "radial gradient to 30 s + 3*14 s with the same blurred-disc (erf) profile"
+  },
+  "sizes_used": {
+    "neon-hud chip, crown holder": {
+      "s": 0.55,
+      "glow": 0
+    },
+    "neon-hud chip, winner": {
+      "s": 0.6,
+      "glow": 0.8
+    },
+    "ring-escape arena": {
+      "s": "1.35 at the centre before the first break, 1.0 on the holder (hop 0.3 s ease_io), 1.0 -> 1.2 at the win",
+      "glow": 0.6,
+      "offset": "marble radius + 19 px above the marble"
+    },
+    "winner-card (Sword Roulette)": {
+      "s": "0.95 * CROWN_SCALE 2.0 = 1.9",
+      "glow": 0,
+      "dy": "-6 px per unit"
+    },
+    "question-thumbnail": {
+      "s": 3.0,
+      "glow": 1.6,
+      "at": [
+        540,
+        640
+      ]
+    }
+  },
+  "fonts": "none"
+}

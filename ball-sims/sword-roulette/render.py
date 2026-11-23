@@ -181,8 +181,13 @@ class Renderer:
         ctx.paint()
         fighting = V_FIGHT <= v < tl.v_reveal
         slow = fighting and tl.rate_at_v(v) < 0.5
-        if slow:
-            fx.draw_slowmo_vignette(ctx, CX, CY, R)
+        if fighting:
+            strength = sum(fx.vignette_strength(tl.rate_at_v(v - k * S.VIGNETTE_SMOOTH / 3), S.SLOWMO_FINAL[1])
+                           for k in range(4)) / 4
+            if strength > 0.001:
+                k_ = min(tl.kills, key=lambda e: abs(e["v"] - v))
+                focus = (CX + 0.8 * (k_["x"] - CX), CY + 0.8 * (k_["y"] - CY))
+                fx.draw_slowmo_vignette(ctx, CX, CY, R, strength=strength, focus=focus)
         # rim under the action: swords may poke out over it
         if fighting:
             board.draw_rim(ctx, board.RIM_FIGHT, glow=1.5 if slow else 1.0, cx=CX, cy=CY, r=R)

@@ -3,6 +3,7 @@
 The winning ball glides to the arena centre and grows (r 40 -> 100) inside a colour glow,
 its label switches to the colour name, a gold crown drops on top, confetti rains, and the
 "<COLOR> WINS!" box pops up in the bottom slot with a one-line story subtitle.
+The crown is the shared one from ../crown-icon (since Nov 2026).
 """
 import math
 import os
@@ -12,20 +13,20 @@ import sys
 import cairo
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
-for _dep in ("style-kit", "glossy-ball"):
+for _dep in ("style-kit", "glossy-ball", "crown-icon"):
     sys.path.append(os.path.join(_HERE, "..", _dep))
 from kit import (BALL_COLORS, HIGHLIGHT, NAMES, PI, W, WHITE, clamp, ease_out, ease_out_back,  # noqa: E402
                  rgb, rounded_rect, text)
 from glossy_ball import draw_ball  # noqa: E402
+from crown_icon import draw_crown_cairo  # noqa: E402
 
 # --------------------------------------------------------------------------- settings
 TARGET = (540, 875, 100)          # winner ball centre x, y and final radius
 GROW_TIME = 0.55                  # seconds to glide + grow
 NAME_AT = 0.3                     # label switches from HP to the colour name
 CROWN_AT, CROWN_DROP = 0.35, 0.4  # crown starts dropping / drop duration
-CROWN_FILL = (255, 211, 60)
-CROWN_INK = (120, 70, 0)
-CROWN_GEMS = (255, 235, 140)
+CROWN_SCALE = 2.0                 # crown-icon scale per winner-card unit (s=1 is about 110 px wide)
+CROWN_DY = -6.0                   # px per unit of s: keeps the crown's bottom edge where the old crown sat
 BOX_CENTER_Y = 1620               # bottom box: 960 x 180, radius 28, 5 px border in winner colour
 BOX_FILL = (0.0, 0.0, 0.02, 0.92)
 CONFETTI_SEED, CONFETTI_COUNT = 77, 150
@@ -34,28 +35,8 @@ CONFETTI_FLOOR_Y = 1500           # pieces below this are not drawn
 
 
 def draw_crown(ctx, x, y, s, alpha=1.0):
-    ctx.save()
-    ctx.translate(x, y)
-    ctx.scale(s, s)
-    pts = [(-44, 22), (-50, -26), (-22, 0), (0, -38), (22, 0), (50, -26), (44, 22)]
-    ctx.move_to(*pts[0])
-    for p in pts[1:]:
-        ctx.line_to(*p)
-    ctx.close_path()
-    ctx.set_source_rgba(*rgb(CROWN_FILL, alpha))
-    ctx.fill_preserve()
-    ctx.set_source_rgba(*rgb(CROWN_INK, alpha))
-    ctx.set_line_width(4)
-    ctx.set_line_join(cairo.LINE_JOIN_ROUND)
-    ctx.stroke()
-    for px, py in ((-50, -26), (0, -38), (50, -26)):
-        ctx.arc(px, py - 4, 6, 0, 2 * PI)
-        ctx.set_source_rgba(*rgb(CROWN_GEMS, alpha))
-        ctx.fill_preserve()
-        ctx.set_source_rgba(*rgb(CROWN_INK, alpha))
-        ctx.set_line_width(2.5)
-        ctx.stroke()
-    ctx.restore()
+    """The shared gold crown from ../crown-icon (gradient, band, jewels). s=1 is about 110 px wide."""
+    draw_crown_cairo(ctx, x, y + CROWN_DY * s, s * CROWN_SCALE, alpha)
 
 
 def draw_winner_reveal(ctx, age, start_x, start_y, color, name, start_label, start_r=40.0, target=TARGET):

@@ -1,0 +1,155 @@
+{
+  "prop": "neon-hud",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "renderer": "skia-python"
+  },
+  "font": {
+    "family": "DejaVu Sans Bold 2.37",
+    "get": "see ../neon-kit (get_fonts.py)",
+    "text_anchor": "visual centre at y (baseline = y + 0.36 size)"
+  },
+  "chips": {
+    "layout": "2 rows x 4",
+    "centres_x": [
+      133,
+      403,
+      673,
+      943
+    ],
+    "centres_y": [
+      258,
+      328
+    ],
+    "size": [
+      186,
+      52
+    ],
+    "corner_radius": 13,
+    "fill": "#0e1326",
+    "fill_alpha": 0.92,
+    "outline": "ball colour, 3.2 px",
+    "dot": {
+      "x_offset": -68,
+      "radius": 9,
+      "color": "ball colour"
+    },
+    "name": {
+      "x_offset": -50,
+      "size": 21,
+      "color": "#ffffff",
+      "spacing": 0.3,
+      "align": "left"
+    },
+    "count_badge": {
+      "x_offset": 73,
+      "radius": 13,
+      "fill": "#ffcd3c",
+      "text": "#281905",
+      "size": 18,
+      "shown": "count > 0"
+    },
+    "holder": {
+      "outline": "#ffd246",
+      "glow": "#ffcd3c at 0.55, 10 px stroke, blur 7",
+      "crown": "crown-icon s 0.55 at (+82, -30)"
+    },
+    "winner": {
+      "outline": "#ffd246",
+      "crown": "crown-icon s 0.6, glow 0.8"
+    },
+    "dimmed": {
+      "when": "losers after the win",
+      "outline": "#5a6278 at 0.6",
+      "dot": "#5a6278",
+      "name": "#6e768c",
+      "count_badge_alpha": 0.35
+    },
+    "pop": "scale 1 + 0.12 pop, colour wash at 0.35 pop; pop = 1 - age/0.45 s after a score"
+  },
+  "headline": {
+    "y": 432,
+    "intro": {
+      "text": "PICK YOUR COLOR!",
+      "size": 76,
+      "color": "#fed934",
+      "max_width": 1010
+    },
+    "intro_line2": {
+      "text": "THE FIRST ONE OUT WINS THE CROWN",
+      "y": 512,
+      "size": 33,
+      "color": "#fffdff",
+      "spacing": 1.0
+    },
+    "count": {
+      "size": 104,
+      "color": "#fffdff",
+      "pop": "back-out 1.45 -> 1 over 0.28 s"
+    },
+    "last_ring": {
+      "text": "LAST RING!",
+      "size": 92,
+      "y": 430,
+      "color": "lerp(#ffcd3c, #ff963c, 0.3 * pulse), pulse 2.2 Hz"
+    },
+    "win": {
+      "text": "<NAME> WINS!",
+      "size": 100,
+      "color": "winner colour",
+      "shadow": 1.0,
+      "pop": "back-out 1.6 -> 1 over 0.35 s",
+      "sub": {
+        "text": "LIKE & SUBSCRIBE!",
+        "y": 512,
+        "size": 40,
+        "color": "#fffdff",
+        "spacing": 1.5,
+        "fade_in": "0.25 -> 0.45 s"
+      }
+    }
+  },
+  "status": {
+    "y": 512,
+    "size": 34,
+    "spacing": 1.0,
+    "left": {
+      "text": "<n> RINGS LEFT  •  ",
+      "color": "#fed646"
+    },
+    "right": {
+      "text": "<NAME> HAS THE CROWN",
+      "color": "holder colour"
+    }
+  },
+  "captions": {
+    "big": {
+      "y": 1515,
+      "size": 46,
+      "spacing": 1.2,
+      "color": "#b6c8e1 (or the colour of whoever just scored)"
+    },
+    "small": {
+      "y": 1640,
+      "size": 28,
+      "spacing": 2.0,
+      "color": "#8698b4"
+    },
+    "max_width": 1000
+  },
+  "progress_bar": {
+    "x": [
+      104,
+      976
+    ],
+    "y": 1580,
+    "height": 16,
+    "radius": 8,
+    "track": "#1e263e",
+    "fill": "#fed646",
+    "glow": "#fed646 at 0.5, blur 6"
+  },
+  "ring_escape_texts": "see ../ring-escape/settings.py (on-screen text section)"
+}

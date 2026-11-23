@@ -26,45 +26,51 @@
     "color": "winner colour"
   },
   "crown": {
-    "fill": "#ffd33c",
-    "ink": "#784600",
-    "gems": "#ffeb8c",
-    "ink_width": 4,
+    "source": "../crown-icon draw_crown_cairo (since Nov 2026); colours, points, band and jewels are in ../crown-icon/style.json",
     "scale": 0.95,
-    "points": [
-      [
-        -44,
-        22
-      ],
-      [
-        -50,
-        -26
-      ],
-      [
-        -22,
-        0
-      ],
-      [
-        0,
-        -38
-      ],
-      [
-        22,
-        0
-      ],
-      [
-        50,
-        -26
-      ],
-      [
-        44,
-        22
-      ]
-    ],
+    "crown_icon_scale": "scale * CROWN_SCALE 2.0 = 1.9 (about 106 px wide)",
+    "dy_px": "CROWN_DY -6 * scale",
     "start_s": 0.35,
     "drop_s": 0.4,
     "drop_px": 90,
-    "gap_above_ball": 34
+    "gap_above_ball": 34,
+    "fade_in_s": 0.12,
+    "previous": {
+      "fill": "#ffd33c",
+      "ink": "#784600",
+      "gems": "#ffeb8c",
+      "ink_width": 4,
+      "points": [
+        [
+          -44,
+          22
+        ],
+        [
+          -50,
+          -26
+        ],
+        [
+          -22,
+          0
+        ],
+        [
+          0,
+          -38
+        ],
+        [
+          22,
+          0
+        ],
+        [
+          50,
+          -26
+        ],
+        [
+          44,
+          22
+        ]
+      ]
+    }
   },
   "box": {
     "center": [

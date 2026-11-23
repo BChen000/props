@@ -1,0 +1,106 @@
+{
+  "prop": "neon-marble",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "renderer": "skia-python"
+  },
+  "radius_px": 22.0,
+  "colors": {
+    "RED": "#ff444f",
+    "BLUE": "#3489ff",
+    "GREEN": "#44da78",
+    "YELLOW": "#fed934",
+    "PURPLE": "#ac6cff",
+    "ORANGE": "#ff9238",
+    "PINK": "#fe76c6",
+    "CYAN": "#21d9e6"
+  },
+  "colors_source": "../neon-kit BALL_COLORS",
+  "sprite": {
+    "padding": "15 px for r <= 22 (as in the video), else ceil(0.9 r)",
+    "shadow": {
+      "color": "#000000",
+      "alpha": 0.55,
+      "offset": "(0.16 r, 0.26 r)",
+      "radius": "0.98 r",
+      "blur_sigma": "0.22 r"
+    },
+    "gradient": {
+      "type": "radial",
+      "centre": "(-0.38 r, -0.42 r)",
+      "radius": "1.75 r",
+      "stops": [
+        {
+          "at": 0.0,
+          "color": "lerp(colour, white, 0.45)"
+        },
+        {
+          "at": 0.42,
+          "color": "colour * 0.86"
+        },
+        {
+          "at": 1.0,
+          "color": "colour * 0.42"
+        }
+      ]
+    },
+    "light_arc": {
+      "radius": "0.86 r",
+      "from_deg": 20,
+      "sweep_deg": 80,
+      "width": "0.08 r",
+      "color": "lerp(colour, white, 0.25)",
+      "alpha": 0.35
+    },
+    "specular": {
+      "ellipse": "0.54 r x 0.34 r",
+      "centre": "(-0.36 r, -0.42 r)",
+      "rotate_deg": -35,
+      "color": "#ffffff",
+      "alpha": 0.92,
+      "blur_sigma": "0.07 r"
+    },
+    "sparkle": {
+      "centre": "(-0.08 r, -0.55 r)",
+      "radius": "0.06 r",
+      "color": "#ffffff",
+      "alpha": 0.55
+    },
+    "sampling": "linear"
+  },
+  "trail": {
+    "steps": 8,
+    "dt_s": 0.011,
+    "alpha": "0.30 * (1 - j/9)",
+    "radius": "r * (0.92 - 0.05 j)",
+    "loser_after_win": "alpha x 0.5"
+  },
+  "holder_ring": {
+    "color": "#ffd246",
+    "alpha": 0.85,
+    "width": 3.5,
+    "radius": "r + 6 + 1.5 * pulse",
+    "pulse": "0.5 + 0.5 sin(9 tau)"
+  },
+  "winner_glow": {
+    "color": "#ffd750",
+    "alpha": "0.45 + 0.2 * pulse",
+    "radius": "r + 16",
+    "blur_sigma": 18
+  },
+  "dimmed_loser_alpha": 0.55,
+  "hit_flash": {
+    "color": "#ffffff",
+    "alpha": "0.85 * flash"
+  },
+  "label": {
+    "font": "DejaVu Sans Bold (see ../neon-kit)",
+    "color": "#ffffff",
+    "size": "round(0.8 r) by default",
+    "max_width": "1.7 r",
+    "shadow": "#000000 at 0.55, offset (0.03, 0.05) x size, blur sigma 0.08 x size (neon-kit draw_text shadow=1)"
+  },
+  "assets": "assets/marble_<colour>.png: the sprite at big=4.0 (r 88 px), 336 x 336, transparent"
+}

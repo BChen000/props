@@ -1,0 +1,87 @@
+{
+  "prop": "escape-rings",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "arena_centre_px": [
+      540,
+      990
+    ],
+    "renderer": "skia-python"
+  },
+  "rings": {
+    "count": 10,
+    "radius_inner_px": 110.0,
+    "radius_outer_px": 452.0,
+    "spacing": "linear (38 px)",
+    "gap_deg_inner_to_outer": [
+      32,
+      26,
+      23,
+      21,
+      20,
+      19,
+      19,
+      19,
+      19,
+      11
+    ],
+    "color_inner": "#966eff",
+    "color_outer": "#3cd7ff",
+    "color_rule": "linear RGB lerp by k/(n-1)",
+    "active": {
+      "alpha": 1.0,
+      "width": 9.0,
+      "glow": 1.0,
+      "core": 0.35,
+      "dot_alpha": 0.85
+    },
+    "idle": {
+      "alpha": 0.5,
+      "width": 7.0,
+      "glow": 0.55,
+      "core": 0.2
+    },
+    "stroke": {
+      "halo": "3x width, blur sigma 1.3x width, alpha 0.42*alpha*glow",
+      "core": "width, round caps",
+      "centre_line": "0.36x width, colour lerp 70% to white, alpha alpha*core*2"
+    },
+    "gap_dots": {
+      "radius_px": 7.0,
+      "color": "#ffffff",
+      "blur_sigma": 4
+    }
+  },
+  "last_ring": {
+    "gold": "#ffbe32",
+    "hot": "#ff783c",
+    "pulse_mix": 0.25,
+    "pulse_hz": 2.2,
+    "width_px": 11.0,
+    "glow": "1.0 + 0.6*pulse",
+    "win_flash_to": "#ffffe6",
+    "win_flash_seconds": 0.8,
+    "gap_closes_seconds_after_win": 0.3
+  },
+  "shatter": {
+    "pieces": 26,
+    "life_s": 0.85,
+    "radial_speed_px_s": "260..680",
+    "tangential_px_s": "-150..150",
+    "drag": 2.2,
+    "piece_width_px": 7,
+    "spin_rad_per_s": "-4.5..4.5",
+    "flash_wave": "0.35 s, +70 px, blur 8"
+  },
+  "arena_disc": {
+    "radius": "outer ring + 16 px",
+    "fill": "#1f2b41",
+    "centre_glow": "#283652 @0.55 -> 0"
+  },
+  "reset_loop": {
+    "ring_fade_in": "ease_out((u - 0.05 - 0.035k) / 0.45), scale 1.18 -> 1.0",
+    "rotation": "shortest way back to start angle"
+  }
+}

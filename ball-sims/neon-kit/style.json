@@ -1,0 +1,125 @@
+{
+  "prop": "neon-kit",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "origin": "top-left, y down, px",
+    "renderer": "skia-python"
+  },
+  "ball_palette": {
+    "order": [
+      "RED",
+      "BLUE",
+      "GREEN",
+      "YELLOW",
+      "PURPLE",
+      "ORANGE",
+      "PINK",
+      "CYAN"
+    ],
+    "colors": {
+      "RED": "#ff444f",
+      "BLUE": "#3489ff",
+      "GREEN": "#44da78",
+      "YELLOW": "#fed934",
+      "PURPLE": "#ac6cff",
+      "ORANGE": "#ff9238",
+      "PINK": "#fe76c6",
+      "CYAN": "#21d9e6"
+    }
+  },
+  "background": {
+    "radial_gradient": {
+      "center_px": [
+        540,
+        990
+      ],
+      "radius_px": 1150,
+      "stops": [
+        {
+          "stop": 0.0,
+          "color": "#161e36"
+        },
+        {
+          "stop": 0.55,
+          "color": "#0d1125"
+        },
+        {
+          "stop": 1.0,
+          "color": "#0a0d1f"
+        }
+      ]
+    },
+    "grid": {
+      "step_px": 72,
+      "color": "#465a8c",
+      "alpha": 0.07,
+      "width_px": 1,
+      "passes_through": "arena centre (540, 990)"
+    }
+  },
+  "ui_colors": {
+    "bg": "#0a0d1f",
+    "arena": "#1f2b41",
+    "arena_glow": "#283652 @0.55",
+    "white_title": "#fffdff",
+    "caption": "#b6c8e1",
+    "subtitle_cyan": "#7bdbf4",
+    "status_yellow": "#fed646",
+    "pick_yellow": "#fed934",
+    "small_caption": "#8698b4",
+    "gold": "#ffcd3c",
+    "chip_fill": "#0e1326 @0.92",
+    "dim": "#5a6278",
+    "dim_text": "#6e768c",
+    "cta_cyan": "#78dcff"
+  },
+  "fonts": {
+    "used": [
+      {
+        "name": "DejaVu Sans Bold",
+        "weight": 700,
+        "file": "DejaVuSans-Bold.ttf",
+        "version": "2.37"
+      }
+    ],
+    "license": "Bitstream Vera Fonts licence + public-domain DejaVu changes (free, redistributable)",
+    "get": [
+      "https://dejavu-fonts.github.io",
+      "https://github.com/dejavu-fonts/dejavu-fonts/releases/tag/version_2_37",
+      "npm dejavu-fonts-ttf@2.37.3",
+      "Ubuntu/Debian: apt install fonts-dejavu-core"
+    ],
+    "installer": "ball-sims/neon-kit/get_fonts.py"
+  },
+  "font_check": {
+    "text": "RING ESCAPE",
+    "size": 100,
+    "advance_px": 746.0
+  },
+  "text_rules": {
+    "vertical_anchor": "baseline = y + 0.36 * size (visual centre near y)",
+    "kerning": "skia default (drawString)",
+    "letter_spacing": "drawn letter by letter with extra px when spacing > 0",
+    "title": {
+      "text_size": 84,
+      "y": 112,
+      "spacing": 2,
+      "color": "#fffdff"
+    },
+    "subtitle": {
+      "text_size": 34,
+      "y": 180,
+      "spacing": 3.5,
+      "color": "#7bdbf4"
+    }
+  },
+  "easing": {
+    "ease_out": "1-(1-u)^3",
+    "ease_io": "cubic in-out",
+    "back_out": "overshoot c1=1.9",
+    "u": "clamped to 0..1"
+  },
+  "hrand": "FNV-1a over repr() of the arguments, mod 1000003 -> 0..1"
+}

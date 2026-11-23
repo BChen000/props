@@ -1,5 +1,6 @@
 """battle-fx: hit / clash / KO particle bursts, floating damage numbers, screen shake,
 final-blow camera zoom, slow-motion vignette and the flying sword of a KO'd ball.
+The slow-motion vignette (strength + focus) came from Ring Escape and has a skia version too.
 
 Particles are pre-generated per event from a fixed seed, so every render is identical.
 """
@@ -154,13 +155,56 @@ def zoom_cam(v, v_slow, v_final, focus, zoom=1.18, rest=(540.0, 1010.0)):
     return z, px, py
 
 
-def draw_slowmo_vignette(ctx, cx=540.0, cy=1010.0, r=445.0):
-    ctx.arc(cx, cy, r, 0, 2 * PI)
-    vg = cairo.RadialGradient(cx, cy, r * 0.35, cx, cy, r)
+VIGNETTE_DARK = (2, 4, 12)        # slow-mo edge colour, alpha VIGNETTE_ALPHA * strength
+VIGNETTE_ALPHA = 0.62
+VIGNETTE_REACH = 760.0            # px from the focus to full darkness; clear inside 35 % of it
+
+
+def vignette_strength(rate, slowest=0.24):
+    """0..1 from the playback rate: 0 at normal speed, 1 at the slowest rate (or a hit-stop)."""
+    return clamp((1 - rate) / (1 - slowest))
+
+
+def draw_slowmo_vignette(ctx, cx=540.0, cy=1010.0, r=445.0, strength=None, focus=None, reach=VIGNETTE_REACH):
+    """Slow-motion darkening.
+
+    strength 0..1 (use vignette_strength(rate)): the frame edges darken smoothly with the slow motion,
+    staying clear around `focus` (the action; Ring Escape uses a point 80 % of the way from the arena
+    centre to it). This is Ring Escape's design, used by both Shorts since Nov 2026.
+    strength=None draws the original look: a fixed 0.6 vignette inside the arena circle (cx, cy, r).
+    """
+    if strength is None:
+        ctx.arc(cx, cy, r, 0, 2 * PI)
+        vg = cairo.RadialGradient(cx, cy, r * 0.35, cx, cy, r)
+        vg.add_color_stop_rgba(0, 0, 0, 0, 0)
+        vg.add_color_stop_rgba(1, 0.0, 0.0, 0.0, 0.6)
+        ctx.set_source(vg)
+        ctx.fill()
+        return
+    if strength <= 0:
+        return
+    fx, fy = focus if focus is not None else (cx, cy)
+    vg = cairo.RadialGradient(fx, fy, 0, fx, fy, reach)
     vg.add_color_stop_rgba(0, 0, 0, 0, 0)
-    vg.add_color_stop_rgba(1, 0.0, 0.0, 0.0, 0.6)
+    vg.add_color_stop_rgba(0.35, 0, 0, 0, 0)
+    vg.add_color_stop_rgba(1, *rgb(VIGNETTE_DARK, VIGNETTE_ALPHA * strength))
+    vg.set_extend(cairo.EXTEND_PAD)
     ctx.set_source(vg)
-    ctx.fill()
+    ctx.paint()
+
+
+def draw_slowmo_vignette_skia(c, fx, fy, strength, reach=VIGNETTE_REACH, width=1080, height=1920):
+    """Same vignette on a skia-python canvas (Ring Escape). strength 0..1, focus (fx, fy)."""
+    import skia
+    if strength <= 0:
+        return
+    d = VIGNETTE_DARK
+    vg = skia.GradientShader.MakeRadial(skia.Point(fx, fy), reach,
+                                        [skia.Color4f(0, 0, 0, 0).toColor(), skia.Color4f(0, 0, 0, 0).toColor(),
+                                         skia.Color4f(d[0] / 255.0, d[1] / 255.0, d[2] / 255.0,
+                                                      max(0.0, min(1.0, VIGNETTE_ALPHA * strength))).toColor()],
+                                        [0.0, 0.35, 1.0])
+    c.drawRect(skia.Rect(-60, -60, width + 60, height + 60), skia.Paint(Shader=vg))
 
 
 def draw_sword_flyoff(ctx, kill_x, kill_y, th0, age, big, color, ball_r=40.0, center=(540.0, 1010.0)):

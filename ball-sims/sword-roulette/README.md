@@ -7,7 +7,13 @@ The complete code behind the **Sword Roulette** Short (Marble Pop, Nov 2026; 39.
 - The final blow plays in slow motion with a zoom and a hit-stop.
 - "GREEN WINS!" and the SUBSCRIBE button appear on the same frame, followed by "What do you want to see next?".
 
-Running `./build.sh` with the shipped settings reproduces that video. I checked this on 195 frames, which came out pixel-identical to the delivered render, and on the soundtrack, which came out sample-identical.
+Running `bash build.sh` with the shipped settings replays that exact match, with the same story, timing and layout. Since the Ring Escape update (Nov 2026) it differs from the posted video in four places, because the repo now keeps one copy of each piece:
+- **Slow-motion vignette** (`../battle-fx`): it now follows the playback speed and darkens the whole frame around the action, so the title dims during slow motion. Before, a fixed vignette sat inside the arena.
+- **Crown** (`../winner-card`, from `../crown-icon`): the winner's crown has a gold gradient, a band and jewels, and is slightly larger.
+- **Riser** (`../battle-audio`): the slow-motion build-up climbs smoothly instead of in 8 steps.
+- **Loudness:** the soundtrack goes through a look-ahead limiter and is normalised to -14 LUFS (the posted video measures about -16.4 LUFS).
+
+Frames outside slow motion and before the winner's crown are unchanged: stills at 5.0, 11.0, 15.0, 26.0, 30.0 and 34.5 s came out pixel-identical to the delivered render. The code that renders the posted version exactly is in the repo's history, in the commit before this update.
 
 ## Files
 | file | what |
@@ -19,7 +25,7 @@ Running `./build.sh` with the shipped settings reproduces that video. I checked 
 | `audio.py` | cue sheet: places `battle-audio` sounds on the timeline and masters to WAV |
 | `search.py` | finds seeds (matches) with a dramatic story |
 | `tune.py` | balance check: big-sword win rate and fight length over many seeds |
-| `build.sh` | full render: 4 chunks, 2 at a time, then concat and mux audio into `out/sword_roulette.mp4` |
+| `build.sh` | full render: 4 chunks, 2 at a time, then concat and mux the audio (normalised to -14 LUFS) into `out/sword_roulette.mp4` |
 
 ## Make a new episode
 ```bash
@@ -27,7 +33,7 @@ python search.py 0 6000 --outcome upset     # or --outcome big / any; prints can
 # put the seed you like in settings.py -> SEED
 python timeline.py                          # prints big-sword owner, winner, KO times, video length
 python render.py still 2 12 30              # quick look at a few moments (stills/)
-./build.sh                                  # about 30 s on 2 CPU cores -> out/sword_roulette.mp4
+bash build.sh                               # about 40 s on 2 CPU cores -> out/sword_roulette.mp4
 ```
 - Don't commit `out/` or `stills/`, which are render outputs.
 - The physics really decides the outcome. `search.py` only picks which match to show. The shipped balance gives the big sword about a 51 % win rate and a median fight of 17 s (`python tune.py 150`).
@@ -43,7 +49,7 @@ The physics runs at 120 Hz in **sim time** `t`. The video runs in **video time**
 Every event gets both `t` and `v`. Particles age on sim time, while damage numbers and text age on video time.
 
 ## Uses these props
-`../style-kit`, `../arena-board`, `../color-chips`, `../glossy-ball`, `../sword`, `../roulette-spinner`, `../battle-fx`, `../winner-card`, `../subscribe-cta`, `../battle-audio`. They're imported from the sibling folders, so keep the `ball-sims/` layout.
+`../style-kit`, `../arena-board`, `../color-chips`, `../glossy-ball`, `../sword`, `../roulette-spinner`, `../battle-fx`, `../winner-card` (with `../crown-icon`), `../subscribe-cta`, `../battle-audio`. They're imported from the sibling folders, so keep the `ball-sims/` layout.
 
 ## Dependencies (tested)
 - Python 3.13.18

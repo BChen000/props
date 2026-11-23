@@ -152,9 +152,22 @@
     "out_s": 0.85
   },
   "slowmo_vignette": {
-    "inner": "0.35 r",
-    "edge_alpha": 0.6,
-    "color": "#000000"
+    "since": "Nov 2026 (Ring Escape design); used by Sword Roulette and Ring Escape",
+    "color": "#02040c",
+    "edge_alpha": "0.62 * strength",
+    "strength": "clamp((1 - rate) / (1 - slowest)); slowest 0.28 in Sword Roulette, 0.24 in Ring Escape",
+    "smoothing": "Sword Roulette averages the strength at v, v-0.04, v-0.08, v-0.12 s (VIGNETTE_SMOOTH 0.12)",
+    "focus": "80 % of the way from the arena centre to the action (nearest KO / winner's exit)",
+    "reach_px": 760,
+    "clear_inside": "0.35 * reach",
+    "area": "whole frame (radial gradient, EXTEND_PAD); drawn under the rim, balls and HUD",
+    "original": {
+      "call": "draw_slowmo_vignette(ctx) with strength=None",
+      "inner": "0.35 r",
+      "edge_alpha": 0.6,
+      "color": "#000000",
+      "area": "inside the arena circle"
+    }
   },
   "sword_flyoff": {
     "life_s": 0.9,

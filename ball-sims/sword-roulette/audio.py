@@ -118,7 +118,7 @@ def build(tl, out_path):
 
     L += music
     Rr += music
-    st = ba.master_and_write(L, Rr, out_path)
+    st = ba.master_and_write(L, Rr, out_path, limit=S.MASTER_LIMIT)
     rms = np.sqrt(np.mean(st ** 2))
     print(f"wrote {out_path}: {len(st) / ba.SR:.2f}s, rms {rms:.3f}, clashes {clash_count}")
 

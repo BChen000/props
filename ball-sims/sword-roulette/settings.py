@@ -56,6 +56,9 @@ DUEL_BANNER_DELAY = 0.85            # "FINAL DUEL!" after the 4th KO
 SLOWMO_KO = (0.10, 0.22, 0.35)      # around each KO: from t-0.10 to t+0.22 at 0.35x
 SLOWMO_FINAL = (0.85, 0.28)         # last 0.85 sim-s before the final blow at 0.28x
 SLOWMO_AFTER = (0.5, 0.45)          # 0.5 sim-s after it at 0.45x
+VIGNETTE_SMOOTH = 0.12              # s of video the slow-mo vignette fades over (follows the rate)
+MASTER_LIMIT = 0.46                 # look-ahead limiter threshold (fraction of peak) before loudnorm
+LOUDNESS = (-14, -1.0, 11)          # build.sh normalises the mix: integrated LUFS, true peak dBTP, LRA
 HITSTOP = 0.32                      # freeze on the final blow (video s)
 FINAL_ZOOM = 1.18
 

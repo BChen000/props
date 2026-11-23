@@ -1,0 +1,53 @@
+{
+  "prop": "question-thumbnail",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "renderer": "skia-python",
+    "export": "PNG + JPEG quality 92 (YouTube limit 2 MB; shipped one is 0.3 MB)"
+  },
+  "line1": {
+    "text": "WHO ESCAPES",
+    "y": 250,
+    "size_px": 132,
+    "max_width_px": 1010,
+    "fill": "#ffffff"
+  },
+  "line2": {
+    "text": "FIRST?",
+    "y": 440,
+    "size_px": 215,
+    "max_width_px": 980,
+    "fill": "#fed934",
+    "glow": "#ffbe28 @0.55, blur sigma 22"
+  },
+  "text_style": {
+    "font": "DejaVu Sans Bold (see ../neon-kit)",
+    "outline": "#080a1a, stroke 14 px, round joins",
+    "shadow": "black @0.6, offset (6, 10), blur sigma 10",
+    "anchor": "baseline = y + 0.36*size"
+  },
+  "crown": {
+    "x": 540.0,
+    "y": 640.0,
+    "scale": 3.0,
+    "glow": 1.6
+  },
+  "scene": {
+    "source": "Ring Escape arena (../ring-escape) at sim time 5.2 s, no crown or holder ring",
+    "zoom": 1.5,
+    "arena_centre_y_px": 1300.0
+  },
+  "background": {
+    "centre_px": [
+      540.0,
+      1235.0
+    ],
+    "glow": "#1a2442",
+    "grid_origin": [
+      0,
+      0
+    ],
+    "grid_step_px": 72
+  }
+}

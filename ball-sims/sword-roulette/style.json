@@ -10,7 +10,7 @@
     "duration_s": 39.667,
     "frames": 1190,
     "codec": "H.264 libx264 -preset veryfast -crf 18 yuv420p",
-    "audio": "AAC 192 kb/s from a 44.1 kHz 16-bit stereo WAV",
+    "audio": "AAC 192 kb/s 48 kHz from a 44.1 kHz 16-bit stereo WAV; limiter 0.46, then two-pass loudnorm to -14 LUFS, -1 dBTP, LRA 11 (since Nov 2026; the posted video was about -16.4 LUFS)",
     "chunks": "4 parts rendered 2 at a time, concat -c copy"
   },
   "episode": {
@@ -107,7 +107,12 @@
       "rate": 0.45
     },
     "hit_stop_s": 0.32,
-    "final_zoom": 1.18
+    "final_zoom": 1.18,
+    "vignette": {
+      "prop": "../battle-fx draw_slowmo_vignette (since Nov 2026)",
+      "strength": "vignette_strength(rate, 0.28), averaged over the last 0.12 s of video (VIGNETTE_SMOOTH)",
+      "focus": "80 % of the way from the arena centre to the nearest KO"
+    }
   },
   "physics": {
     "dt": 0.008333333333333333,
@@ -167,6 +172,7 @@
     "roulette-spinner",
     "battle-fx",
     "winner-card",
+    "crown-icon",
     "subscribe-cta",
     "battle-audio"
   ],

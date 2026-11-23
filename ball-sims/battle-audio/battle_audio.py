@@ -3,7 +3,10 @@
 Everything is generated with numpy/scipy (no samples): chiptune loops (battle, suspense,
 outro), a victory fanfare and the SFX set (roulette tick, ding, whoosh, sword shing, metal
 clash, hit, KO boom, taiko, heartbeat, riser, pop, click, bell, drums).
-Mix with add()/add_st() into float buffers, then master_and_write().
+From Ring Escape: marble clack, glass shatter, sweep-up, clap, brass stab, a B-major brass
+fanfare, and the "In the Hall of the Mountain King" accelerando music (mountain_king()).
+Mix with add()/add_st() into float buffers, then master_and_write(), then loudnorm_filter()
+when you mux (two-pass ffmpeg loudnorm to -14 LUFS).
 """
 import math
 import os
@@ -228,21 +231,36 @@ def heartbeat(vol=1.0):
     return x * vol
 
 
-def riser(dur, vol=1.0):
+def gnoise(dur):
+    """Gaussian noise (the Ring Escape sounds use it; it is about 1.7x louder than noise())."""
+    return rng.standard_normal(int(dur * SR))
+
+
+RISER_LEVEL = 3.31  # riser(3.0) has the same RMS as the old 8-step riser, so existing gains still fit
+
+
+def riser(dur, vol=1.0, lo=250.0, hi=3500.0, steps=24, xfade=0.006):
+    """Noise riser: a one-octave band [0.7 f, 1.4 f] climbs from lo to hi in `steps` log steps
+    (about 1.9 semitones each with the defaults), cross-faded over `xfade` s so the steps don't click,
+    swelling as (t/dur)^2.2. (Ring Escape's reverse whoosh; replaced the 8-step riser in Nov 2026.)"""
     n = int(dur * SR)
     x = noise(dur)
-    seg = 8
     out = np.zeros(n)
-    edges = np.linspace(0, n, seg + 1).astype(int)
-    for s in range(seg):
-        f = 300 * (12 ** (s / (seg - 1)))
-        part = bandpass(x, f, min(f * 2.5, 18000))
-        w = np.zeros(n)
+    edges = np.linspace(0, n, steps + 1).astype(int)
+    xf = max(1, int(xfade * SR))
+    idx = np.arange(n)
+    for s in range(steps):
+        f = lo * (hi / lo) ** (s / steps)
+        y = bandpass(x, f * 0.7, min(f * 1.4, SR * 0.45))
         a, b = edges[s], edges[s + 1]
-        w[a:b] = 1
-        out += part * w
-    e = np.linspace(0, 1, n) ** 2
-    return out * e * vol * 2.0
+        w = np.ones(n)
+        if s > 0:
+            w *= np.clip((idx - (a - xf / 2)) / xf, 0, 1)
+        if s < steps - 1:
+            w *= np.clip(((b + xf / 2) - idx) / xf, 0, 1)
+        out += y * w
+    e = (idx / SR / dur) ** 2.2
+    return out * e * vol * RISER_LEVEL
 
 
 def click(vol=1.0):
@@ -261,6 +279,168 @@ def bell_ring(vol=1.0):
     # tremolo = ringing bell
     x *= 0.75 + 0.25 * np.sin(2 * np.pi * 9 * t)
     return x * vol
+
+
+# ---------------------------------------------------------------- Ring Escape sounds (Nov 2026)
+def saw(f, n, phase=0.0):
+    t = np.arange(n) / SR
+    return 2 * ((f * t + phase) % 1.0) - 1
+
+
+def clack(vol=1.0, f=3650.0):
+    """Marble hits marble: two short partials (f, 1.47 f) and a noise tick, 60 ms."""
+    d = 0.06
+    t = t_axis(d)
+    x = np.sin(2 * np.pi * f * t) * np.exp(-t / 0.012) + 0.6 * np.sin(2 * np.pi * f * 1.47 * t) * np.exp(-t / 0.008)
+    x += 0.4 * highpass(gnoise(d), 4000) * np.exp(-t / 0.002)
+    return x * vol
+
+
+def shatter(vol=1.0, seed=103):
+    """Glass ring breaking: bright noise burst, 26 random glass pings in the first 0.28 s, low thump."""
+    r = np.random.default_rng(seed)
+    d = 0.55
+    t = t_axis(d)
+    x = highpass(gnoise(d), 2500) * np.exp(-t / 0.09) * 0.5
+    m = int(0.03 * SR)
+    tt = np.arange(m) / SR
+    for _ in range(26):
+        i0 = int(r.uniform(0, 0.28) * SR)
+        f = r.uniform(2500, 7500)
+        x[i0:i0 + m] += 0.35 * np.sin(2 * np.pi * f * tt) * np.exp(-tt / 0.006) * r.uniform(0.4, 1.0)
+    thump = np.sin(2 * np.pi * (60 + 80 * np.exp(-t / 0.03)) * t) * np.exp(-t / 0.09)
+    return (x + 0.7 * thump) * vol
+
+
+def sweep_up(dur=0.5, vol=1.0, f0=300.0, f1=1300.0):
+    """Tonal power-up glide (speed-up cue, fills): exponential pitch rise with a 2nd harmonic."""
+    t = t_axis(dur)
+    f = f0 * (f1 / f0) ** (t / dur)
+    ph = 2 * np.pi * np.cumsum(f) / SR
+    return (np.sin(ph) + 0.3 * np.sin(2 * ph)) * np.sin(np.pi * t / dur) ** 0.7 * vol
+
+
+def clap(vol=1.0):
+    """Hand clap: band-passed noise with three quick bursts and a short tail."""
+    d = 0.25
+    t = t_axis(d)
+    x = bandpass(gnoise(d), 900, 3800)
+    e = np.exp(-t / 0.06)
+    for dd in (0.0, 0.011, 0.022):
+        e += 0.6 * (t >= dd) * np.exp(-np.clip(t - dd, 0, None) / 0.008)
+    return x * e * 0.6 * vol
+
+
+def saw_pluck(n, dur, vol=1.0, bright=1.0):
+    """Staccato synth lead (saw + square, low-passed). bright 0..1 opens the filter. Rings 0.25 s past dur."""
+    m = int((dur + 0.25) * SR)
+    f = midi(n)
+    t = np.arange(m) / SR
+    x = 0.6 * saw(f, m) + 0.4 * np.sign(np.sin(2 * np.pi * f * t)) * 0.6 + 0.3 * saw(f * 1.004, m, 0.3)
+    x = lowpass(x, 900 + 2600 * bright)
+    e = np.minimum(1, t / 0.004) * np.exp(-t / (0.09 + 0.25 * dur))
+    rel = np.clip((dur - t) / 0.03 + 1, 0, 1)
+    return x * e * rel * vol
+
+
+def bass_pluck(n, dur, vol=1.0):
+    """Round staccato bass: sine + 2nd harmonic + a little low-passed saw."""
+    m = int((dur + 0.2) * SR)
+    f = midi(n)
+    t = np.arange(m) / SR
+    x = np.sin(2 * np.pi * f * t) + 0.35 * np.sin(4 * np.pi * f * t) + 0.25 * lowpass(saw(f, m), 700)
+    e = np.minimum(1, t / 0.005) * np.exp(-t / 0.16)
+    rel = np.clip((dur - t) / 0.03 + 1, 0, 1)
+    return x * e * rel * vol
+
+
+def brass_chord(notes, dur, vol=1.0):
+    """Brass stab/pad: 3 detuned saws per MIDI note, low-passed at 2.4 kHz, slow decay."""
+    t = t_axis(dur)
+    m = len(t)
+    x = np.zeros(m)
+    for n in notes:
+        f = midi(n)
+        for det in (-0.004, 0.0, 0.005):
+            x += saw(f * (1 + det), m, rng.random())
+    x = lowpass(x, 2400)
+    e = np.minimum(1, t / 0.03) * np.exp(-t / (dur * 0.6))
+    rel = np.clip((dur - t) / 0.15, 0, 1)
+    return x * e * rel / (3 * len(notes)) * vol
+
+
+def brass_fanfare(vol=1.0):
+    """B-major win fanfare: quick B-D#-F#-B arpeggio with dings, then a held brass chord + bass + kick (2.2 s)."""
+    out = np.zeros(int(2.2 * SR))
+    for q, n in enumerate((71, 75, 78, 83)):
+        add(out, saw_pluck(n, 0.11, 0.22, 1.0), 0.02 + 0.075 * q)
+        add(out, ding(0.06, midi(n + 12), 0.5), 0.02 + 0.075 * q)
+    add(out, brass_chord((59, 63, 66, 71, 75), 1.8, 0.9), 0.32)
+    add(out, bass_pluck(47, 1.4, 0.35), 0.32)
+    add(out, kick(0.55), 0.32)
+    return out * vol
+
+
+MK_A = [(59, 1), (61, 1), (62, 1), (64, 1), (66, 1), (62, 1), (66, 2), (65, 1), (61, 1), (65, 2), (64, 1), (60, 1),
+        (64, 2), (59, 1), (61, 1), (62, 1), (64, 1), (66, 1), (62, 1), (66, 1), (71, 1), (69, 1), (66, 1), (62, 1),
+        (66, 1), (69, 4)]
+MK_B = [(66, 1), (68, 1), (70, 1), (71, 1), (73, 1), (70, 1), (73, 2), (74, 1), (70, 1), (74, 2), (73, 1), (70, 1),
+        (73, 2), (66, 1), (68, 1), (70, 1), (71, 1), (73, 1), (70, 1), (73, 2), (74, 1), (70, 1), (74, 2), (73, 4)]
+MOUNTAIN_KING = MK_A + MK_A + MK_B + MK_A + MK_A + MK_B  # (MIDI note, eighths), B minor
+
+
+def mountain_king(L, Rr, tau_final, tau_slow, tau_cut, t0=0.0, bpm=(132, 168, 196), song=MOUNTAIN_KING):
+    """Grieg's "In the Hall of the Mountain King" (1875, public domain), accelerating, into stereo buffers.
+
+    Stage 1 (0 -> tau_final): bpm[0] -> bpm[1], kick on beats 1 and 3, clap on 2 and 4, hats on 8ths.
+    Stage 2 (tau_final -> tau_slow): bpm[1] -> bpm[2], kick every beat, lead doubled an octave up.
+    Stops at tau_cut. Clap fill + small sweep on every long note. Times are seconds after t0.
+    """
+    def tempo(tau):
+        if tau < tau_final:
+            return bpm[0] + (bpm[1] - bpm[0]) * (tau / tau_final)
+        return bpm[1] + (bpm[2] - bpm[1]) * min(1.0, (tau - tau_final) / max(0.1, tau_slow - tau_final))
+
+    taus = np.arange(0, tau_cut + 0.5, 0.001)
+    beats = np.cumsum([tempo(x) / 60 * 0.001 for x in taus])
+
+    def at(k):
+        return float(np.interp(k / 2.0, beats, taus))
+
+    pos = 0
+    for n, d in song:
+        ta, tb = at(pos), at(pos + d)
+        if ta >= tau_cut:
+            break
+        length = (tb - ta) * (0.62 if d == 1 else 0.8)
+        stage = 1 if ta < tau_final else 2
+        add_st(L, Rr, saw_pluck(n, length, 1.0, 0.6 + 0.2 * stage), t0 + ta, 0.17 if stage == 1 else 0.2, -0.15)
+        if stage == 2:
+            add_st(L, Rr, saw_pluck(n + 12, length, 1.0, 0.8), t0 + ta, 0.07, 0.25)
+        add_st(L, Rr, bass_pluck(n - 24, length), t0 + ta, 0.26)
+        if d == 4:
+            for q in range(4):
+                tq = at(pos + 2 + q * 0.5)
+                if tq < tau_cut:
+                    add_st(L, Rr, clap(), t0 + tq, 0.07 + 0.04 * q, -0.1 + 0.07 * q)
+            add_st(L, Rr, sweep_up(max(0.15, at(pos + 4) - at(pos + 2)), 1.0, 250, 900), t0 + at(pos + 2), 0.035)
+        pos += d
+    nb = int(beats[np.searchsorted(taus, tau_cut) - 1]) + 1
+    for b in range(nb * 2):
+        ta = at(b)
+        if ta >= tau_cut:
+            break
+        stage = 1 if ta < tau_final else 2
+        if b % 2 == 0:
+            beat = b // 2
+            if beat % 2 == 0 or stage == 2:
+                add_st(L, Rr, kick(MK_KICK * (1.0 if stage == 1 else 1.19)), t0 + ta)
+            if beat % 2 == 1:
+                add_st(L, Rr, clap(), t0 + ta, 0.22, 0.1)
+        add_st(L, Rr, hat(MK_HAT * (1.0 if stage == 1 else 1.33), open_=(b % 4 == 3)), t0 + ta, 1.0, 0.3)
+
+
+MK_KICK, MK_HAT = 0.386, 0.101  # kick()/hat() volumes matching Ring Escape's original drum levels (RMS)
 
 
 # ---------------------------------------------------------------- music
@@ -389,16 +569,53 @@ def add_st(L, Rr, x, t, gain=1.0, pan=0.0):
 
 
 # ---------------------------------------------------------------- mastering / export
-def master_and_write(L, Rr, out_path, drive=1.25, ceiling=0.92, end_fade=0.4):
-    """Peak-normalise, soft-clip with tanh, fade the last `end_fade` s, write 16-bit stereo WAV."""
+def limiter(st, thr, look=0.006, release=0.08):
+    """Look-ahead peak limiter on an (n, 2) array: instant gain drop, `release` s recovery."""
+    from scipy.ndimage import maximum_filter1d
+    env = maximum_filter1d(np.abs(st).max(1), size=int(look * SR), origin=-int(look / 2 * SR))
+    g = np.minimum(1.0, thr / np.maximum(env, 1e-9))
+    a = math.exp(-1.0 / (release * SR))
+    gs = np.empty_like(g)
+    cur = 1.0
+    for i in range(len(g)):
+        cur = g[i] if g[i] < cur else a * cur + (1 - a) * g[i]
+        gs[i] = cur
+    return st * gs[:, None]
+
+
+def master_and_write(L, Rr, out_path, drive=1.25, ceiling=0.92, end_fade=0.4, limit=None):
+    """Peak-normalise, soft-clip with tanh, fade the last `end_fade` s, write 16-bit stereo WAV.
+
+    limit: None, or a threshold as a fraction of the post-tanh peak (0.46 in both Shorts). The look-ahead
+    limiter then trims the peaks so loudnorm_filter() can reach -14 LUFS with plain gain (linear mode).
+    """
     st = np.stack([L, Rr], axis=1)
     peak = np.max(np.abs(st))
     st = st / peak * drive
-    st = np.tanh(st) * ceiling
+    if limit is None:
+        st = np.tanh(st) * ceiling
+    else:
+        st = np.tanh(st)
+        st = limiter(st, limit * np.max(np.abs(st)))
+        st = st / np.max(np.abs(st)) * ceiling
     ef = int(end_fade * SR)
-    st[-ef:] *= np.linspace(1, 0, ef)[:, None]
+    if ef > 0:
+        st[-ef:] *= np.linspace(1, 0, ef)[:, None]
     write_wav(out_path, st)
     return st
+
+
+def loudnorm_filter(wav_path, I=-14, TP=-1.0, LRA=11):
+    """Measure wav_path with ffmpeg and return the second-pass loudnorm filter (linear gain).
+    Use it when muxing:  ffmpeg -i video -i wav -af "<filter>" -ar 48000 -c:a aac -b:a 192k ..."""
+    import json
+    import subprocess
+    err = subprocess.run(["ffmpeg", "-hide_banner", "-i", wav_path, "-af",
+                          f"loudnorm=I={I}:TP={TP}:LRA={LRA}:print_format=json", "-f", "null", "-"],
+                         capture_output=True, text=True).stderr
+    j = json.loads(err[err.rindex("{"):err.rindex("}") + 1])
+    return (f"loudnorm=I={I}:TP={TP}:LRA={LRA}:measured_I={j['input_i']}:measured_TP={j['input_tp']}:"
+            f"measured_LRA={j['input_lra']}:measured_thresh={j['input_thresh']}:offset={j['target_offset']}:linear=true")
 
 
 def write_wav(path, x):
@@ -439,6 +656,12 @@ def sfx_bank():
     }
 
 
+def _mountain_king_demo():
+    L, Rr = np.zeros(int(16.5 * SR)), np.zeros(int(16.5 * SR))
+    mountain_king(L, Rr, tau_final=11.0, tau_slow=15.8, tau_cut=16.0)
+    return ((L + Rr) / 2)[:int(16.2 * SR)]
+
+
 def music_bank():
     beat = 60 / 152
     return {
@@ -451,11 +674,25 @@ def music_bank():
     }
 
 
+def ring_escape_bank():
+    """Sounds added from Ring Escape (Nov 2026). Exported after the other banks, so the older
+    files keep their exact noise when you re-export."""
+    return {
+        "clack": (lambda: clack(0.5), "marble hits marble (Ring Escape)"),
+        "shatter": (lambda: shatter(0.6), "glass ring breaks (Ring Escape)"),
+        "sweep_up": (lambda: sweep_up(0.5, 0.45, 300, 1400), "power-up glide: speed-up cue (Ring Escape)"),
+        "clap": (lambda: clap(0.9), "hand clap (Ring Escape drums)"),
+        "brass_stab": (lambda: brass_chord((47, 54, 59, 62), 1.1, 0.9), "B-minor brass stab: last ring (Ring Escape)"),
+        "fanfare_brass": (brass_fanfare, "B-major brass fanfare (Ring Escape win)"),
+        "mountain_king": (_mountain_king_demo, "Mountain King accelerando, 16 s demo (Ring Escape music)"),
+    }
+
+
 def export_assets(folder):
     os.makedirs(folder, exist_ok=True)
     reset_rng()
     rows = []
-    for name, (gen, desc) in list(sfx_bank().items()) + list(music_bank().items()):
+    for name, (gen, desc) in list(sfx_bank().items()) + list(music_bank().items()) + list(ring_escape_bank().items()):
         x = gen()
         peak = np.max(np.abs(x)) or 1.0
         if peak > 0.99:
@@ -468,7 +705,7 @@ def export_assets(folder):
 def preview(path):
     import cairo
     reset_rng()
-    items = list(sfx_bank().items()) + list(music_bank().items())
+    items = list(sfx_bank().items()) + list(music_bank().items()) + list(ring_escape_bank().items())
     W_, row = 1080, 54
     H_ = 90 + row * len(items)
     surf = cairo.ImageSurface(cairo.FORMAT_ARGB32, W_, H_)
