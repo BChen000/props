@@ -1,0 +1,21 @@
+{
+  "prop": "marble-counter",
+  "canvas": {"width": 1080, "height": 1920, "fps": 30},
+  "labels": [
+    {"start_s": 0.0, "text": "×1", "size_px": 150, "fill": "white"},
+    {"start_s": 1.85, "text": "×2", "size_px": 150, "fill": "white"},
+    {"start_s": 3.70, "text": "×3", "size_px": 150, "fill": "white"},
+    {"start_s": 5.55, "text": "×4", "size_px": 150, "fill": "white"},
+    {"start_s": 7.40, "text": "×40!", "size_px": 165, "fill": "rainbow gradient, left to right"}
+  ],
+  "center_px": [200, 250],
+  "font": {"name": "Archivo Black", "file": "ArchivoBlack-Regular.ttf", "get_it": "https://fonts.google.com/specimen/Archivo+Black (SIL Open Font License)"},
+  "colors": {"fill": "#FFFFFF", "stroke": "#1C1C22",
+             "rainbow": ["#FF3B30", "#FF9500", "#FFD60A", "#34C759", "#00C7BE", "#0A84FF", "#AF52DE", "#FF3791"],
+             "shadow": "black, 45% alpha"},
+  "stroke_px": "max(6, size/14)",
+  "shadow": {"blur_px": "size/18", "offset_px": "max(3, size/28)"},
+  "animation": {"pop_s": 0.28, "start_scale": 0.35, "ease": "ease-out-back, overshoot 1.9", "fade_in_s": 0.07,
+                "crossfade_s": 0.12, "old_label": "grows to 1.25x while fading out"},
+  "encode": {"crf": 17, "preset": "veryfast", "audio": "copied"}
+}

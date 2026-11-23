@@ -1,0 +1,26 @@
+{
+  "prop": "thumbnail-title",
+  "canvas": {"width": 1080, "height": 1920},
+  "output": "JPEG quality 95 (PNG if the output name ends in .png)",
+  "fonts": {
+    "rainbow-outline": {"name": "Archivo Black", "file": "ArchivoBlack-Regular.ttf", "get_it": "https://fonts.google.com/specimen/Archivo+Black (SIL OFL)"},
+    "clean-white": {"name": "Montserrat (variable, weight 750-850)", "file": "Montserrat[wght].ttf", "get_it": "https://fonts.google.com/specimen/Montserrat (SIL OFL)"},
+    "emoji": {"name": "Noto Color Emoji", "file": "NotoColorEmoji.ttf", "get_it": "https://fonts.google.com/noto/specimen/Noto+Color+Emoji (SIL OFL)", "size_px": 109}
+  },
+  "rainbow-outline": {
+    "fill_rainbow": ["#FF3B30", "#FF9500", "#FFD60A", "#34C759", "#00C7BE", "#0A84FF", "#AF52DE", "#FF3791"],
+    "fill_white": "#FFFFFF", "stroke": "#1C1C22", "stroke_px": "max(6, size/14)",
+    "shadow": "black 45% alpha, blur size/18, offset max(3, size/28)",
+    "top_shade": "darkens the top 430 px, power 1.5, up to 30%",
+    "shrink_to_fit": "first line shrinks if wider than 1040 px"
+  },
+  "clean-white": {"fill": "#FFFFFF", "shadow": "#0A0C14 at 55% of 200/255, offset (4, 6) px, blur 9 px",
+                  "emoji": "95% of the text size, 0.25 x size gap after the text"},
+  "presets": {
+    "forty-marbles": {"frame_s": 9.3, "lines": [["40 MARBLES", 150, "rainbow", "y 140"], ["vs XYLOPHONE", 92, "white", "y 272"]]},
+    "fifty-marbles-twinkle": {"frame_s": 9.5, "lines": [["50 MARBLES", 112, "weight 850", "y 165"], ["play Twinkle Twinkle ⭐", 66, "weight 750", "y 268"]]},
+    "fifty-marbles": {"frame_s": 9.5, "lines": [["50 MARBLES", 122, "weight 850", "y 200"]]},
+    "no-text": {"frame_s": 9.5, "zoom": 1.08, "crop": "bottom-anchored, 20 px margin"}
+  },
+  "source_frames": "marble-plate-compositor/render_frame.py at 16 samples per pixel"
+}

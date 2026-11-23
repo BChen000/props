@@ -1,0 +1,30 @@
+{
+  "prop": "marble-plate-compositor",
+  "canvas": {"width": 1080, "height": 1920, "fps": 30},
+  "video_encode": {"codec": "H.264 (libx264)", "preset": "veryfast", "crf": 17, "pix_fmt": "yuv420p"},
+  "plates_cycles": {
+    "beauty": {"size": "1080x1920", "samples": 128, "denoiser": "OpenImageDenoise", "adaptive_sampling": true},
+    "key_direct_and_top_direct": {"size": "540x960", "samples": 64, "bounces": 0},
+    "gbuffer": {"position": "2160x3840, 1 sample, no filter (offset +2,+2,+1)", "normal": "1080x1920", "object_id": "pass_index / 16"},
+    "probes": {"count": 7, "cube_face": 128, "samples": 96, "latlong": "512x256", "metal_blur_sigma_px": 3.0}
+  },
+  "marble_colors": {
+    "glossy_linear_rgb": {"red": [0.78, 0.018, 0.022], "orange": [0.95, 0.26, 0.008], "yellow": [0.98, 0.70, 0.02],
+                          "green": [0.09, 0.58, 0.05], "teal": [0.0, 0.50, 0.47], "blue": [0.012, 0.17, 0.88],
+                          "purple": [0.36, 0.05, 0.75], "pink": [0.97, 0.21, 0.48]},
+    "metal_f0_linear_rgb": {"gold": [1.0, 0.70, 0.28], "silver": [0.93, 0.93, 0.95]},
+    "hex_srgb": {"red": "#E52429", "orange": "#F98B16", "yellow": "#FDDA27", "green": "#55C83F", "teal": "#00BCB6",
+                 "blue": "#1D73F1", "purple": "#A23FE1", "pink": "#FC7EB8", "gold": "#FFDA90", "silver": "#F7F7F9"}
+  },
+  "marble_shading": {"glossy": "albedo/pi * SH irradiance under a clear coat (F0 0.04, Schlick)",
+                     "metal": "Schlick with colored F0, blurred probe reflection",
+                     "marble_to_marble": "1 reflection bounce, soft shadows from key and top lights, contact occlusion"},
+  "marble_radius_m": 0.015,
+  "antialias_motion_blur": {"samples_per_pixel": 8, "shutter_s": 0.01, "shadow_time_samples": 2},
+  "bar_reflection_strength": 0.42,
+  "bar_reflection_blur": "3x3 jittered rays, 0.07 x 0.11 spread",
+  "occlusion_clamps": {"plate": 0.92, "marble": 0.9},
+  "tone": {"exposure": 1.1, "curve": "linear below 0.8, then 0.8 + 0.2*tanh((x-0.8)/0.2)", "output": "sRGB 8-bit"},
+  "speed": "0.1 s (1 marble) to about 6 s (50 marbles) per frame on one CPU core",
+  "fonts": "none"
+}

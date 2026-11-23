@@ -1,0 +1,21 @@
+{
+  "prop": "xylophone-song-template",
+  "canvas": {"width": 1080, "height": 1920, "fps": 30, "aspect": "9:16 Short"},
+  "videos": {
+    "twinkle": {"length_s": 12.2, "frames": 366, "marbles": 50, "text_on_video": "none",
+                "song": "Twinkle Twinkle Little Star, first 2 phrases, 120 BPM, first note at 0.2 s",
+                "structure": "7 single marbles, 7 pairs, 4-note sparkle at 7.95 s, 25-marble pour 8.5-9.5 s, last marble in the basket ~11.9 s",
+                "tuning": "C major, C8-C5", "thumbnail_frame_s": 9.5, "thumbnail_preset": "fifty-marbles"},
+    "forty-marbles": {"length_s": 12.6, "frames": 378, "marbles": 50, "text_on_video": "marble-counter ×1 … ×40!",
+                      "structure": "1 marble at 0 s, 2 at 1.8 s, 3 at 3.65 s, 4 at 5.5 s, 40-marble pour 7.35-9.0 s",
+                      "tuning": "C major pentatonic, C8-A3", "thumbnail_frame_s": 9.3, "thumbnail_preset": "forty-marbles"}
+  },
+  "hook": "a marble is already falling into view on frame 1; first note within 0.2 s",
+  "audio": {"rate_hz": 48000, "codec": "AAC 192 kb/s", "loudness": "about -14 dBFS RMS, peak -1 dB"},
+  "video": {"codec": "H.264 veryfast CRF 17, yuv420p, faststart", "render": "2 parallel workers, concat with -c copy"},
+  "palette_hex": {"red": "#E52429", "orange": "#F98B16", "yellow": "#FDDA27", "green": "#55C83F", "teal": "#00BCB6",
+                  "blue": "#1D73F1", "purple": "#A23FE1", "pink": "#FC7EB8", "gold": "#FFDA90", "silver": "#F7F7F9",
+                  "backdrop": "#959698", "bars": "#E7E8EB", "basket": "#AD9979 to #CEBD9B"},
+  "fonts": "only through marble-counter (Archivo Black) and thumbnail-title (Archivo Black, Montserrat, Noto Color Emoji)",
+  "timing_first_run": "~20 min plates (once) + ~1 min sim/sound + ~8 min frames on 2 cores"
+}

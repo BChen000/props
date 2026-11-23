@@ -1,0 +1,22 @@
+{
+  "prop": "glockenspiel-sounds",
+  "sample_rate_hz": 48000,
+  "channels": 2,
+  "format": "16-bit PCM WAV (muxed as AAC 192 kb/s in the videos)",
+  "seed": 7,
+  "bar_note": {
+    "partials_ratio": [1.0, 2.756, 5.404, 8.933], "partials_amp": [1.0, 0.32, 0.11, 0.045],
+    "decay_fundamental_s": "1.5 * (523 Hz / f)^0.42, partial k decays (1 + 3.2k) times faster",
+    "beating_partial": "+0.7 Hz at 0.12", "attack_ms": 0.6, "strike_click": "2 ms high-passed noise (2.5 kHz)",
+    "brightness": "upper partials scale with hit strength", "gain": 0.22
+  },
+  "glass_click": {"modes_hz": [3300, 5600, 8400, 11800], "decays_ms": [6, 4, 3, 2], "random_detune": "±12%", "gain": 0.16},
+  "wicker_thud": {"noise_band_hz": [350, 2600], "noise_decay_ms": 18, "thump_hz": "95-140", "crackles": "2-4", "gain": 0.5},
+  "rolling": {"bars": "1.4 kHz low-passed noise x speed, gain 0.035", "basket": "600-4000 Hz band noise x speed, gain 0.05"},
+  "pan": "marble x position, width 0.55",
+  "reverb": {"rt60_s": 0.65, "predelay_ms": 12, "lowpass_hz": 5000, "wet": 0.28},
+  "leveling": {"target": "median loudness of 7.5-11 s (the finale)", "gain_range": [0.6, 4.0], "limiter": "97th percentile x0.8, ratio ~2.5"},
+  "peak": 0.89, "fade_out_s": 0.25,
+  "loudness_result": {"twinkle_rms_dbfs": -13.9, "forty_marbles_rms_dbfs": -14.8},
+  "fonts": "none"
+}

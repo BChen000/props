@@ -1,0 +1,35 @@
+{
+  "prop": "marble-drop-sim",
+  "engine": "Blender 5.3.0 rigid body (Bullet), simulated 10x bigger with 10x gravity",
+  "sim_rate_hz": 240,
+  "substeps_per_frame": 4,
+  "solver_iterations": 30,
+  "video_fps": 30,
+  "preroll_s": 0.3,
+  "marble": {"radius_m": 0.015, "friction": 0.6, "restitution": 0.42, "linear_damping": 0.8, "angular_damping": 0.9},
+  "bars": {"friction": 0.5, "restitution": 0.65},
+  "basket": {"friction": 0.8, "restitution": 0.45},
+  "roll_time_s": "about 1.5 from the top bar to the basket",
+  "drop_start": "0.008 m above the top edge of the frame (marble center = frame top + radius + 0.008)",
+  "guards": {"sides": "0.012 m past each bar end, 0.08 m tall", "rim_ring": {"r": 0.158, "z0": 0.06, "z1": 0.10},
+             "back": "behind the top bar", "touched_in_videos": 0},
+  "rounds_video": {
+    "duration_s": 12.8, "seed": 3, "drop_z_m": 0.605,
+    "rounds": [[-0.12, "red"], [1.80, "orange", "yellow"], [3.65, "green", "teal", "blue"], [5.50, "purple", "pink", "gold", "silver"]],
+    "pour": {"count": 40, "start_s": 7.35, "end_s": 9.0, "lanes_x_m": [-0.048, -0.016, 0.016, 0.048], "rows": 10},
+    "pour_color_cycle": ["red", "orange", "yellow", "green", "teal", "blue", "purple", "pink"],
+    "pour_every_5th": ["gold", "silver"]
+  },
+  "melody_video": {
+    "duration_s": 12.6, "seed": 11, "beat_s": 0.5, "bpm": 120, "first_note_s": 0.2,
+    "melody": "C6 C6 G6 G6 A6 A6 G6(half) | F6 F6 E6 E6 D6 D6 C6(half)",
+    "single_notes": 7, "single_colors": ["red", "orange", "yellow", "green", "teal", "blue", "purple"],
+    "pairs_from_note": 8, "arpeggio": ["C7", "E7", "G7", "C8"], "arpeggio_start_s": 7.95, "arpeggio_step_s": 0.125,
+    "pour": {"total_marbles": 50, "count": 25, "start_s": 8.525, "span_s": 1.0, "bars": [6, 5, 4, 3, 2, 1, 0]},
+    "timing_accuracy": "every melody marble hits its bar within 2 ms of the beat"
+  },
+  "event_loudness": {"melody": 1.0, "melody2_pairs": 0.8, "arpeggio": 0.85, "pour_first_hit": 0.45, "later_hits": "x0.42"},
+  "colors_hex": {"red": "#E52429", "orange": "#F98B16", "yellow": "#FDDA27", "green": "#55C83F", "teal": "#00BCB6",
+                 "blue": "#1D73F1", "purple": "#A23FE1", "pink": "#FC7EB8", "gold": "#FFDA90", "silver": "#F7F7F9"},
+  "fonts": "none (preview chart uses matplotlib's default font)"
+}
