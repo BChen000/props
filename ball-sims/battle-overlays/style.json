@@ -1,0 +1,192 @@
+{
+  "arena_px": 872.0,
+  "coordinates": "arena-local (0..arena_px); confetti uses 1080x1920 screen coordinates",
+  "fighters": [
+    {
+      "name": "RED",
+      "color": "#FE394C",
+      "ability": "blaster",
+      "ability_name": "360° BLASTER"
+    },
+    {
+      "name": "BLUE",
+      "color": "#2F7EFF",
+      "ability": "laser",
+      "ability_name": "LASER BEAM"
+    },
+    {
+      "name": "GREEN",
+      "color": "#21C45D",
+      "ability": "missiles",
+      "ability_name": "MISSILES"
+    },
+    {
+      "name": "YELLOW",
+      "color": "#FEC32F",
+      "ability": "lightning",
+      "ability_name": "LIGHTNING"
+    }
+  ],
+  "texts": {
+    "intro": "PICK YOUR FIGHTER!",
+    "fight": "FIGHT!",
+    "out": "{name} IS OUT!",
+    "final_blow": "FINAL BLOW...",
+    "win": "{name} WINS!",
+    "win_sub_one": "with just {hp} HP left!",
+    "win_sub_many": "with {hp} HP left!"
+  },
+  "font": "Poppins (Black for headlines, Bold/ExtraBold for small lines)",
+  "panel": {
+    "color": "#000000",
+    "radius": 36
+  },
+  "intro": {
+    "box": [
+      36,
+      226,
+      836,
+      646
+    ],
+    "box_alpha": 215,
+    "title_y": 320,
+    "title_size": 62,
+    "title_max_w": 740,
+    "spacing": 190,
+    "ball_y": 468,
+    "scale": 1.3,
+    "pop_lead": 0.45,
+    "pop_stagger": 0.09,
+    "pop_time": 0.4,
+    "bob": 4,
+    "bob_hz": 3.2,
+    "bob_phase": 1.3,
+    "name_dy": 102,
+    "name_size": 31,
+    "ability_dy": 138,
+    "ability_size": 19,
+    "ability_color": "#D2CDE4",
+    "ability_max_w": 180,
+    "fade": 0.3,
+    "pop_easing": "easeOutBack, starts (pop_lead - stagger*i) s early"
+  },
+  "fight": {
+    "size": 150,
+    "color": "#FFFFFF",
+    "outline": "#140A12",
+    "ow": 16,
+    "shadow": 8,
+    "rotate": -4,
+    "grow": 1.2,
+    "slam": 0.18,
+    "fade_from": 0.65,
+    "fade_len": 0.35,
+    "life": 1.0,
+    "slam_easing": "easeOutCubic"
+  },
+  "out_banner": {
+    "y": 58,
+    "size": 44,
+    "box": "#08080E",
+    "box_alpha": 225,
+    "pad": 28,
+    "half_h": 36,
+    "radius": 16,
+    "pop_from": 0.5,
+    "pop_time": 0.25,
+    "life": 2.0,
+    "fade_from": 1.6,
+    "fade_len": 0.4,
+    "pop_easing": "easeOutBack"
+  },
+  "final_blow": {
+    "y": 62,
+    "size": 48,
+    "color": "#FF4557",
+    "outline": "#14080E",
+    "ow": 9,
+    "pulse": 0.04,
+    "pulse_hz": 8,
+    "ramp": 0.2
+  },
+  "vignette": {
+    "color": "#3C000A",
+    "alpha": 150,
+    "inner": 0.55,
+    "radius": 0.75
+  },
+  "flash_color": "#FFFFFF",
+  "winner": {
+    "box": [
+      36,
+      166,
+      836,
+      716
+    ],
+    "box_alpha": 220,
+    "box_fade": 0.25,
+    "pop_time": 0.4,
+    "crown_y": 258,
+    "crown_w": 110,
+    "ball_y": 392,
+    "scale": 1.7,
+    "name_y": 555,
+    "name_size": 112,
+    "name_max_w": 740,
+    "name_delay": 0.15,
+    "sub_y": 650,
+    "sub_size": 42,
+    "sub_color": "#FFFFFF",
+    "sub_delay": 0.35,
+    "sub_fade": 0.3,
+    "pop_easing": "easeOutBack"
+  },
+  "confetti": {
+    "seed": 4242,
+    "burst": 140,
+    "burst_from_center": 0.55,
+    "center": [
+      540,
+      900
+    ],
+    "rain_per_frame": 3,
+    "rain_until": 2.6,
+    "gravity": 700,
+    "terminal": 330,
+    "flutter": 40,
+    "extra_colors": [
+      "#FFCD3C",
+      "#FFFFFF"
+    ],
+    "width": [
+      9,
+      14
+    ],
+    "height": [
+      16,
+      26
+    ],
+    "canvas": [
+      1080,
+      1920
+    ]
+  },
+  "fonts": {
+    "family": "Poppins",
+    "weights": [
+      "SemiBold",
+      "Bold",
+      "ExtraBold",
+      "Black"
+    ],
+    "source": "@fontsource/poppins@5.3.0 latin subset (woff2 -> ttf); same design as https://fonts.google.com/specimen/Poppins",
+    "rendering": "skia anti-aliased edging, subpixel positioning"
+  },
+  "outline_color": "#110C1C",
+  "crown": {
+    "outline": "#965F0A",
+    "gold": "#FFC832",
+    "band": "#EBA519",
+    "jewel": "#FFECAA"
+  }
+}

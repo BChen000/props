@@ -1,0 +1,233 @@
+{
+  "fighters": [
+    {
+      "color": "#FE394C",
+      "ability": "blaster"
+    },
+    {
+      "color": "#2F7EFF",
+      "ability": "laser"
+    },
+    {
+      "color": "#21C45D",
+      "ability": "missiles"
+    },
+    {
+      "color": "#FEC32F",
+      "ability": "lightning"
+    }
+  ],
+  "ball_radius": 46.0,
+  "ball": {
+    "rim": "#FFFFFF",
+    "rim_w": 4,
+    "highlight": "circle r*0.22 at (-0.42r, -0.42r)",
+    "highlight_alpha": 60,
+    "hp_weight": "Black",
+    "hp_size": 50,
+    "hp_color": "#FFFFFF",
+    "hp_outline": "#100C16",
+    "hp_ow": 8,
+    "flash_to": "#FFFFFF",
+    "shield": "#FFFFFF",
+    "shield_w": 3,
+    "shield_gap": 8,
+    "shield_alpha": 150,
+    "font": "Poppins"
+  },
+  "blaster_barrels": {
+    "outline": "#0C0A12",
+    "body": "#302E3E",
+    "tip": "#FF5F6E",
+    "stripe": "#5A586E",
+    "flash": "#FFBE6E",
+    "flash_core": "#FFFFFF",
+    "recoil": 6.0,
+    "recoil_time": 0.16,
+    "flash_time": 0.08,
+    "static_n": 6,
+    "static_rot": -0.3,
+    "barrel": "rounded rect r-6..r+23 x 15 px, tip 8 px, recoil over recoil_time s"
+  },
+  "laser_turret": {
+    "outline": "#0A0E1C",
+    "body": "#202E50",
+    "stripe": "#508CFF",
+    "sight": "#78B4FF",
+    "sight_alpha": 110,
+    "glow": "#5096FF",
+    "glow_core": "#96C8FF",
+    "lens_rim": "#0A0E1C",
+    "lens": "#AAD7FF",
+    "lens_core": "#FFFFFF",
+    "static_aim": -0.6,
+    "turret": "rounded rect r-10..r+33 x 28 px, lens at r+35, sight r+36..r+300"
+  },
+  "missile_pod": {
+    "outline": "#08160E",
+    "body": "#224830",
+    "stripe": "#21C45D",
+    "missile_outline": "#0A1E12",
+    "missile_body": "#ECF6EE",
+    "nose_outline": "#0A2814",
+    "nose": "#21C45D",
+    "reload": 1.2,
+    "static_aim": -0.4,
+    "pod": "rounded rect r-12..r+24 x 36 px, missiles slide out 12 px"
+  },
+  "lightning_coil": {
+    "aura": "ring r+7 width 6",
+    "aura_alpha": 70,
+    "spark_glow": "#FFD23C",
+    "spark_glow_alpha": 110,
+    "spark_core": "#FFFFE1",
+    "sparks": "3 zigzags, 6 points, radius r+4..r+22"
+  },
+  "range_ring": {
+    "fill": "#FEC32F",
+    "fill_alpha": 12,
+    "fill_alpha_ready": 22,
+    "line": "#FED250",
+    "line_w": 3.5,
+    "line_alpha": 130,
+    "line_alpha_ready": 210,
+    "dash": [
+      16,
+      11
+    ],
+    "dash_speed": 40
+  },
+  "laser_aim": {
+    "color": "#8CBEFF",
+    "width": 2.5,
+    "alpha0": 70,
+    "alpha_gain": 120,
+    "dash": [
+      18,
+      12
+    ],
+    "dash_speed": 200,
+    "locked": "#FF788C",
+    "locked_w": 3.5,
+    "locked_alpha": 160,
+    "locked_blink": 90,
+    "blink_hz": 90
+  },
+  "laser_beam": {
+    "layers": [
+      {
+        "extra_width": 34,
+        "color": "#286EFF",
+        "alpha": 45
+      },
+      {
+        "extra_width": 16,
+        "color": "#468CFF",
+        "alpha": 110
+      },
+      {
+        "extra_width": 0,
+        "color": "#82B9FF",
+        "alpha": 235
+      },
+      {
+        "extra_width": -1,
+        "color": "#FFFFFF",
+        "alpha": 255
+      }
+    ],
+    "core_frac": 0.42,
+    "attack": 0.04,
+    "wobble": 0.08,
+    "wobble_hz": 160,
+    "end_glow": "#C8E1FF",
+    "end_alpha": 160,
+    "end_pad": 18,
+    "note": "extra_width -1 = core (width * core_frac); envelope attack then fades 60% after u=0.6"
+  },
+  "bullet": {
+    "trail": "#FF465A",
+    "trail_w": 10,
+    "trail_alpha": 90,
+    "trail_len": 0.05,
+    "glow": "#FF394C",
+    "glow_r": 16,
+    "glow_alpha": 75,
+    "body": "#FF7886",
+    "body_r": 9,
+    "core": "#FFFFFF",
+    "core_r": 4.8
+  },
+  "missile": {
+    "scale": 1.4,
+    "flame": "#FFA03C",
+    "flame_alpha": 230,
+    "flame_core": "#FFF0B4",
+    "fins": "#14783C",
+    "body": "#ECF6EE",
+    "body_outline": "#14281C",
+    "nose": "#21C45D",
+    "nose_outline": "#0A3219"
+  },
+  "lightning_bolt": {
+    "segs": 12,
+    "amp": 26,
+    "layers": [
+      [
+        16,
+        "#FFC828",
+        0.35
+      ],
+      [
+        7,
+        "#FFE878",
+        0.85
+      ],
+      [
+        2.8,
+        "#FFFFFF",
+        1.0
+      ]
+    ],
+    "branch_len": 70,
+    "branch_layers": [
+      [
+        4,
+        "#FFE878",
+        0.6
+      ],
+      [
+        1.6,
+        "#FFFFFF",
+        0.8
+      ]
+    ],
+    "life_s": 0.3,
+    "alpha": "255 * (1 - age/life) ** 0.7",
+    "rejag": "every 2 frames"
+  },
+  "trail": {
+    "every": 6,
+    "alpha": 34,
+    "history": "last 40 physics steps (1/240 s)",
+    "radius": "r * (0.55 + 0.4 u)"
+  },
+  "fonts": {
+    "family": "Poppins",
+    "weights": [
+      "SemiBold",
+      "Bold",
+      "ExtraBold",
+      "Black"
+    ],
+    "source": "@fontsource/poppins@5.3.0 latin subset (woff2 -> ttf); same design as https://fonts.google.com/specimen/Poppins",
+    "rendering": "skia anti-aliased edging, subpixel positioning"
+  },
+  "outline_color": "#110C1C",
+  "crown": {
+    "outline": "#965F0A",
+    "gold": "#FFC832",
+    "band": "#EBA519",
+    "jewel": "#FFECAA"
+  }
+}

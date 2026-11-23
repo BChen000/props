@@ -1,0 +1,164 @@
+{
+  "ball_radius": 46.0,
+  "damage_text": {
+    "text": "-1",
+    "color": "#FF4557",
+    "size": 40,
+    "life": 0.95,
+    "jitter": 14,
+    "above": 8,
+    "font": "Poppins"
+  },
+  "label_text": {
+    "size": 24,
+    "life": 1.0,
+    "above": 34,
+    "font": "Poppins"
+  },
+  "text_motion": {
+    "weight": "Black",
+    "outline": "#140A12",
+    "ow": 7,
+    "rise": 70,
+    "pop": 0.5,
+    "pop_time": 0.12,
+    "fade_from": 0.55,
+    "fade_len": 0.45,
+    "font": "Poppins",
+    "rise_easing": "easeOutCubic"
+  },
+  "hit_burst": {
+    "n": 14,
+    "speed": [
+      140,
+      460
+    ],
+    "life": 0.55,
+    "size": 9,
+    "spread": 1.4,
+    "colors": "victim, victim, white",
+    "note": "squares spray within +-spread rad of knockback"
+  },
+  "ko": {
+    "white_ring": [
+      170,
+      0.5,
+      12
+    ],
+    "color_ring": [
+      0.5,
+      110,
+      0.42,
+      9
+    ],
+    "n": 44,
+    "speed": [
+      220,
+      820
+    ],
+    "life": 0.9,
+    "size": 12,
+    "glow": [
+      120,
+      0.3
+    ],
+    "shake": 14.0,
+    "flash": 0.25,
+    "flash_final": 0.55,
+    "colors": "victim, victim, white"
+  },
+  "missile_explosion": {
+    "ring": [
+      "#FFB450",
+      6,
+      64,
+      44,
+      0.32,
+      7
+    ],
+    "glow": [
+      "#FFE696",
+      40,
+      26,
+      0.22
+    ],
+    "palette": [
+      "#FFAA3C",
+      "#FFDC6E",
+      "#FF6E32"
+    ],
+    "n": [
+      12,
+      7
+    ],
+    "speed": [
+      90,
+      380
+    ],
+    "life": 0.45,
+    "size": 7,
+    "smoke": [
+      "#96969E",
+      5,
+      90,
+      0.7,
+      10,
+      3
+    ],
+    "shake": 4.0
+  },
+  "spark_colors": {
+    "bullet_wall": [
+      "#FF7882",
+      "#FFC88C"
+    ],
+    "absorb": "#FFFFFF",
+    "bump": "#FFFFFF",
+    "laser_wall": [
+      "#B4D7FF",
+      "#FFFFFF"
+    ]
+  },
+  "smoke_colors": {
+    "launch": "#C8CDD2",
+    "trail": "#B9BEC4",
+    "fizzle": "#8C8C96"
+  },
+  "ring_colors": {
+    "blaster": "#FF7882"
+  },
+  "lightning_glow": {
+    "color": "#FFF5BE",
+    "size": 48,
+    "life": 0.2
+  },
+  "particles": {
+    "sq": "rotating square, size*(1-0.5u), alpha 255(1-u)",
+    "spark": "line of length v*0.03 s, alpha 255(1-u)",
+    "glow": "circle size*(0.6+0.6u), alpha 200(1-u)",
+    "smoke": "circle size*(1+1.6u), alpha 120(1-u)",
+    "drag": "velocity *= exp(-drag*dt)"
+  },
+  "rings": "radius r0->r1 easeOutCubic, width w*(1-u), alpha 255(1-u)",
+  "shake_decay_px_per_s": 40.0,
+  "flash_decay_per_s": 2.4,
+  "timestep": "1/240 s",
+  "fonts": {
+    "family": "Poppins",
+    "weights": [
+      "SemiBold",
+      "Bold",
+      "ExtraBold",
+      "Black"
+    ],
+    "source": "@fontsource/poppins@5.3.0 latin subset (woff2 -> ttf); same design as https://fonts.google.com/specimen/Poppins",
+    "rendering": "skia anti-aliased edging, subpixel positioning"
+  },
+  "outline_color": "#110C1C",
+  "crown": {
+    "outline": "#965F0A",
+    "gold": "#FFC832",
+    "band": "#EBA519",
+    "jewel": "#FFECAA"
+  }
+}

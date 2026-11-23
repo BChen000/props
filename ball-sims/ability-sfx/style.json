@@ -1,0 +1,99 @@
+{
+  "sample_rate": 44100,
+  "format": "16-bit PCM WAV, mono",
+  "noise_seed": 1774,
+  "hit_pitch_by_victim": {
+    "0": 1.0,
+    "1": 1.12,
+    "2": 0.9,
+    "3": 1.22
+  },
+  "sounds": [
+    {
+      "file": "blaster_volley.wav",
+      "use": "360 blaster ring of bullets"
+    },
+    {
+      "file": "laser_charge.wav",
+      "use": "laser charging (0.75 s, plays with the aim line)"
+    },
+    {
+      "file": "laser_fire.wav",
+      "use": "laser beam firing"
+    },
+    {
+      "file": "missile_launch.wav",
+      "use": "missile volley launch"
+    },
+    {
+      "file": "missile_hit.wav",
+      "use": "missile explodes on a fighter"
+    },
+    {
+      "file": "missile_miss.wav",
+      "use": "missile hits a wall or runs out"
+    },
+    {
+      "file": "lightning_zap.wav",
+      "use": "lightning strike"
+    },
+    {
+      "file": "hit.wav",
+      "use": "a fighter loses a heart (pitch x1.0/1.12/0.9/1.22 for red/blue/green/yellow)"
+    },
+    {
+      "file": "ko.wav",
+      "use": "knockout explosion + power-down"
+    },
+    {
+      "file": "bump.wav",
+      "use": "two balls bounce off each other"
+    },
+    {
+      "file": "wall_tick.wav",
+      "use": "bullet hits the wall"
+    },
+    {
+      "file": "shield_tink.wav",
+      "use": "bullet blocked by i-frames"
+    },
+    {
+      "file": "upgrade.wav",
+      "use": "power-up chime after landing a hit"
+    },
+    {
+      "file": "intro_pop.wav",
+      "use": "fighter pops into PICK YOUR FIGHTER"
+    },
+    {
+      "file": "riser.wav",
+      "use": "build-up into FIGHT!"
+    },
+    {
+      "file": "fight_stab.wav",
+      "use": "chord stab on FIGHT!"
+    },
+    {
+      "file": "crash.wav",
+      "use": "cymbal crash (FIGHT!, final blow, winner)"
+    },
+    {
+      "file": "slowmo_whoosh.wav",
+      "use": "slow-motion starts"
+    },
+    {
+      "file": "tension_drone.wav",
+      "use": "under the slow-motion final blow"
+    },
+    {
+      "file": "heartbeat.wav",
+      "use": "repeats every 0.85 s during slow motion"
+    },
+    {
+      "file": "sub_drop.wav",
+      "use": "final blow low-end drop"
+    }
+  ],
+  "slow_motion": "events inside the slow-mo window play at rate 0.5 (an octave down) with gain x1.1",
+  "edges": "add() fades the first 0.7 ms and last 6 ms of every sound to avoid clicks"
+}

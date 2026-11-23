@@ -1,0 +1,1242 @@
+{
+  "video": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "encode": "H.264 (libx264 veryfast, CRF 18, yuv420p)",
+    "audio": "AAC 192k, 44100 Hz, loudnorm -14.0 LUFS / -1.5 dBTP"
+  },
+  "seed": 1774,
+  "fighters": [
+    {
+      "name": "RED",
+      "color": "#FE394C",
+      "ability": "blaster",
+      "card_label": "BLASTER",
+      "intro_name": "360° BLASTER",
+      "upgrade_label": "+1 BULLET"
+    },
+    {
+      "name": "BLUE",
+      "color": "#2F7EFF",
+      "ability": "laser",
+      "card_label": "LASER",
+      "intro_name": "LASER BEAM",
+      "upgrade_label": "LASER UP!"
+    },
+    {
+      "name": "GREEN",
+      "color": "#21C45D",
+      "ability": "missiles",
+      "card_label": "MISSILES",
+      "intro_name": "MISSILES",
+      "upgrade_label": [
+        "+1 MISSILE",
+        "POWER UP!"
+      ]
+    },
+    {
+      "name": "YELLOW",
+      "color": "#FEC32F",
+      "ability": "lightning",
+      "card_label": "LIGHTNING",
+      "intro_name": "LIGHTNING",
+      "upgrade_label": "RANGE UP!"
+    }
+  ],
+  "texts": {
+    "TITLE": "POWER BALLS",
+    "SUBTITLE": "Every hit UPGRADES your power",
+    "WIN_TITLE": "WE HAVE A WINNER!",
+    "INTRO_TEXT": "PICK YOUR FIGHTER!",
+    "FIGHT_TEXT": "FIGHT!",
+    "CAPTION": "Comment your fighter!",
+    "DUEL_CAPTION": "FINAL DUEL!",
+    "END_CAPTION": "Did your fighter win? Comment!",
+    "OUT_TEXT": "{name} IS OUT!",
+    "FINAL_BLOW_TEXT": "FINAL BLOW...",
+    "WIN_TEXT": "{name} WINS!",
+    "WIN_SUB_ONE": "with just {hp} HP left!",
+    "WIN_SUB_MANY": "with {hp} HP left!"
+  },
+  "timing_s": {
+    "intro": 2.6,
+    "intro_fade": 0.3,
+    "fight_text": 1.0,
+    "out_banner": 2.0,
+    "slow_motion_speed": 0.25,
+    "slow_motion_lead": 0.9,
+    "slow_motion_tail": 0.32,
+    "final_blow_ramp": 0.2,
+    "winner_delay_sim": 1.15,
+    "winner_hold": 4.3,
+    "hit_shake": 0.4,
+    "heart_pop": 0.5,
+    "iframes": 0.8,
+    "physics_step": 0.004166666666666667
+  },
+  "camera": {
+    "final_zoom": 1.32,
+    "zoom_smoothing_per_frame": 0.16,
+    "focus_smoothing_per_frame": 0.2,
+    "shake": "random offset +-shake px per frame; laser 7, lightning 3.5, missile hit 4, KO 14"
+  },
+  "simulation": {
+    "arena_px": 872.0,
+    "ball_radius": 46.0,
+    "base_speed": 400.0,
+    "relax": 1.3,
+    "knockback": 300.0,
+    "hp": 7,
+    "max_level": 10,
+    "first_cooldown": {
+      "blaster": 0.9,
+      "laser": 1.1,
+      "missiles": 1.0,
+      "lightning": 0.8
+    },
+    "abilities": {
+      "INVULN": 0.8,
+      "BL_CD": 3.6,
+      "BL_N0": 5,
+      "BL_STEP": 1,
+      "BL_NMAX": 16,
+      "BL_SPEED": 480,
+      "BL_R": 5,
+      "BL_SPIN": 0.9,
+      "LZ_CD0": 3.1,
+      "LZ_CD_STEP": 0.08,
+      "LZ_CD_MIN": 1.5,
+      "LZ_CHARGE": 0.75,
+      "LZ_LOCK": 0.18,
+      "LZ_FIRE": 0.3,
+      "LZ_W0": 22,
+      "LZ_W_STEP": 2,
+      "LZ_TRACK": 8,
+      "LZ_FIRE_TRACK": 1.2,
+      "MS_CD": 4.0,
+      "MS_N0": 1,
+      "MS_NMAX": 6,
+      "MS_V0": 230.0,
+      "MS_V1": 420,
+      "MS_ACC": 650.0,
+      "MS_TURN": 2.0,
+      "MS_LIFE": 3.0,
+      "MS_HIT_R": 9.0,
+      "MS_SPREAD": 1.25,
+      "MS_EVERY": 2,
+      "LT_CD": 3.4,
+      "LT_RANGE0": 190,
+      "LT_RANGE_STEP": 12,
+      "LT_CHAIN_EVERY": 5
+    }
+  },
+  "fonts": {
+    "fonts": {
+      "family": "Poppins",
+      "weights": [
+        "SemiBold",
+        "Bold",
+        "ExtraBold",
+        "Black"
+      ],
+      "source": "@fontsource/poppins@5.3.0 latin subset (woff2 -> ttf); same design as https://fonts.google.com/specimen/Poppins",
+      "rendering": "skia anti-aliased edging, subpixel positioning"
+    },
+    "outline_color": "#110C1C",
+    "crown": {
+      "outline": "#965F0A",
+      "gold": "#FFC832",
+      "band": "#EBA519",
+      "jewel": "#FFECAA"
+    }
+  },
+  "layout": {
+    "canvas": {
+      "width": 1080,
+      "height": 1920
+    },
+    "background": {
+      "type": "radial",
+      "center": [
+        540,
+        880
+      ],
+      "radius": 1150,
+      "stops": [
+        {
+          "color": "#261A3E",
+          "pos": 0.0
+        },
+        {
+          "color": "#1A112D",
+          "pos": 0.55
+        },
+        {
+          "color": "#130D22",
+          "pos": 1.0
+        }
+      ]
+    },
+    "title": {
+      "weight": "Black",
+      "size": 88,
+      "color": "#FED64D",
+      "outline": 12,
+      "shadow": 5,
+      "text": "POWER BALLS",
+      "y": 150,
+      "outline_color": "#110C1C",
+      "font": "Poppins"
+    },
+    "subtitle": {
+      "weight": "ExtraBold",
+      "size": 33,
+      "color": "#EAE4FF",
+      "outline": 8,
+      "text": "Every hit UPGRADES your power",
+      "y": 214,
+      "outline_color": "#110C1C",
+      "font": "Poppins"
+    },
+    "winner_title": {
+      "weight": "Black",
+      "size": 74,
+      "color": "#FED64D",
+      "outline": 12,
+      "shadow": 5,
+      "max_w": 900,
+      "pop_from": 0.6,
+      "pop_time": 0.35,
+      "text": "WE HAVE A WINNER!",
+      "y": 150,
+      "easing": "easeOutBack",
+      "font": "Poppins"
+    },
+    "arena": {
+      "inner": [
+        104.0,
+        474.0,
+        872.0,
+        872.0
+      ],
+      "background": "#0D0D17",
+      "frame": {
+        "pad": 20,
+        "radius": 30,
+        "color": "#FFFFFF",
+        "final_blow_color": "#FF3B4E"
+      },
+      "grid": {
+        "start": 76,
+        "step": 80,
+        "color": "#AFAFBE",
+        "alpha": 120,
+        "width": 1.6
+      }
+    },
+    "caption": {
+      "weight": "ExtraBold",
+      "size": 42,
+      "color": "#FFFFFF",
+      "outline": 9,
+      "y": 1435,
+      "texts": {
+        "normal": "Comment your fighter!",
+        "end": "Did your fighter win? Comment!"
+      },
+      "outline_color": "#110C1C",
+      "font": "Poppins"
+    },
+    "duel_caption": {
+      "weight": "Black",
+      "size": 46,
+      "color": "#FED64D",
+      "outline": 10,
+      "pulse": 0.05,
+      "pulse_hz": 6,
+      "y": 1435,
+      "text": "FINAL DUEL!",
+      "outline_color": "#110C1C",
+      "font": "Poppins"
+    }
+  },
+  "cards": {
+    "fighters": [
+      {
+        "name": "RED",
+        "color": "#FE394C",
+        "label": "BLASTER"
+      },
+      {
+        "name": "BLUE",
+        "color": "#2F7EFF",
+        "label": "LASER"
+      },
+      {
+        "name": "GREEN",
+        "color": "#21C45D",
+        "label": "MISSILES"
+      },
+      {
+        "name": "YELLOW",
+        "color": "#FEC32F",
+        "label": "LIGHTNING"
+      }
+    ],
+    "max_hp": 7,
+    "max_level": 10,
+    "card": {
+      "x0": 66,
+      "pitch": 240,
+      "y": 262,
+      "w": 228,
+      "h": 132,
+      "radius": 14,
+      "bar_h": 14,
+      "bar_radius": 7,
+      "background": "#181526",
+      "border": "#504A61",
+      "border_width": 2.5,
+      "leader_border": "#FFFFFF",
+      "leader_border_width": 3.5,
+      "dead_bar": "#5A5868",
+      "x_formula": "x0 + pitch * index (px, 1080-wide canvas)"
+    },
+    "name": {
+      "weight": "ExtraBold",
+      "size": 25,
+      "dx": 16,
+      "dy": 40,
+      "color": "#FFFFFF",
+      "dead": "#787684",
+      "font": "Poppins"
+    },
+    "hearts": {
+      "dx0": 23,
+      "pitch": 30,
+      "dy": 79,
+      "scale": 0.98,
+      "full": "#FF4557",
+      "empty": "#45454F",
+      "pop_time": 0.3,
+      "pop_grow": 0.6,
+      "pop_from": "#FFFFFF"
+    },
+    "label": {
+      "weight": "Bold",
+      "size": 14.5,
+      "dx": 16,
+      "dy": 112,
+      "color": "#C4BED8",
+      "dead": "#6E6C7A",
+      "font": "Poppins"
+    },
+    "power_bar": {
+      "gap": 7,
+      "x1": 213,
+      "y0": 106,
+      "y1": 118,
+      "radius": 6,
+      "bg": "#343140",
+      "fill": "#DAE1EF",
+      "dead": "#646270",
+      "min_frac": 0.09,
+      "fraction": "max(min_frac, level / max_level)"
+    },
+    "leader_crown": {
+      "dx": 200,
+      "dy": -6,
+      "w": 40
+    },
+    "ko_stamp": {
+      "text": "K.O.",
+      "weight": "Black",
+      "size": 62,
+      "color": "#FF3B4E",
+      "outline": "#140A12",
+      "ow": 10,
+      "shadow": 4,
+      "rotate": -6,
+      "dx": 114,
+      "dy": 72,
+      "pop": 0.9,
+      "pop_time": 0.25,
+      "shade": "#0A0812",
+      "shade_alpha": 90,
+      "font": "Poppins",
+      "pop_easing": "easeOutCubic"
+    },
+    "hit_shake": {
+      "time": 0.4,
+      "freq": 70,
+      "amp": 5,
+      "formula": "sin(left * freq) * amp * left / time"
+    }
+  },
+  "fighters_look": {
+    "fighters": [
+      {
+        "color": "#FE394C",
+        "ability": "blaster"
+      },
+      {
+        "color": "#2F7EFF",
+        "ability": "laser"
+      },
+      {
+        "color": "#21C45D",
+        "ability": "missiles"
+      },
+      {
+        "color": "#FEC32F",
+        "ability": "lightning"
+      }
+    ],
+    "ball_radius": 46.0,
+    "ball": {
+      "rim": "#FFFFFF",
+      "rim_w": 4,
+      "highlight": "circle r*0.22 at (-0.42r, -0.42r)",
+      "highlight_alpha": 60,
+      "hp_weight": "Black",
+      "hp_size": 50,
+      "hp_color": "#FFFFFF",
+      "hp_outline": "#100C16",
+      "hp_ow": 8,
+      "flash_to": "#FFFFFF",
+      "shield": "#FFFFFF",
+      "shield_w": 3,
+      "shield_gap": 8,
+      "shield_alpha": 150,
+      "font": "Poppins"
+    },
+    "blaster_barrels": {
+      "outline": "#0C0A12",
+      "body": "#302E3E",
+      "tip": "#FF5F6E",
+      "stripe": "#5A586E",
+      "flash": "#FFBE6E",
+      "flash_core": "#FFFFFF",
+      "recoil": 6.0,
+      "recoil_time": 0.16,
+      "flash_time": 0.08,
+      "static_n": 6,
+      "static_rot": -0.3,
+      "barrel": "rounded rect r-6..r+23 x 15 px, tip 8 px, recoil over recoil_time s"
+    },
+    "laser_turret": {
+      "outline": "#0A0E1C",
+      "body": "#202E50",
+      "stripe": "#508CFF",
+      "sight": "#78B4FF",
+      "sight_alpha": 110,
+      "glow": "#5096FF",
+      "glow_core": "#96C8FF",
+      "lens_rim": "#0A0E1C",
+      "lens": "#AAD7FF",
+      "lens_core": "#FFFFFF",
+      "static_aim": -0.6,
+      "turret": "rounded rect r-10..r+33 x 28 px, lens at r+35, sight r+36..r+300"
+    },
+    "missile_pod": {
+      "outline": "#08160E",
+      "body": "#224830",
+      "stripe": "#21C45D",
+      "missile_outline": "#0A1E12",
+      "missile_body": "#ECF6EE",
+      "nose_outline": "#0A2814",
+      "nose": "#21C45D",
+      "reload": 1.2,
+      "static_aim": -0.4,
+      "pod": "rounded rect r-12..r+24 x 36 px, missiles slide out 12 px"
+    },
+    "lightning_coil": {
+      "aura": "ring r+7 width 6",
+      "aura_alpha": 70,
+      "spark_glow": "#FFD23C",
+      "spark_glow_alpha": 110,
+      "spark_core": "#FFFFE1",
+      "sparks": "3 zigzags, 6 points, radius r+4..r+22"
+    },
+    "range_ring": {
+      "fill": "#FEC32F",
+      "fill_alpha": 12,
+      "fill_alpha_ready": 22,
+      "line": "#FED250",
+      "line_w": 3.5,
+      "line_alpha": 130,
+      "line_alpha_ready": 210,
+      "dash": [
+        16,
+        11
+      ],
+      "dash_speed": 40
+    },
+    "laser_aim": {
+      "color": "#8CBEFF",
+      "width": 2.5,
+      "alpha0": 70,
+      "alpha_gain": 120,
+      "dash": [
+        18,
+        12
+      ],
+      "dash_speed": 200,
+      "locked": "#FF788C",
+      "locked_w": 3.5,
+      "locked_alpha": 160,
+      "locked_blink": 90,
+      "blink_hz": 90
+    },
+    "laser_beam": {
+      "layers": [
+        {
+          "extra_width": 34,
+          "color": "#286EFF",
+          "alpha": 45
+        },
+        {
+          "extra_width": 16,
+          "color": "#468CFF",
+          "alpha": 110
+        },
+        {
+          "extra_width": 0,
+          "color": "#82B9FF",
+          "alpha": 235
+        },
+        {
+          "extra_width": -1,
+          "color": "#FFFFFF",
+          "alpha": 255
+        }
+      ],
+      "core_frac": 0.42,
+      "attack": 0.04,
+      "wobble": 0.08,
+      "wobble_hz": 160,
+      "end_glow": "#C8E1FF",
+      "end_alpha": 160,
+      "end_pad": 18,
+      "note": "extra_width -1 = core (width * core_frac); envelope attack then fades 60% after u=0.6"
+    },
+    "bullet": {
+      "trail": "#FF465A",
+      "trail_w": 10,
+      "trail_alpha": 90,
+      "trail_len": 0.05,
+      "glow": "#FF394C",
+      "glow_r": 16,
+      "glow_alpha": 75,
+      "body": "#FF7886",
+      "body_r": 9,
+      "core": "#FFFFFF",
+      "core_r": 4.8
+    },
+    "missile": {
+      "scale": 1.4,
+      "flame": "#FFA03C",
+      "flame_alpha": 230,
+      "flame_core": "#FFF0B4",
+      "fins": "#14783C",
+      "body": "#ECF6EE",
+      "body_outline": "#14281C",
+      "nose": "#21C45D",
+      "nose_outline": "#0A3219"
+    },
+    "lightning_bolt": {
+      "segs": 12,
+      "amp": 26,
+      "layers": [
+        [
+          16,
+          "#FFC828",
+          0.35
+        ],
+        [
+          7,
+          "#FFE878",
+          0.85
+        ],
+        [
+          2.8,
+          "#FFFFFF",
+          1.0
+        ]
+      ],
+      "branch_len": 70,
+      "branch_layers": [
+        [
+          4,
+          "#FFE878",
+          0.6
+        ],
+        [
+          1.6,
+          "#FFFFFF",
+          0.8
+        ]
+      ],
+      "life_s": 0.3,
+      "alpha": "255 * (1 - age/life) ** 0.7",
+      "rejag": "every 2 frames"
+    },
+    "trail": {
+      "every": 6,
+      "alpha": 34,
+      "history": "last 40 physics steps (1/240 s)",
+      "radius": "r * (0.55 + 0.4 u)"
+    }
+  },
+  "fx": {
+    "ball_radius": 46.0,
+    "damage_text": {
+      "text": "-1",
+      "color": "#FF4557",
+      "size": 40,
+      "life": 0.95,
+      "jitter": 14,
+      "above": 8,
+      "font": "Poppins"
+    },
+    "label_text": {
+      "size": 24,
+      "life": 1.0,
+      "above": 34,
+      "font": "Poppins"
+    },
+    "text_motion": {
+      "weight": "Black",
+      "outline": "#140A12",
+      "ow": 7,
+      "rise": 70,
+      "pop": 0.5,
+      "pop_time": 0.12,
+      "fade_from": 0.55,
+      "fade_len": 0.45,
+      "font": "Poppins",
+      "rise_easing": "easeOutCubic"
+    },
+    "hit_burst": {
+      "n": 14,
+      "speed": [
+        140,
+        460
+      ],
+      "life": 0.55,
+      "size": 9,
+      "spread": 1.4,
+      "colors": "victim, victim, white",
+      "note": "squares spray within +-spread rad of knockback"
+    },
+    "ko": {
+      "white_ring": [
+        170,
+        0.5,
+        12
+      ],
+      "color_ring": [
+        0.5,
+        110,
+        0.42,
+        9
+      ],
+      "n": 44,
+      "speed": [
+        220,
+        820
+      ],
+      "life": 0.9,
+      "size": 12,
+      "glow": [
+        120,
+        0.3
+      ],
+      "shake": 14.0,
+      "flash": 0.25,
+      "flash_final": 0.55,
+      "colors": "victim, victim, white"
+    },
+    "missile_explosion": {
+      "ring": [
+        "#FFB450",
+        6,
+        64,
+        44,
+        0.32,
+        7
+      ],
+      "glow": [
+        "#FFE696",
+        40,
+        26,
+        0.22
+      ],
+      "palette": [
+        "#FFAA3C",
+        "#FFDC6E",
+        "#FF6E32"
+      ],
+      "n": [
+        12,
+        7
+      ],
+      "speed": [
+        90,
+        380
+      ],
+      "life": 0.45,
+      "size": 7,
+      "smoke": [
+        "#96969E",
+        5,
+        90,
+        0.7,
+        10,
+        3
+      ],
+      "shake": 4.0
+    },
+    "spark_colors": {
+      "bullet_wall": [
+        "#FF7882",
+        "#FFC88C"
+      ],
+      "absorb": "#FFFFFF",
+      "bump": "#FFFFFF",
+      "laser_wall": [
+        "#B4D7FF",
+        "#FFFFFF"
+      ]
+    },
+    "smoke_colors": {
+      "launch": "#C8CDD2",
+      "trail": "#B9BEC4",
+      "fizzle": "#8C8C96"
+    },
+    "ring_colors": {
+      "blaster": "#FF7882"
+    },
+    "lightning_glow": {
+      "color": "#FFF5BE",
+      "size": 48,
+      "life": 0.2
+    },
+    "particles": {
+      "sq": "rotating square, size*(1-0.5u), alpha 255(1-u)",
+      "spark": "line of length v*0.03 s, alpha 255(1-u)",
+      "glow": "circle size*(0.6+0.6u), alpha 200(1-u)",
+      "smoke": "circle size*(1+1.6u), alpha 120(1-u)",
+      "drag": "velocity *= exp(-drag*dt)"
+    },
+    "rings": "radius r0->r1 easeOutCubic, width w*(1-u), alpha 255(1-u)",
+    "shake_decay_px_per_s": 40.0,
+    "flash_decay_per_s": 2.4,
+    "timestep": "1/240 s"
+  },
+  "overlays": {
+    "arena_px": 872.0,
+    "coordinates": "arena-local (0..arena_px); confetti uses 1080x1920 screen coordinates",
+    "fighters": [
+      {
+        "name": "RED",
+        "color": "#FE394C",
+        "ability": "blaster",
+        "ability_name": "360° BLASTER"
+      },
+      {
+        "name": "BLUE",
+        "color": "#2F7EFF",
+        "ability": "laser",
+        "ability_name": "LASER BEAM"
+      },
+      {
+        "name": "GREEN",
+        "color": "#21C45D",
+        "ability": "missiles",
+        "ability_name": "MISSILES"
+      },
+      {
+        "name": "YELLOW",
+        "color": "#FEC32F",
+        "ability": "lightning",
+        "ability_name": "LIGHTNING"
+      }
+    ],
+    "texts": {
+      "intro": "PICK YOUR FIGHTER!",
+      "fight": "FIGHT!",
+      "out": "{name} IS OUT!",
+      "final_blow": "FINAL BLOW...",
+      "win": "{name} WINS!",
+      "win_sub_one": "with just {hp} HP left!",
+      "win_sub_many": "with {hp} HP left!"
+    },
+    "font": "Poppins (Black for headlines, Bold/ExtraBold for small lines)",
+    "panel": {
+      "color": "#000000",
+      "radius": 36
+    },
+    "intro": {
+      "box": [
+        36,
+        226,
+        836,
+        646
+      ],
+      "box_alpha": 215,
+      "title_y": 320,
+      "title_size": 62,
+      "title_max_w": 740,
+      "spacing": 190,
+      "ball_y": 468,
+      "scale": 1.3,
+      "pop_lead": 0.45,
+      "pop_stagger": 0.09,
+      "pop_time": 0.4,
+      "bob": 4,
+      "bob_hz": 3.2,
+      "bob_phase": 1.3,
+      "name_dy": 102,
+      "name_size": 31,
+      "ability_dy": 138,
+      "ability_size": 19,
+      "ability_color": "#D2CDE4",
+      "ability_max_w": 180,
+      "fade": 0.3,
+      "pop_easing": "easeOutBack, starts (pop_lead - stagger*i) s early"
+    },
+    "fight": {
+      "size": 150,
+      "color": "#FFFFFF",
+      "outline": "#140A12",
+      "ow": 16,
+      "shadow": 8,
+      "rotate": -4,
+      "grow": 1.2,
+      "slam": 0.18,
+      "fade_from": 0.65,
+      "fade_len": 0.35,
+      "life": 1.0,
+      "slam_easing": "easeOutCubic"
+    },
+    "out_banner": {
+      "y": 58,
+      "size": 44,
+      "box": "#08080E",
+      "box_alpha": 225,
+      "pad": 28,
+      "half_h": 36,
+      "radius": 16,
+      "pop_from": 0.5,
+      "pop_time": 0.25,
+      "life": 2.0,
+      "fade_from": 1.6,
+      "fade_len": 0.4,
+      "pop_easing": "easeOutBack"
+    },
+    "final_blow": {
+      "y": 62,
+      "size": 48,
+      "color": "#FF4557",
+      "outline": "#14080E",
+      "ow": 9,
+      "pulse": 0.04,
+      "pulse_hz": 8,
+      "ramp": 0.2
+    },
+    "vignette": {
+      "color": "#3C000A",
+      "alpha": 150,
+      "inner": 0.55,
+      "radius": 0.75
+    },
+    "flash_color": "#FFFFFF",
+    "winner": {
+      "box": [
+        36,
+        166,
+        836,
+        716
+      ],
+      "box_alpha": 220,
+      "box_fade": 0.25,
+      "pop_time": 0.4,
+      "crown_y": 258,
+      "crown_w": 110,
+      "ball_y": 392,
+      "scale": 1.7,
+      "name_y": 555,
+      "name_size": 112,
+      "name_max_w": 740,
+      "name_delay": 0.15,
+      "sub_y": 650,
+      "sub_size": 42,
+      "sub_color": "#FFFFFF",
+      "sub_delay": 0.35,
+      "sub_fade": 0.3,
+      "pop_easing": "easeOutBack"
+    },
+    "confetti": {
+      "seed": 4242,
+      "burst": 140,
+      "burst_from_center": 0.55,
+      "center": [
+        540,
+        900
+      ],
+      "rain_per_frame": 3,
+      "rain_until": 2.6,
+      "gravity": 700,
+      "terminal": 330,
+      "flutter": 40,
+      "extra_colors": [
+        "#FFCD3C",
+        "#FFFFFF"
+      ],
+      "width": [
+        9,
+        14
+      ],
+      "height": [
+        16,
+        26
+      ],
+      "canvas": [
+        1080,
+        1920
+      ]
+    }
+  },
+  "music": {
+    "tempo_bpm": 128,
+    "key": "A minor",
+    "progression": "Am - F - C - G (one bar each)",
+    "sample_rate": 44100,
+    "chords_hz": [
+      [
+        55.0,
+        [
+          220.0,
+          261.63,
+          329.63
+        ]
+      ],
+      [
+        43.65,
+        [
+          174.61,
+          220.0,
+          261.63
+        ]
+      ],
+      [
+        65.41,
+        [
+          196.0,
+          261.63,
+          329.63
+        ]
+      ],
+      [
+        49.0,
+        [
+          196.0,
+          246.94,
+          293.66
+        ]
+      ]
+    ],
+    "lead_motif": [
+      [
+        [
+          0,
+          0,
+          2
+        ],
+        [
+          2,
+          3,
+          1
+        ],
+        [
+          3,
+          7,
+          1
+        ],
+        [
+          4,
+          10,
+          2
+        ],
+        [
+          6,
+          7,
+          1
+        ],
+        [
+          7,
+          3,
+          1
+        ]
+      ],
+      [
+        [
+          0,
+          -4,
+          2
+        ],
+        [
+          2,
+          0,
+          1
+        ],
+        [
+          3,
+          3,
+          1
+        ],
+        [
+          4,
+          8,
+          3
+        ],
+        [
+          7,
+          7,
+          1
+        ]
+      ],
+      [
+        [
+          0,
+          3,
+          2
+        ],
+        [
+          2,
+          7,
+          1
+        ],
+        [
+          3,
+          10,
+          1
+        ],
+        [
+          4,
+          12,
+          2
+        ],
+        [
+          6,
+          10,
+          1
+        ],
+        [
+          7,
+          7,
+          1
+        ]
+      ],
+      [
+        [
+          0,
+          2,
+          2
+        ],
+        [
+          2,
+          7,
+          1
+        ],
+        [
+          3,
+          5,
+          1
+        ],
+        [
+          4,
+          2,
+          2
+        ],
+        [
+          6,
+          -2,
+          2
+        ]
+      ]
+    ],
+    "layers": {
+      "pad_from_bar": 1,
+      "arp_from_bar": 2,
+      "hats16_from_bar": 4,
+      "lead_from_bar": 4
+    },
+    "gains": {
+      "kick": 0.9,
+      "clap": 0.7,
+      "clap_bar0": 0.45,
+      "open_hat": 0.55,
+      "open_hat_bar0": 0.3,
+      "closed_hat": 0.35,
+      "closed_hat_duel": 0.5,
+      "bass": 0.55,
+      "pad": 0.2,
+      "arp": 0.14,
+      "arp_duel": 0.16,
+      "lead": 0.13,
+      "lead_duel": 0.16,
+      "echo": 0.35,
+      "lead_echo": 0.3
+    },
+    "lowpass_hz": {
+      "bass": 1300,
+      "bass_duel": 1900,
+      "pad": 2600,
+      "pad_duel": 4000,
+      "arp": 3500,
+      "arp_duel": 5500,
+      "lead": 4200
+    },
+    "sidechain": {
+      "depth": 0.65,
+      "release": 0.09
+    },
+    "fanfare_notes_hz": [
+      [
+        0.0,
+        659.25
+      ],
+      [
+        0.13,
+        880.0
+      ],
+      [
+        0.26,
+        1108.73
+      ],
+      [
+        0.39,
+        1318.5
+      ]
+    ],
+    "fanfare_chord_hz": [
+      220.0,
+      277.18,
+      329.63,
+      440.0
+    ],
+    "tape_stop": "rate (1 - t/d)^1.3 over 0.7 s in the video, then silence",
+    "mix_in_video": "bed x0.2 under effects x0.9, high-passed at 35 Hz, limited, then -14 LUFS"
+  },
+  "sfx": {
+    "sample_rate": 44100,
+    "format": "16-bit PCM WAV, mono",
+    "noise_seed": 1774,
+    "hit_pitch_by_victim": {
+      "0": 1.0,
+      "1": 1.12,
+      "2": 0.9,
+      "3": 1.22
+    },
+    "sounds": [
+      {
+        "file": "blaster_volley.wav",
+        "use": "360 blaster ring of bullets"
+      },
+      {
+        "file": "laser_charge.wav",
+        "use": "laser charging (0.75 s, plays with the aim line)"
+      },
+      {
+        "file": "laser_fire.wav",
+        "use": "laser beam firing"
+      },
+      {
+        "file": "missile_launch.wav",
+        "use": "missile volley launch"
+      },
+      {
+        "file": "missile_hit.wav",
+        "use": "missile explodes on a fighter"
+      },
+      {
+        "file": "missile_miss.wav",
+        "use": "missile hits a wall or runs out"
+      },
+      {
+        "file": "lightning_zap.wav",
+        "use": "lightning strike"
+      },
+      {
+        "file": "hit.wav",
+        "use": "a fighter loses a heart (pitch x1.0/1.12/0.9/1.22 for red/blue/green/yellow)"
+      },
+      {
+        "file": "ko.wav",
+        "use": "knockout explosion + power-down"
+      },
+      {
+        "file": "bump.wav",
+        "use": "two balls bounce off each other"
+      },
+      {
+        "file": "wall_tick.wav",
+        "use": "bullet hits the wall"
+      },
+      {
+        "file": "shield_tink.wav",
+        "use": "bullet blocked by i-frames"
+      },
+      {
+        "file": "upgrade.wav",
+        "use": "power-up chime after landing a hit"
+      },
+      {
+        "file": "intro_pop.wav",
+        "use": "fighter pops into PICK YOUR FIGHTER"
+      },
+      {
+        "file": "riser.wav",
+        "use": "build-up into FIGHT!"
+      },
+      {
+        "file": "fight_stab.wav",
+        "use": "chord stab on FIGHT!"
+      },
+      {
+        "file": "crash.wav",
+        "use": "cymbal crash (FIGHT!, final blow, winner)"
+      },
+      {
+        "file": "slowmo_whoosh.wav",
+        "use": "slow-motion starts"
+      },
+      {
+        "file": "tension_drone.wav",
+        "use": "under the slow-motion final blow"
+      },
+      {
+        "file": "heartbeat.wav",
+        "use": "repeats every 0.85 s during slow motion"
+      },
+      {
+        "file": "sub_drop.wav",
+        "use": "final blow low-end drop"
+      }
+    ],
+    "slow_motion": "events inside the slow-mo window play at rate 0.5 (an octave down) with gain x1.1",
+    "edges": "add() fades the first 0.7 ms and last 6 ms of every sound to avoid clicks"
+  },
+  "mix": {
+    "music_gain": 0.2,
+    "sfx_gain": 0.9,
+    "pregain": 1.3,
+    "limiter_ceiling": 0.8,
+    "music_highpass_hz": 35,
+    "limiter": "4x oversampled peak, 5 ms look-ahead, 90 ms release, 16 kHz LP",
+    "end_fade_s": 0.6
+  }
+}

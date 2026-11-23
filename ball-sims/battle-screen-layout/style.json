@@ -1,0 +1,128 @@
+{
+  "canvas": {
+    "width": 1080,
+    "height": 1920
+  },
+  "background": {
+    "type": "radial",
+    "center": [
+      540,
+      880
+    ],
+    "radius": 1150,
+    "stops": [
+      {
+        "color": "#261A3E",
+        "pos": 0.0
+      },
+      {
+        "color": "#1A112D",
+        "pos": 0.55
+      },
+      {
+        "color": "#130D22",
+        "pos": 1.0
+      }
+    ]
+  },
+  "title": {
+    "weight": "Black",
+    "size": 88,
+    "color": "#FED64D",
+    "outline": 12,
+    "shadow": 5,
+    "text": "POWER BALLS",
+    "y": 150,
+    "outline_color": "#110C1C",
+    "font": "Poppins"
+  },
+  "subtitle": {
+    "weight": "ExtraBold",
+    "size": 33,
+    "color": "#EAE4FF",
+    "outline": 8,
+    "text": "Every hit UPGRADES your power",
+    "y": 214,
+    "outline_color": "#110C1C",
+    "font": "Poppins"
+  },
+  "winner_title": {
+    "weight": "Black",
+    "size": 74,
+    "color": "#FED64D",
+    "outline": 12,
+    "shadow": 5,
+    "max_w": 900,
+    "pop_from": 0.6,
+    "pop_time": 0.35,
+    "text": "WE HAVE A WINNER!",
+    "y": 150,
+    "easing": "easeOutBack",
+    "font": "Poppins"
+  },
+  "arena": {
+    "inner": [
+      104.0,
+      474.0,
+      872.0,
+      872.0
+    ],
+    "background": "#0D0D17",
+    "frame": {
+      "pad": 20,
+      "radius": 30,
+      "color": "#FFFFFF",
+      "final_blow_color": "#FF3B4E"
+    },
+    "grid": {
+      "start": 76,
+      "step": 80,
+      "color": "#AFAFBE",
+      "alpha": 120,
+      "width": 1.6
+    }
+  },
+  "caption": {
+    "weight": "ExtraBold",
+    "size": 42,
+    "color": "#FFFFFF",
+    "outline": 9,
+    "y": 1435,
+    "texts": {
+      "normal": "Comment your fighter!",
+      "end": "Did your fighter win? Comment!"
+    },
+    "outline_color": "#110C1C",
+    "font": "Poppins"
+  },
+  "duel_caption": {
+    "weight": "Black",
+    "size": 46,
+    "color": "#FED64D",
+    "outline": 10,
+    "pulse": 0.05,
+    "pulse_hz": 6,
+    "y": 1435,
+    "text": "FINAL DUEL!",
+    "outline_color": "#110C1C",
+    "font": "Poppins"
+  },
+  "fonts": {
+    "family": "Poppins",
+    "weights": [
+      "SemiBold",
+      "Bold",
+      "ExtraBold",
+      "Black"
+    ],
+    "source": "@fontsource/poppins@5.3.0 latin subset (woff2 -> ttf); same design as https://fonts.google.com/specimen/Poppins",
+    "rendering": "skia anti-aliased edging, subpixel positioning"
+  },
+  "outline_color": "#110C1C",
+  "crown": {
+    "outline": "#965F0A",
+    "gold": "#FFC832",
+    "band": "#EBA519",
+    "jewel": "#FFECAA"
+  }
+}
