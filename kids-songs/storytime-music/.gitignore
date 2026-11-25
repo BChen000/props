@@ -1,0 +1,5 @@
+out/
+build/
+fonts/
+models/
+__pycache__/

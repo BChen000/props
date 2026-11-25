@@ -10,7 +10,9 @@
 #   ./setup.sh ball-sims                Marble Pop: skia, cairo, numba, OpenCV, matplotlib..., Poppins + DejaVu +
 #                                       Montserrat fonts
 #   ./setup.sh ball-sims --bpy          also Blender 5.3 as a Python module (bpy, OpenEXR, pybullet) for the Blender props
-#   ./setup.sh all                      both channels
+#   ./setup.sh kids-songs               Story Time with Kenji: skia, Kokoro, numpy/scipy audio, DejaVu fonts,
+#                                       the int8 Kokoro narrator model (~120 MB), ffmpeg check
+#   ./setup.sh all                      every channel
 #   ./setup.sh <channel> --check        only report what's missing, install nothing
 #
 # Packages install with `python3 -m pip` (PYTHON=... to use another interpreter). System tools (Blender, ffmpeg,
@@ -31,7 +33,7 @@ done
 PY="${PYTHON:-python3}"
 MISSING=()
 
-usage() { sed -n '2,17p' "$0" | sed 's/^# \{0,1\}//'; }
+usage() { sed -n '2,19p' "$0" | sed 's/^# \{0,1\}//'; }
 
 has_mod() { "$PY" -c "import $1" >/dev/null 2>&1; }
 
@@ -114,10 +116,28 @@ ball_sims() {
   if ! has_mod cairo; then echo "  hint     pycairo builds from source on Linux: apt-get install -y libcairo2-dev pkg-config python3-dev"; fi
 }
 
+kids_songs() {
+  echo "== kids-songs (Story Time with Kenji)"
+  echo "-- Python packages"
+  pkgs numpy:numpy scipy:scipy pillow:PIL soundfile:soundfile skia-python==144.1:skia kokoro-onnx:kokoro_onnx \
+       matplotlib:matplotlib
+  echo "-- fonts (DejaVu 2.37: Sans, Sans Bold, Serif, Serif Bold, Serif Italic, Sans Mono Bold, Sans Condensed Bold)"
+  run kids-songs/storytime-kit/get_fonts.py
+  echo "-- narrator model (Kokoro v1.0 int8)"
+  if [ -n "${KOKORO_DIR:-}" ] && [ -f "$KOKORO_DIR/kokoro-v1.0.int8.onnx" ]; then echo "  ok       $KOKORO_DIR"
+  elif [ -f kids-songs/storytime-narrator/models/kokoro-v1.0.int8.onnx ]; then echo "  ok       kids-songs/storytime-narrator/models"
+  elif [ -f /home/claude/models/kokoro/kokoro-v1.0.int8.onnx ]; then echo "  ok       /home/claude/models/kokoro"
+  elif [ "$NO_MODELS" = 1 ]; then echo "  skipped (--no-models)"
+  else run kids-songs/storytime-narrator/get_models.py; fi
+  echo "-- tools"
+  tool ffmpeg "apt-get install -y ffmpeg / brew install ffmpeg"
+}
+
 case "$CH" in
   animal-docs) animal_docs ;;
   ball-sims) ball_sims ;;
-  all) animal_docs; ball_sims ;;
+  kids-songs) kids_songs ;;
+  all) animal_docs; ball_sims; kids_songs ;;
   -h|--help|"") usage; exit 0 ;;
   *) echo "unknown channel '$CH'"; usage; exit 2 ;;
 esac

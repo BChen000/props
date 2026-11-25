@@ -1,0 +1,29 @@
+{
+  "prop": "storytime-narrator",
+  "engine": "Kokoro v1.0 int8 ONNX (kokoro-onnx 0.6.1), 24 kHz mono",
+  "voice": {
+    "name": "am_michael",
+    "lang": "en-us",
+    "speed": 1.0,
+    "character": "calm American male storyteller, matter-of-fact, lets the twist land on its own"
+  },
+  "line_handling": {
+    "one_caption_per_line": true,
+    "trim": "below 2 % of the line's peak, 15 ms kept either side",
+    "comma_added_after_bare_last_word": true,
+    "curly_quotes_removed": true,
+    "spoken_override": "third field, e.g. 'five a.m.' for '5 a.m.'"
+  },
+  "pauses_s": {
+    "lead_in": 0.15,
+    "after_clause": 0.13,
+    "after_sentence": 0.42,
+    "after_1_2_word_sentence": 0.56,
+    "after_ellipsis": 0.6,
+    "after_last_line": 1.8
+  },
+  "shipped": {
+    "the_locksmith": "46 lines, 77.76 s",
+    "the_hero": "47 lines, 81.96 s"
+  }
+}
