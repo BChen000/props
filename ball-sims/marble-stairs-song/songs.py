@@ -47,8 +47,26 @@ def _jingle():
     return p1 + p2 + p1 + p4, ch1 + ch2 + ch1 + ch4
 
 
+def _joy():
+    B5 = 83
+    p1 = [C6, B5, A5, G5, F5, E5, D5, C5, -C5]
+    p2 = [G5, A5, A5, B5, B5, C6, -C6]
+    p3 = [C6, C6, B5, A5, G5, G5, F5, E5, -E5]
+    p5 = [E5, E5, E5, E5, E5, F5, G5, -G5]
+    p6 = [F5, E5, D5, D5, D5, E5, F5, -F5]
+    p7 = [E5, D5, C5, C6, A5, G5, F5, E5, F5, E5, D5, C5, -C5, -C5]
+    c1 = ["C", "C", "F", "C", "F", "C", "G7", "C", "C"]
+    c2 = ["C", "F", "F", "G", "G", "C", "C"]
+    c3 = ["C", "C", "G", "F", "C", "C", "G7", "C", "C"]
+    c5 = ["C", "C", "C", "C", "C", "G7", "C", "C"]
+    c6 = ["G7", "C", "G", "G", "G", "C", "G7", "G7"]
+    c7 = ["C", "G", "C", "C", "F", "C", "F", "C", "F", "C", "G7", "C", "C", "C"]
+    return p1 + p2 + p3 + p3 + p5 + p6 + p7, c1 + c2 + c3 + c3 + c5 + c6 + c7
+
+
 _tw_mel, _tw_ch = _twinkle()
 _jb_mel, _jb_ch = _jingle()
+_joy_mel, _joy_ch = _joy()
 
 SONGS = {
     "twinkle": dict(
@@ -68,6 +86,15 @@ SONGS = {
         offsets=[[0], [0, 3], [0, 2, 4], [0, 2, 3, 5, 7], [0, 1, 2, 4, 5, 7, 8, 10]],
         melody=_jb_mel,
         chords=_jb_ch,
+    ),
+    "joy-to-the-world": dict(
+        name="Joy to the World",
+        file="Marble_Staircase_Joy_to_the_World",
+        bpm=112.5,
+        rounds=[1, 2, 3, 5, 8],
+        offsets=[[0], [0, 3], [0, 2, 4], [0, 2, 3, 5, 7], [0, 1, 2, 4, 5, 7, 8, 10]],
+        melody=_joy_mel,
+        chords=_joy_ch,
     ),
 }
 

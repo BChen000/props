@@ -14,6 +14,8 @@ One command for a rainbow-staircase marble music Short, in the "Satisfying 3D Si
   - The notes, chords and timing are the upload's. They were read back from its audio by pitch tracking, and the G-vs-G7 choices by checking for D4 vs F4.
 - Thumbnails: with `--thumb-title`, the automatically picked frames (769 and 897) match the uploads' clean thumbnails to within JPEG noise (43–44 dB PSNR). The default thumbnail is the same picture without the title, because the channel's thumbnails have no text unless GJ asks for it.
 
+- `joy-to-the-world` (Nov 2026): the never-posted bonus round of the long-form compilation (`../longform-compilation`). It reuses Jingle Bells' rounds and entry offsets with a 64-beat melody whose first round is the hymn's falling scale, one note per tile as the first marble rolls down. Rendered from this folder with `WATERMARK="" python3 make_video.py joy-to-the-world --no-thumb`: 1128 frames, 37.6 s, music −11.1 LUFS gained to −13; stills 300 and 850 were checked by eye. The melody was written from the tune (Antioch), not pitch-tracked from a recording.
+
 ## Files
 | file | what |
 |---|---|
@@ -30,6 +32,7 @@ One command for a rainbow-staircase marble music Short, in the "Satisfying 3D Si
 ./setup.sh ball-sims                       # or: pip install numpy scipy pillow && python3 ../marble-raytrace-kit/get_fonts.py
 python3 make_video.py twinkle              # -> build/twinkle/Marble_Staircase_Twinkle.mp4 + thumbnail.png
 python3 make_video.py jingle-bells         # -> build/jingle-bells/Marble_Staircase_Jingle_Bells.mp4 + thumbnail.png
+python3 make_video.py joy-to-the-world     # -> build/joy-to-the-world/Marble_Staircase_Joy_to_the_World.mp4 + thumbnail.png
 python3 make_video.py twinkle --stills 300,650,900    # PNG stills only, to check a change
 python3 make_video.py twinkle --thumb-only --thumb-title --thumb-frame 769
 ```

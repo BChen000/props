@@ -1,0 +1,43 @@
+{
+  "prop": "longform-compilation",
+  "canvas": {"width": 1920, "height": 1080, "fps": 30, "aspect": "16:9 long-form"},
+  "card": {
+    "height": 1024, "top": 28, "corner_radius": 30, "border": "3 px white at 47% alpha", "shadow": "black 67%, blur 18, +10 px down",
+    "modes": {
+      "zoom": {"source_crop": "1080x1480 from crop_y (150 music sets, 250 wooden runs)", "card": [748, 1024], "panels": 586},
+      "full": {"source_crop": "1080x1920", "card": [576, 1024], "panels": 672}
+    }
+  },
+  "backdrop": "the round's own frame at 70%, filled to 16:9, downsampled 8x + blur 7, brightness 0.42, vignette, 14% #1e0c33 tint",
+  "left_panel": {
+    "round_pill": {"y": 112, "h": 76, "font": "Poppins Black 40", "fill": "#fb7fd3 (bonus and labels #ffcd46)"},
+    "prompt": {"top": 215, "font": "Poppins Black 86, 6 px outline", "accent": "#ffd650"},
+    "countdown": {"centre_y": 690, "radius": 122, "ring": "14 px, #ffd650 arc for the time left", "number": "Poppins Black 150"},
+    "answer": {"top": "330 (songs), 440 (runs)", "header": "IT'S... Poppins Black 58 #ffd650", "card": "white, 8 px #32c664 border, radius 34, check badge", "title": "Poppins Black up to 66, balanced wrap, <=3 lines", "pop_in_scales": [0.55, 0.82, 1.06, 1.12, 1.05, 1.0]},
+    "hint_y": 880
+  },
+  "right_panel": {
+    "logo": {"y": 108, "marble": "#fb7fd3", "text": "Marble Pop, Poppins Black 44"},
+    "progress": {"label_y": 232, "grid": "5 x 4 marbles, r 23, step 66, from y 330", "done": "glossy tile colours", "current": "white ring", "todo": "15% white"},
+    "bonus_marble": {"y": 624, "r": 36, "colour": "#ffcd46"},
+    "up_next": {"y": 870, "slide_in_px_per_s": 3200, "lead_s": 4.0}
+  },
+  "timings": {
+    "cut_before_first_note_s": 0.45,
+    "countdown_s": 5, "speed_round_countdown_s": 3, "countdown_starts_after_first_note_s": 1.0,
+    "intro_s": 3.3, "end_screen_s": 15.0
+  },
+  "transition": {
+    "name": "marble pop", "frames_out": 8, "frames_in": 8,
+    "cover": "glossy marble grows from the centre, radius 1.04 x half-diagonal x q^1.6, 7 px white rim",
+    "uncover": "the full marble bursts open from the centre, hole 1-(1-q)^1.8, rim fading",
+    "colours": ["#EE3434", "#FA8A1C", "#FACE26", "#96D630", "#24BE60", "#1CC4CC", "#2C76EE", "#9852E4"]
+  },
+  "audio": {
+    "per_clip_lufs": -15.0, "limiter_dbfs": -2.0, "fade_in_s": 0.04, "fade_out_s": 0.25, "aac": "192k 48 kHz stereo",
+    "sfx_db": {"pop": 2.0, "whoosh": -14.0, "ding": -6.0, "tick": -14.0},
+    "sfx_cues": "pop at each round start, whoosh under each cover and up-next slide, ticks on 3-2-1, ding on every reveal"
+  },
+  "encode": {"codec": "libx264", "preset": "veryfast", "crf": 18, "profile": "high 4.1", "gop": 60},
+  "thumbnail": {"size": [1280, 720], "text": "none", "layout": "three cards cut below the round title, middle 470 px wide, sides 390 px at +/-7 deg, on #4a1d80 -> #12061f with scattered marbles"}
+}

@@ -27,6 +27,17 @@
       "entries": "spread to fit the tune's phrases",
       "bpm": 112.5,
       "beats": 64
+    },
+    "joy-to-the-world": {
+      "title_card": "Joy to the World",
+      "length_s": 37.6,
+      "frames": 1128,
+      "marbles": 19,
+      "rounds": [1, 2, 3, 5, 8],
+      "entries": "Jingle Bells' offsets",
+      "bpm": 112.5,
+      "beats": 64,
+      "song": "the hymn tune (Antioch) one note per beat; round 1 is the falling scale C6 B5 A5 G5 F5 E5 D5 C5, one note per tile"
     }
   },
   "hook": "a marble is already rolling down the chute on frame 1; first tile hit at 1.07 s (2 beats)",
