@@ -247,7 +247,7 @@ def crop_keys(it):
 
 
 def vcam_input(it):
-    """The round's picture through the virtual camera, rendered once into build/reframe/ (about 2 min for 30 s)."""
+    """The round's picture through the virtual camera, rendered once into build/reframe/ (about 3 min for 30 s)."""
     keys = it["frame"]["vcam"]
     out = os.path.join(S.BUILD, "reframe", f"{it['key']}.mp4")
     sig = out + ".json"

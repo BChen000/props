@@ -35,7 +35,7 @@ SHORTS_DIR=/path/to/shorts python3 build.py --only 7,16     # only those rounds'
 python3 thumbs.py --render                                  # close-camera renders if missing, then 3 thumbnails
 python3 check.py                                            # verify the finished file
 ```
-Outputs in `build/`: the mp4, `thumbnail_*.jpg`, `chapters.txt`, `youtube_copy.txt`, `plan.json`, and the cached `segs/`, `audio/`, `assets/` and `reframe/`. On a 2-core cloud session, a 16:9 template render takes about 8 minutes for a staircase song, 3 for a twin-stairs song and 2 for the spiral (plus about 6 minutes the first time a camera's set is path-traced). A round's segment takes about a minute, a virtual-camera reframe about 2 minutes for 30 s, and the audio and mux about 3 minutes once the segments exist.
+Outputs in `build/`: the mp4, `thumbnail_*.jpg`, `chapters.txt`, `youtube_copy.txt`, `plan.json`, and the cached `segs/`, `audio/`, `assets/` and `reframe/`. On a 2-core cloud session, a 16:9 template render takes about 8 minutes for a staircase song, 3 for a twin-stairs song and 2 for the spiral (plus about 6 minutes the first time a camera's set is path-traced). A round's segment takes about a minute, a virtual-camera reframe about 3 minutes for 30 s, and the audio and mux about 3 minutes once the segments exist.
 
 **A new compilation:** edit `ITEMS` in `settings.py`, render the changed rounds with `--only`, and look at stills before a full build.
 - `src`: `("wide", template, song)` is a 16:9 template render in `<template>/build_wide/<song>/`; `("short", glob)` is a vertical Short matched in `SHORTS_DIR`.
