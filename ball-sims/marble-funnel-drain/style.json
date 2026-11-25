@@ -1,0 +1,384 @@
+{
+ "prop": "marble-funnel-drain",
+ "canvas": {
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "renderer": "numba CPU ray-caster (render.py)"
+ },
+ "episode": {
+  "seed": 3,
+  "frames": 924,
+  "duration_s": 30.81,
+  "sim_start_s": 0.3,
+  "sim_end_s": 26.95,
+  "marbles": 480,
+  "places": [
+   {
+    "place": 1,
+    "colour": "GREEN",
+    "marble": 129,
+    "out_sim_s": 25.44,
+    "out_video_s": 29.307
+   },
+   {
+    "place": 2,
+    "colour": "BLUE",
+    "marble": 143,
+    "out_sim_s": 24.175,
+    "out_video_s": 27.5
+   },
+   {
+    "place": 3,
+    "colour": "RED",
+    "marble": 67,
+    "out_sim_s": 23.363,
+    "out_video_s": 26.34
+   },
+   {
+    "place": 4,
+    "colour": "YELLOW",
+    "marble": 289,
+    "out_sim_s": 15.785,
+    "out_video_s": 18.028
+   }
+  ],
+  "loop": "last frame = opening shot over the empty board; frame 0 = same shot as the first marbles arrive"
+ },
+ "physics": {
+  "N": 480,
+  "T": 40.0,
+  "seed": 3,
+  "pour": 3.2,
+  "vx0": -28.0,
+  "vy0": -24.0,
+  "sx0": -10.0,
+  "sx1": 10.0,
+  "sy0": 52.5,
+  "sy1": 55.5,
+  "S0": 0.02,
+  "S1": 0.003,
+  "DEP": 2.5,
+  "SIG": 6.5,
+  "RH": 2.2,
+  "zeta": 0.5,
+  "crr": 4.0,
+  "gam": 0.15,
+  "mu_t": 0.08,
+  "BA": 22.6,
+  "BB": 47.3,
+  "BYC": 9.7,
+  "BRC": 13.0
+ },
+ "look": {
+  "S0": 0.02,
+  "S1": 0.003,
+  "DEP": 2.5,
+  "SIG": 6.5,
+  "RH": 2.05,
+  "L": [
+   -0.25,
+   0.45,
+   1.0
+  ],
+  "L2": [
+   -0.55,
+   -0.55,
+   0.62
+  ],
+  "L3": [
+   0.85,
+   0.45,
+   0.32
+  ],
+  "C3": [
+   0.8,
+   1.4,
+   3.6
+  ],
+  "L4": [
+   -0.85,
+   0.35,
+   0.3
+  ],
+  "C4": [
+   3.2,
+   0.8,
+   2.4
+  ],
+  "KI": 2.0,
+  "KA": 0.9,
+  "ALPHA": 0.13,
+  "SB": 14.0,
+  "SB2": 3.0,
+  "BEND": 0.1,
+  "EXPO": 0.26,
+  "F0F": 0.05,
+  "BLOOM": 0.22,
+  "VIG": 0.38,
+  "WOOD_SEED": 7,
+  "EARLY": [
+   0.44,
+   0.22,
+   0.1
+  ],
+  "LATE": [
+   0.2,
+   0.085,
+   0.035
+  ]
+ },
+ "palette": {
+  "RED": [
+   0.9,
+   0.03,
+   0.02
+  ],
+  "BLUE": [
+   0.03,
+   0.17,
+   0.95
+  ],
+  "GREEN": [
+   0.04,
+   0.72,
+   0.06
+  ],
+  "YELLOW": [
+   0.98,
+   0.72,
+   0.02
+  ]
+ },
+ "places": [
+  "GREEN",
+  "BLUE",
+  "RED",
+  "YELLOW"
+ ],
+ "shots": {
+  "OPEN": {
+   "T": [
+    -9.0,
+    30.5,
+    1.5
+   ],
+   "D": 24.0,
+   "yaw": 0.0,
+   "elev": 56.0,
+   "hf": 0.27,
+   "kd": 12.0
+  },
+  "MAIN": {
+   "T": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "D": 118.0,
+   "yaw": 0.0,
+   "elev": 66.0,
+   "hf": 0.2,
+   "kd": 0.0
+  },
+  "MAIN2": {
+   "T": [
+    0.0,
+    0.5,
+    0.0
+   ],
+   "D": 86.0,
+   "yaw": 0.0,
+   "elev": 63.0,
+   "hf": 0.2,
+   "kd": 0.0
+  },
+  "CLOSE": {
+   "T": [
+    0.0,
+    -16.6,
+    1.6
+   ],
+   "D": 20.0,
+   "yaw": 0.0,
+   "elev": 29.0,
+   "hf": 0.24,
+   "kd": 28.0
+  },
+  "FINALE": {
+   "T": [
+    0.0,
+    0.0,
+    -0.2
+   ],
+   "D": 18.0,
+   "yaw": 20.0,
+   "elev": 40.0,
+   "hf": 0.27,
+   "kd": 16.0
+  }
+ },
+ "keys": [
+  [
+   0.0,
+   "OPEN"
+  ],
+  [
+   1.05,
+   "OPEN"
+  ],
+  [
+   2.55,
+   "MAIN"
+  ],
+  [
+   6.6,
+   "MAIN"
+  ],
+  [
+   7.25,
+   "CLOSE"
+  ],
+  [
+   8.65,
+   "CLOSE"
+  ],
+  [
+   9.3,
+   "MAIN"
+  ],
+  [
+   10.2,
+   "MAIN"
+  ],
+  [
+   19.85,
+   "MAIN2"
+  ],
+  [
+   20.45,
+   "FINALE"
+  ],
+  [
+   25.65,
+   "FINALE"
+  ],
+  [
+   26.95,
+   "OPEN"
+  ]
+ ],
+ "speed": [
+  [
+   0.0,
+   0.55
+  ],
+  [
+   1.15,
+   0.55
+  ],
+  [
+   1.75,
+   1.0
+  ],
+  [
+   6.6,
+   1.0
+  ],
+  [
+   7.2,
+   0.45
+  ],
+  [
+   8.7,
+   0.45
+  ],
+  [
+   9.3,
+   1.0
+  ],
+  [
+   12.0,
+   1.0
+  ],
+  [
+   12.6,
+   1.3
+  ],
+  [
+   19.2,
+   1.3
+  ],
+  [
+   19.9,
+   0.7
+  ],
+  [
+   25.6,
+   0.7
+  ],
+  [
+   26.0,
+   1.15
+  ],
+  [
+   60.0,
+   1.15
+  ]
+ ],
+ "shutter": 0.45,
+ "thumbnail": {
+  "t": 8.2,
+  "T": [
+   -0.3,
+   -17.9,
+   1.6
+  ],
+  "D": 16.0,
+  "yaw": 40.0,
+  "elev": 33.0,
+  "hf": 0.27,
+  "kd": 30.0
+ },
+ "camera_moves_video_s": [
+  [
+   1.364,
+   3.159
+  ],
+  [
+   7.209,
+   8.224
+  ],
+  [
+   11.336,
+   12.351
+  ],
+  [
+   21.322,
+   22.179
+  ],
+  [
+   29.607,
+   30.81
+  ]
+ ],
+ "encoding": {
+  "codec": "libx264",
+  "preset": "fast",
+  "crf": 17,
+  "pix_fmt": "yuv420p",
+  "audio": "aac 192k 48 kHz",
+  "volume_db": -2.5,
+  "loudness_lufs": -14.1
+ },
+ "copy": {
+  "title": "Last Marble Left WINS 🕳️ Pick Your Color",
+  "description": [
+   "480 marbles swirl into one hole. The last color left wins!",
+   "Pick your color in the comments 🔴🔵🟢🟡",
+   "Made with a 3D physics simulation",
+   "#marbles #satisfying #3d #pickyourcolor #whowillwin"
+  ],
+  "thumbnail": "no text"
+ }
+}
