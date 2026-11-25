@@ -1,0 +1,221 @@
+{
+  "prop": "blue-raspberry",
+  "species": "Rubus cyanocarpus",
+  "berry_macro": {
+    "output": "1080x1920 PNG, 64 TAA samples, ~3 min on 2 cores",
+    "berry": {
+      "drupelets": 110,
+      "seed": 3,
+      "core_factor": 0.93,
+      "core_colours": [
+        [
+          0.02,
+          0.07,
+          0.42
+        ],
+        [
+          0.03,
+          0.09,
+          0.5
+        ]
+      ],
+      "core_emission": [
+        [
+          0.02,
+          0.08,
+          0.55
+        ],
+        0.25
+      ],
+      "coat_roughness": 0.24,
+      "hairs": "hidden",
+      "tilt_deg": [
+        6,
+        -8,
+        0
+      ]
+    },
+    "stalk": {
+      "from": [
+        0.06,
+        0.02,
+        0.07
+      ],
+      "via": [
+        0.03,
+        0.01,
+        0.04
+      ],
+      "radius_m": [
+        0.001,
+        0.0011
+      ],
+      "sheen": 0.25
+    },
+    "camera": {
+      "framing_equiv_mm": 100,
+      "real_lens_mm": 8,
+      "sensor_mm": 2.88,
+      "fstop": 2.2,
+      "distance_m": 0.147,
+      "yaw_deg": -12,
+      "pitch_deg": 6,
+      "focus": "7.5 mm in front of the berry centre"
+    },
+    "lights": {
+      "key": {
+        "offset_m": [
+          -0.1,
+          -0.01,
+          0.1
+        ],
+        "size_m": 0.22,
+        "W": 0.55,
+        "colour": [
+          1.0,
+          0.95,
+          0.88
+        ],
+        "shape": "disk"
+      },
+      "rim": {
+        "offset_m": [
+          0.07,
+          0.1,
+          0.06
+        ],
+        "size_m": 0.05,
+        "W": 2.0,
+        "colour": [
+          1.0,
+          0.78,
+          0.48
+        ]
+      },
+      "fill": {
+        "W": 0.03,
+        "colour": [
+          0.75,
+          0.85,
+          1.0
+        ]
+      }
+    },
+    "backdrop": {
+      "hdri": "babylon_forest.hdr",
+      "u": 0.42,
+      "tilt_deg": 8,
+      "tint": [
+        1.0,
+        0.86,
+        0.55
+      ],
+      "saturation": 1.2,
+      "gamma": 1.55,
+      "strength": 0.5,
+      "subject_light_strength": 0.25
+    },
+    "berry_in_frame_px": {
+      "centre": [
+        540,
+        1148
+      ],
+      "top": 769,
+      "bottom": 1533,
+      "width": 698
+    }
+  },
+  "board_scene": {
+    "output": "1080x1920 PNG, 64 samples, ~5 min",
+    "board": {
+      "size_m": [
+        0.38,
+        0.3,
+        0.024
+      ],
+      "yaw_deg": -22,
+      "bevel_m": 0.005,
+      "grain": "build/board_strips.jpg (5 strips of hardwood2_diffuse.jpg)",
+      "tint": [
+        0.368,
+        0.264,
+        0.176
+      ],
+      "gamma": 1.25,
+      "coat": 0.15
+    },
+    "berries": {
+      "count": 6,
+      "drupelets_near": 58,
+      "calyx": false,
+      "hairs": "hidden",
+      "coat": [
+        0.15,
+        0.45
+      ],
+      "specular": 0.35
+    },
+    "bowl": {
+      "scale_of_shot_Q_bowl": 0.6,
+      "centre_m": [
+        0.05,
+        0.105
+      ],
+      "berries": 70
+    },
+    "camera": {
+      "lens_mm": 70,
+      "fstop": 3.2,
+      "pitch_deg": 30,
+      "yaw_deg": -8,
+      "distance_m": 0.24
+    },
+    "lights": {
+      "window": {
+        "pos_m": [
+          -0.45,
+          0.2,
+          0.35
+        ],
+        "size_m": 0.4,
+        "W": 18,
+        "shape": "rectangle"
+      },
+      "bounce": {
+        "pos_m": [
+          0.45,
+          -0.55,
+          0.25
+        ],
+        "size_m": 0.6,
+        "W": 3
+      },
+      "rim": {
+        "pos_m": [
+          0.15,
+          0.55,
+          0.18
+        ],
+        "size_m": 0.4,
+        "W": 8,
+        "colour": [
+          1.0,
+          0.82,
+          0.6
+        ]
+      },
+      "contact_shadows": {
+        "distance_m": 0.012,
+        "thickness_m": 0.004
+      }
+    },
+    "room": {
+      "world": [
+        0.003,
+        0.003,
+        0.003
+      ],
+      "table": "dark slate, roughness 0.9"
+    }
+  }
+}

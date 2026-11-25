@@ -1,0 +1,109 @@
+#!/usr/bin/env bash
+# One-command setup for a session that works from this repo. Safe to re-run: anything already there is skipped.
+#
+#   ./setup.sh animal-docs              Wildlore: audio/voice Python packages, Cinzel + Cormorant fonts,
+#                                       the Kokoro narrator model (~350 MB), tool and asset checks
+#   ./setup.sh animal-docs --no-models  same without the Kokoro download
+#   ./setup.sh ball-sims                Marble Pop: skia, cairo, numba, OpenCV, matplotlib..., Poppins + DejaVu fonts
+#   ./setup.sh ball-sims --bpy          also Blender 5.3 as a Python module (bpy, OpenEXR, pybullet) for the Blender props
+#   ./setup.sh all                      both channels
+#   ./setup.sh <channel> --check        only report what's missing, install nothing
+#
+# Packages install with `python3 -m pip` (PYTHON=... to use another interpreter). System tools (Blender, ffmpeg,
+# FluidSynth, xvfb) are only checked, with an install hint, because they need apt/brew.
+set -u
+cd "$(dirname "$0")"
+CH="${1:-}"
+[ $# -gt 0 ] && shift
+NO_MODELS=0; BPY=0; CHECK=0
+for a in "$@"; do
+  case "$a" in
+    --no-models) NO_MODELS=1 ;;
+    --bpy) BPY=1 ;;
+    --check) CHECK=1 ;;
+    *) echo "unknown option $a"; exit 2 ;;
+  esac
+done
+PY="${PYTHON:-python3}"
+MISSING=()
+
+usage() { sed -n '2,13p' "$0" | sed 's/^# \{0,1\}//'; }
+
+has_mod() { "$PY" -c "import $1" >/dev/null 2>&1; }
+
+pkgs() {  # args: pip-spec:module ...  (one pip call per package so one failure doesn't stop the rest)
+  for pair in "$@"; do
+    spec="${pair%%:*}"; mod="${pair##*:}"
+    if has_mod "$mod"; then echo "  ok       $spec"; continue; fi
+    if [ "$CHECK" = 1 ]; then echo "  missing  $spec"; MISSING+=("$spec"); continue; fi
+    echo "  install  $spec"
+    "$PY" -m pip install -q --break-system-packages "$spec" >/dev/null 2>&1 || "$PY" -m pip install -q "$spec" >/dev/null 2>&1
+    if has_mod "$mod"; then echo "  ok       $spec"; else echo "  FAILED   $spec"; MISSING+=("$spec"); fi
+  done
+}
+
+tool() {  # args: command hint
+  if command -v "$1" >/dev/null 2>&1; then echo "  ok       $1 ($(command -v "$1"))"; else echo "  missing  $1  -> $2"; MISSING+=("$1"); fi
+}
+
+run() {  # a download step, skipped with --check
+  if [ "$CHECK" = 1 ]; then echo "  (check only: skipped) $*"; else "$PY" "$@" | sed 's/^/  /'; fi
+}
+
+animal_docs() {
+  echo "== animal-docs (Wildlore)"
+  echo "-- Python packages"
+  pkgs numpy:numpy scipy:scipy pillow:PIL soundfile:soundfile librosa:librosa pedalboard:pedalboard mido:mido \
+       kokoro-onnx:kokoro_onnx fonttools:fontTools
+  echo "-- fonts (Cinzel, Cormorant Garamond Italic + its static weight-560 instance)"
+  run animal-docs/wildlore-title/get_fonts.py
+  echo "-- narrator model (Kokoro v1.0)"
+  if [ -n "${KOKORO_DIR:-}" ] && [ -f "$KOKORO_DIR/kokoro-v1.0.onnx" ]; then echo "  ok       $KOKORO_DIR"
+  elif [ -f /home/claude/models/kokoro/kokoro-v1.0.onnx ]; then echo "  ok       /home/claude/models/kokoro"
+  elif [ "$NO_MODELS" = 1 ]; then echo "  skipped (--no-models)"
+  else run animal-docs/wildlore-narrator/get_models.py; fi
+  echo "-- tools"
+  if command -v blender >/dev/null 2>&1; then
+    v="$(blender --version 2>/dev/null | head -1)"
+    case "$v" in
+      "Blender 4.0"*|"Blender 4.1"*) echo "  ok       $v (EEVEE Legacy)" ;;
+      *) echo "  WARN     $v: the Wildlore kit needs Blender 4.0 or 4.1 (EEVEE Legacy)"; MISSING+=("blender-4.0/4.1") ;;
+    esac
+  else echo "  missing  blender  -> apt-get install -y blender (Ubuntu 24.04 ships 4.0.2) or download 4.1"; MISSING+=("blender"); fi
+  tool ffmpeg "apt-get install -y ffmpeg / brew install ffmpeg"
+  tool fluidsynth "apt-get install -y fluidsynth fluid-soundfont-gm / brew install fluid-synth"
+  if [ "$(uname)" = "Linux" ]; then tool xvfb-run "apt-get install -y xvfb (EEVEE needs a display)"; fi
+  sf2="${SF2:-/usr/share/sounds/sf2/FluidR3_GM.sf2}"
+  if [ -f "$sf2" ]; then echo "  ok       $sf2"; else echo "  missing  FluidR3_GM.sf2 -> apt-get install -y fluid-soundfont-gm, or set SF2="; MISSING+=("FluidR3_GM.sf2"); fi
+  echo "-- third-party assets (not in the repo; see animal-docs/wildlore-blender-kit/README.md)"
+  A="${WILDLORE_ASSETS:-/home/claude/assets}"
+  for f in hdri/babylon_forest.hdr hdri/babylon_country.hdr tex/hardwood2_diffuse.jpg tex/rockyGround_basecolor.png \
+           tex/rockyGround_normal.png tex/BroadleafBark.jpg tex/Moss_01_Color.png models/Bee.glb; do
+    if [ -f "$A/$f" ]; then echo "  ok       $f"; else echo "  missing  $A/$f"; MISSING+=("asset:$f"); fi
+  done
+}
+
+ball_sims() {
+  echo "== ball-sims (Marble Pop)"
+  echo "-- Python packages"
+  pkgs numpy:numpy scipy:scipy pillow:PIL matplotlib:matplotlib skia-python==144.1:skia pycairo:cairo numba:numba \
+       opencv-python:cv2 fonttools:fontTools brotli:brotli scikit-image:skimage
+  if [ "$BPY" = 1 ]; then pkgs bpy==5.3.0:bpy OpenEXR:OpenEXR pybullet==3.2.7:pybullet; fi
+  echo "-- fonts (Poppins, DejaVu Sans Bold)"
+  run ball-sims/style-kit/get_fonts.py
+  run ball-sims/neon-kit/get_fonts.py
+  echo "-- tools"
+  tool ffmpeg "apt-get install -y ffmpeg / brew install ffmpeg"
+  if ! has_mod cairo; then echo "  hint     pycairo builds from source on Linux: apt-get install -y libcairo2-dev pkg-config python3-dev"; fi
+}
+
+case "$CH" in
+  animal-docs) animal_docs ;;
+  ball-sims) ball_sims ;;
+  all) animal_docs; ball_sims ;;
+  -h|--help|"") usage; exit 0 ;;
+  *) echo "unknown channel '$CH'"; usage; exit 2 ;;
+esac
+
+echo
+if [ ${#MISSING[@]} -eq 0 ]; then echo "READY: nothing missing"; else echo "NOT READY: ${MISSING[*]}"; exit 1; fi
