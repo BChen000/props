@@ -94,6 +94,8 @@ ball_sims() {
   run ball-sims/neon-kit/get_fonts.py
   echo "-- tools"
   tool ffmpeg "apt-get install -y ffmpeg / brew install ffmpeg"
+  if command -v blender >/dev/null 2>&1; then echo "  info     $(blender --version 2>/dev/null | head -1) (marble-song-battle needs 4.0 or 4.1)"
+  else echo "  info     no blender: only marble-song-battle needs it -> apt-get install -y blender (Ubuntu 24.04 ships 4.0.2)"; fi
   if ! has_mod cairo; then echo "  hint     pycairo builds from source on Linux: apt-get install -y libcairo2-dev pkg-config python3-dev"; fi
 }
 
