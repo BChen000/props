@@ -1,0 +1,51 @@
+{
+  "prop": "narration-check",
+  "model": {
+    "name": "Whisper small.en, int8 ONNX (sherpa-onnx export)",
+    "source": "https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-whisper-small.en.tar.bz2",
+    "files_mb": {
+      "encoder_int8": 112.4,
+      "decoder_int8": 262.2,
+      "tokens": 0.8
+    },
+    "threads": 2,
+    "language": "en"
+  },
+  "decode": {
+    "resample_hz": 16000,
+    "silence_pad_s": 0.5,
+    "chunk_s": 28
+  },
+  "words": {
+    "pad_s": 0.05,
+    "normalise": [
+      "lowercase",
+      "digits 0-20 -> words",
+      "hyphens -> spaces",
+      "drop punctuation",
+      "-ise/-ised/-ising/-isation -> -iz-",
+      "-our -> -or inside words"
+    ],
+    "exit_code_on_error": 1
+  },
+  "phrases": {
+    "window_s": 0.01,
+    "silence_dbfs": -45,
+    "min_pause_s": 0.12,
+    "transcribe_pad_s": 0.02,
+    "fps": 24
+  },
+  "two_dragons": {
+    "lines": 24,
+    "words": 328,
+    "errors": 0,
+    "phrases": 87,
+    "wpm_per_line": [
+      94,
+      170
+    ],
+    "wpm_overall": 124,
+    "seconds_per_line_2core": 5.3,
+    "phrases_run_s": 64
+  }
+}

@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 # One-command setup for a session that works from this repo. Safe to re-run: anything already there is skipped.
 #
-#   ./setup.sh animal-docs              Wildlore: audio/voice Python packages, Cinzel + Cormorant fonts,
-#                                       the Kokoro narrator model (~350 MB), the Wildlore asset pack (~56 MB), tool checks
-#   ./setup.sh animal-docs --no-models  same without the Kokoro download
+#   ./setup.sh animal-docs              Wildlore: audio/voice Python packages, Cinzel + Cormorant + EB Garamond fonts,
+#                                       the Kokoro narrator model (~350 MB), the Whisper checker model (~375 MB),
+#                                       the Wildlore asset pack (~56 MB), tool checks
+#   ./setup.sh animal-docs --no-models  same without the Kokoro and Whisper downloads
+#   ./setup.sh animal-docs --bpy        also Blender 5.3 as a Python module (bpy, scikit-image, fast-simplification)
+#                                       for animal-docs/dragons and animal-docs/two-dragons-episode
 #   ./setup.sh ball-sims                Marble Pop: skia, cairo, numba, OpenCV, matplotlib..., Poppins + DejaVu fonts
 #   ./setup.sh ball-sims --bpy          also Blender 5.3 as a Python module (bpy, OpenEXR, pybullet) for the Blender props
 #   ./setup.sh all                      both channels
@@ -27,7 +30,7 @@ done
 PY="${PYTHON:-python3}"
 MISSING=()
 
-usage() { sed -n '2,13p' "$0" | sed 's/^# \{0,1\}//'; }
+usage() { sed -n '2,16p' "$0" | sed 's/^# \{0,1\}//'; }
 
 has_mod() { "$PY" -c "import $1" >/dev/null 2>&1; }
 
@@ -54,14 +57,22 @@ animal_docs() {
   echo "== animal-docs (Wildlore)"
   echo "-- Python packages"
   pkgs numpy:numpy scipy:scipy pillow:PIL soundfile:soundfile librosa:librosa pedalboard:pedalboard mido:mido \
-       kokoro-onnx:kokoro_onnx fonttools:fontTools
+       kokoro-onnx:kokoro_onnx fonttools:fontTools opencv-python-headless:cv2 pyloudnorm:pyloudnorm sherpa-onnx:sherpa_onnx \
+       zstandard:zstandard matplotlib:matplotlib
+  if [ "$BPY" = 1 ]; then pkgs bpy==5.3.0:bpy scikit-image:skimage fast-simplification:fast_simplification; fi
   echo "-- fonts (Cinzel, Cormorant Garamond Italic + its static weight-560 instance)"
   run animal-docs/wildlore-title/get_fonts.py
+  echo "-- fonts (EB Garamond 12 Regular + Italic, for wildlore-2d-comp)"
+  run animal-docs/wildlore-2d-comp/get_fonts.py
   echo "-- narrator model (Kokoro v1.0)"
   if [ -n "${KOKORO_DIR:-}" ] && [ -f "$KOKORO_DIR/kokoro-v1.0.onnx" ]; then echo "  ok       $KOKORO_DIR"
   elif [ -f /home/claude/models/kokoro/kokoro-v1.0.onnx ]; then echo "  ok       /home/claude/models/kokoro"
   elif [ "$NO_MODELS" = 1 ]; then echo "  skipped (--no-models)"
   else run animal-docs/wildlore-narrator/get_models.py; fi
+  echo "-- narration checker model (Whisper small.en int8, shared/narration-check)"
+  if [ -n "${WHISPER_DIR:-}" ] && [ -f "$WHISPER_DIR/small.en-encoder.int8.onnx" ]; then echo "  ok       $WHISPER_DIR"
+  elif [ "$NO_MODELS" = 1 ]; then echo "  skipped (--no-models)"
+  else run shared/narration-check/get_models.py; fi
   echo "-- tools"
   if command -v blender >/dev/null 2>&1; then
     v="$(blender --version 2>/dev/null | head -1)"

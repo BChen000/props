@@ -1,0 +1,430 @@
+{
+  "prop": "two-dragons-episode",
+  "video": {
+    "size": [
+      1080,
+      1920
+    ],
+    "fps": 24,
+    "frames": 4153,
+    "duration_s": 173.042,
+    "shots": 34,
+    "master": "shot files concatenated (x264 CRF 17 veryfast) + AAC 256k",
+    "upload": "x264 medium CRF 19, maxrate 16M, bufsize 32M, faststart, ~344 MB"
+  },
+  "cuts": [
+    {
+      "shot": "sh01",
+      "start": 0,
+      "frames": 145,
+      "what": "title card over the golden cloud sea, both dragons flying"
+    },
+    {
+      "shot": "sh02a",
+      "start": 145,
+      "frames": 40,
+      "what": "Western head + label"
+    },
+    {
+      "shot": "sh02b",
+      "start": 185,
+      "frames": 52,
+      "what": "Chinese head + label"
+    },
+    {
+      "shot": "sh03",
+      "start": 237,
+      "frames": 167,
+      "what": "ancestor fossil"
+    },
+    {
+      "shot": "sh04",
+      "start": 404,
+      "frames": 153,
+      "what": "two dragons diverge over the cloud sea"
+    },
+    {
+      "shot": "sh05a",
+      "start": 557,
+      "frames": 114,
+      "what": "W perched, wings open (u05a_n)"
+    },
+    {
+      "shot": "sh05b",
+      "start": 671,
+      "frames": 53,
+      "what": "W scales close-up"
+    },
+    {
+      "shot": "sh05c",
+      "start": 724,
+      "frames": 85,
+      "what": "W claws on rock"
+    },
+    {
+      "shot": "sh06",
+      "start": 809,
+      "frames": 129,
+      "what": "W rears, throat glows (u06_n)"
+    },
+    {
+      "shot": "sh07a",
+      "start": 938,
+      "frames": 104,
+      "what": "W head close-up, ignition (u07a_n)"
+    },
+    {
+      "shot": "sh07b",
+      "start": 1042,
+      "frames": 146,
+      "what": "W fire breath (u07b_n)"
+    },
+    {
+      "shot": "sh08",
+      "start": 1188,
+      "frames": 192,
+      "what": "karst mist, C appears far off"
+    },
+    {
+      "shot": "sh09a",
+      "start": 1380,
+      "frames": 130,
+      "what": "C body passes the camera (u09a_n)"
+    },
+    {
+      "shot": "sh09b",
+      "start": 1510,
+      "frames": 144,
+      "what": "C head tracking (u09b_n)"
+    },
+    {
+      "shot": "sh10",
+      "start": 1654,
+      "frames": 110,
+      "what": "C glides through mist"
+    },
+    {
+      "shot": "sh11",
+      "start": 1764,
+      "frames": 85,
+      "what": "C rises through bright sky"
+    },
+    {
+      "shot": "sh12",
+      "start": 1849,
+      "frames": 276,
+      "what": "storm with three lightning strikes"
+    },
+    {
+      "shot": "sh13",
+      "start": 2125,
+      "frames": 79,
+      "what": "C over a rain river"
+    },
+    {
+      "shot": "sh14a",
+      "start": 2204,
+      "frames": 62,
+      "what": "fire breath, mirrored (u07b_n)"
+    },
+    {
+      "shot": "sh14b",
+      "start": 2266,
+      "frames": 186,
+      "what": "C over the river in rain, reflection"
+    },
+    {
+      "shot": "sh15a",
+      "start": 2452,
+      "frames": 56,
+      "what": "volcano"
+    },
+    {
+      "shot": "sh15b",
+      "start": 2508,
+      "frames": 47,
+      "what": "karst river"
+    },
+    {
+      "shot": "sh16a",
+      "start": 2555,
+      "frames": 129,
+      "what": "W flies past the volcano"
+    },
+    {
+      "shot": "sh16b",
+      "start": 2684,
+      "frames": 114,
+      "what": "W roars (u16b_n)"
+    },
+    {
+      "shot": "sh17a",
+      "start": 2798,
+      "frames": 106,
+      "what": "C small among karst"
+    },
+    {
+      "shot": "sh17b",
+      "start": 2904,
+      "frames": 156,
+      "what": "C passes close"
+    },
+    {
+      "shot": "sh18a",
+      "start": 3060,
+      "frames": 90,
+      "what": "W eye macro"
+    },
+    {
+      "shot": "sh18b",
+      "start": 3150,
+      "frames": 75,
+      "what": "C eye macro"
+    },
+    {
+      "shot": "sh19",
+      "start": 3225,
+      "frames": 237,
+      "what": "four split-screen comparisons"
+    },
+    {
+      "shot": "sh20",
+      "start": 3462,
+      "frames": 156,
+      "what": "split: W perched / C in mist"
+    },
+    {
+      "shot": "sh21",
+      "start": 3618,
+      "frames": 57,
+      "what": "fire breath close (u07b_n)"
+    },
+    {
+      "shot": "sh22",
+      "start": 3675,
+      "frames": 78,
+      "what": "C rises in the storm"
+    },
+    {
+      "shot": "sh23",
+      "start": 3753,
+      "frames": 112,
+      "what": "both dragons fly together"
+    },
+    {
+      "shot": "sh24",
+      "start": 3865,
+      "frames": 288,
+      "what": "they fly off; end card"
+    }
+  ],
+  "narration": {
+    "voice": "Kokoro v1.0 bm_george",
+    "lang": "en-gb",
+    "speed": 1.0,
+    "prefix": "... ",
+    "lines": 24,
+    "words": 328,
+    "intro_s": 1.0,
+    "outro_s": 3.2,
+    "inner_pause_cap_s": 0.32,
+    "wpm_overall": 124,
+    "first_cut_speed": 1.34
+  },
+  "renders": {
+    "animated_frames": {
+      "u05a_n": 122,
+      "u06_n": 132,
+      "u07a_n": 124,
+      "u07b_n": 146,
+      "u09a_n": 131,
+      "u09b_n": 148,
+      "u16b_n": 116
+    },
+    "pre_post_roll": {
+      "u05a_n": [
+        50,
+        0
+      ],
+      "u06_n": [
+        34,
+        12
+      ],
+      "u07a_n": [
+        52,
+        0
+      ],
+      "u07b_n": "fire held 48 frames longer",
+      "u09a_n": [
+        36,
+        0
+      ],
+      "u09b_n": [
+        0,
+        56
+      ],
+      "u16b_n": [
+        0,
+        28
+      ]
+    },
+    "s_per_frame_2core": {
+      "u05a_n": 13.2,
+      "u06_n": 12.3,
+      "u07a_n": 9.2,
+      "u07b_n": 8.4,
+      "u09a_n": 4.7,
+      "u09b_n": 8.9,
+      "u16b_n": 10.3
+    },
+    "total_hours_2core": 3
+  },
+  "edit": {
+    "lightning_frames_in_sh12": [
+      64,
+      173,
+      228
+    ],
+    "split_screen_segments_sh19": [
+      0,
+      41,
+      79,
+      110,
+      237
+    ],
+    "u07a_n_offsets": {
+      "start_index": 3,
+      "pre_roll": 52
+    },
+    "end_card": "fade to black n-92..n-66, title n-64..n-52 (sh24)",
+    "dissolve_sh23_sh24_frames": 12,
+    "composite_minutes_2core": 40
+  },
+  "music": {
+    "bpm_written": 72,
+    "soundfont": "FluidR3_GM.sf2",
+    "gain": 0.55,
+    "sections": {
+      "A intro": "Dm",
+      "B West": "brass, timpani, low ostinato; hit on the fire cut",
+      "C East": "pentatonic, shakuhachi/koto colours",
+      "D storm": "taiko, string ostinato",
+      "E river": "harp ostinato",
+      "F contrasts": "West and East motifs alternate",
+      "G shared ancestry": "chords on a 3.3 s grid",
+      "H finale": "Bb-C-A-D build to D major on the end title"
+    },
+    "warp_anchor_frames_old_to_new": [
+      [
+        0,
+        0
+      ],
+      [
+        282,
+        404
+      ],
+      [
+        384,
+        557
+      ],
+      [
+        720,
+        1042
+      ],
+      [
+        816,
+        1188
+      ],
+      [
+        1279,
+        1849
+      ],
+      [
+        1466,
+        2125
+      ],
+      [
+        1694,
+        2452
+      ],
+      [
+        1730,
+        2508
+      ],
+      [
+        1769,
+        2555
+      ],
+      [
+        1876.8,
+        2713
+      ],
+      [
+        1936,
+        2798
+      ],
+      [
+        2146,
+        3060
+      ],
+      [
+        2414,
+        3462
+      ],
+      [
+        2524,
+        3618
+      ],
+      [
+        2563,
+        3675
+      ],
+      [
+        2616,
+        3753
+      ],
+      [
+        2690,
+        3865
+      ],
+      [
+        2822.4,
+        4094.4
+      ],
+      [
+        2880,
+        4153
+      ]
+    ]
+  },
+  "mix": {
+    "voice_lufs": -16.0,
+    "music_lufs": -25.5,
+    "fx_lufs": -24.0,
+    "duck_music": 0.5,
+    "duck_fx": 0.45,
+    "duck_attack_s": 0.08,
+    "duck_release_s": 0.45,
+    "extra_music_ducks": [
+      "fire 0.6",
+      "roar 0.45",
+      "storm opening 0.5 (and effects)"
+    ],
+    "fade_in_s": 0.25,
+    "fade_out_s": 1.6,
+    "final_lufs": -14.0,
+    "limiter_dbfs": -1.5,
+    "measured": {
+      "lufs": -14.02,
+      "true_peak_dbtp": -1.48
+    }
+  },
+  "review": {
+    "passes": 3,
+    "findings": [
+      "v1/v2: fire not from the mouth, masking, pupils, horizon seam, whisker rod",
+      "v3 (normal-speed re-cut): BLOCKER old-model eye at render joins; lightning over the dragon; water under fire; music lurch; label contrast",
+      "v4: all fixed; last old-model still (s02a) re-rendered"
+    ]
+  }
+}
