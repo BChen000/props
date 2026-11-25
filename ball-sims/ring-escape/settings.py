@@ -12,11 +12,12 @@ sys.path.append(os.path.join(_HERE, "..", "neon-kit"))
 from neon_kit import BALL_COLORS, NAMES as KIT_NAMES  # noqa: E402
 
 # --------------------------------------------------------------------------- episode
-SEED = 8450                  # which simulated race to show; find good ones with search.py
+SEED = int(os.environ.get("RING_SEED", 8450))  # which simulated race to show; find good ones with search.py
 NAMES = list(KIT_NAMES)      # 8 marbles; chip order row 1 then row 2
 COLORS = dict(BALL_COLORS)   # name -> RGB
 USE_RECORDED_RACE = True     # replay assets/race_<SEED>.npz if it exists (identical on every machine)
-RACE_FILE = os.path.join(_HERE, "assets", f"race_{SEED}.npz")
+RACE_DIR = os.environ.get("RING_RACE_DIR", os.path.join(_HERE, "assets"))  # sim.py record saves here too
+RACE_FILE = os.path.join(RACE_DIR, f"race_{SEED}.npz")
 
 # --------------------------------------------------------------------------- canvas
 W, H, FPS = 1080, 1920, 30
@@ -73,7 +74,7 @@ CAP_NEAR_SECONDS = 1.0
 # --------------------------------------------------------------------------- render
 CRF, PRESET = 17, "veryfast"  # libx264
 CHUNKS = 4                    # build.py renders this many chunks, 2 at a time
-OUT_DIR = os.path.join(_HERE, "out")
+OUT_DIR = os.environ.get("RING_OUT_DIR", os.path.join(_HERE, "out"))
 OUT_NAME = "ring_escape.mp4"
 LOUDNESS = dict(I=-14, TP=-1.0, LRA=11)   # two-pass ffmpeg loudnorm (linear) on the final mix
 

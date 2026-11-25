@@ -1,0 +1,79 @@
+{
+  "prop": "marble-live-streams",
+  "canvas": {"width": 1920, "height": 1080, "fps": 30},
+  "layout": {
+    "short": "the 1080x1920 Short scaled to 608x1080, centred at x 656",
+    "fill": "the Short scaled to 480 wide, centre-cropped to 480x270, gblur sigma 7, eq brightness -0.16 saturation 0.85, scaled back to 1920x1080",
+    "left_panel": [70, 230, 600, 850],
+    "right_panel": [1320, 230, 1850, 850],
+    "panel": {"radius": 38, "fill_rgba": [8, 12, 30, 165], "outline_rgba": [255, 255, 255, 46], "outline_px": 2}
+  },
+  "font": "Montserrat variable (../marble-raytrace-kit/fonts, from its get_fonts.py); Black for titles, Bold / SemiBold for small text",
+  "colors": {
+    "gold": "#FFCE40",
+    "white": "#FFFFFF",
+    "soft": "#C8D2E6",
+    "ring_title_cyan": "#21D9E6",
+    "music_marbles": ["#F6F6F6", "#58C4FA", "#FF7A62", "#FF70BE", "#5CE4A8", "#FFCE40", "#AC80FF"],
+    "ring_marbles": {"RED": "#FF444F", "BLUE": "#3489FF", "GREEN": "#44DA78", "YELLOW": "#FED934",
+                     "PURPLE": "#AC6CFF", "ORANGE": "#FF9238", "PINK": "#FE76C6", "CYAN": "#21D9E6"}
+  },
+  "encode": {
+    "video": "H.264 libx264 veryfast, 6 Mbps with maxrate 6M and bufsize 12M, yuv420p",
+    "gop": "-g 60 -keyint_min 60 -sc_threshold 0: a keyframe exactly every 2 s, and frame 0 is one, so every loop seam starts on a keyframe",
+    "audio": "AAC 192k, 48 kHz stereo (re-encoded to 128k, 44.1 kHz when streamed)"
+  },
+  "streams": {
+    "music": {
+      "file": "marble_music.mp4",
+      "length_s": 156.133,
+      "frames": 4684,
+      "songs": [
+        {"title": "Twinkle Twinkle Little Star", "from": "marble-stairs-song twinkle", "s": 32.267},
+        {"title": "Ode to Joy", "from": "marble-twin-stairs ode-to-joy", "s": 38.0},
+        {"title": "Jingle Bells", "from": "marble-stairs-song jingle-bells", "s": 37.6},
+        {"title": "Row, Row, Row Your Boat", "from": "marble-spiral-round row-row-row", "s": 48.267}
+      ],
+      "reveal_s": 10.0,
+      "left_panel": "MARBLE MUSIC; GUESS THE SONG + ? until reveal_s, then NOW PLAYING + title; SONG k OF n",
+      "right_panel": "PICK YOUR MARBLE, 7 marble dots, follow it down and comment your color"
+    },
+    "ring": {
+      "file": "ring_escape.mp4",
+      "length_s": 209.867,
+      "frames": 6296,
+      "rounds": [
+        {"seed": 7372, "winner": "ORANGE", "s": 27.833},
+        {"seed": 1885, "winner": "BLUE", "s": 26.433},
+        {"seed": 2973, "winner": "GREEN", "s": 25.6},
+        {"seed": 8450, "winner": "CYAN", "s": 26.067},
+        {"seed": 6735, "winner": "PINK", "s": 26.933},
+        {"seed": 1415, "winner": "RED", "s": 25.467},
+        {"seed": 4268, "winner": "YELLOW", "s": 25.867},
+        {"seed": 8201, "winner": "PURPLE", "s": 25.667}
+      ],
+      "seed_choice": "the top-scoring seed for each winning color in ../ring-escape/search.py's ranking, run with AVOID_WINNER = \"\"",
+      "left_panel": "RING ESCAPE, FIRST MARBLE OUT WINS THE CROWN, ROUND k / 8",
+      "right_panel": "PICK YOUR COLOR, 8 named dots, comment your pick before the round ends"
+    },
+    "spiral": {
+      "file": "loop.mp4",
+      "length_s": 216.0,
+      "frames": 6480,
+      "base": "../marble-spiral-loop/build/marble_spiral_loop.mp4 repeated 9 times (24 s loop)",
+      "window": {"w": 380, "h": 676, "x": 90, "y": 262, "radius": 26, "frame_panel": [70, 185, 490, 960],
+                 "label": "WHO ESCAPES FIRST?", "rounds_order": [4, 7, 2, 5, 8, 1, 6, 3], "audio": "none"},
+      "panels": {"pick_your_marble": [1400, 64, 1856, 404], "label": [1360, 900, 1856, 1016]},
+      "audio": "../marble-spiral-loop/build/marble_bells_mix.m4a as mix.m4a (10.45 min), looped on its own"
+    }
+  },
+  "streams_sh": {
+    "hours": 11,
+    "why": "every broadcast ends before 12 hours, YouTube's limit for archiving a stream",
+    "url": "rtmp://a.rtmp.youtube.com/live2/<key>",
+    "ffmpeg": "-re -stream_loop -1 per input, -c:v copy, AAC 128k 44.1 kHz, -t <seconds left>",
+    "reconnect": "if ffmpeg exits early, retry after 5 s with the time that is left",
+    "keys": "asked at the prompt (or pasted at the top); each stream needs its own key",
+    "upload": "about 6.1 Mbps per stream at peak, so about 20 Mbps for all three"
+  }
+}
