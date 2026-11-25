@@ -12,13 +12,13 @@ Units are metres, 24 fps, 1080x1920. Sections, top to bottom:
                     make_cluster, attach_leaf, make_plant, receptacle_mesh, grow_tube
   forest set        ground, scatter_litter, make_fern, make_trunk, make_rock, scatter_groundcover, god_ray, forest_env
   animals           load_bee (Bee.glb with its hover action), bee_land_switch
-Third-party HDRIs, textures and models load from ASSETS (env WILDLORE_ASSETS); see README.md.
+Third-party HDRIs, textures and models load from ASSETS (env WILDLORE_ASSETS); get_assets.py downloads them.
 """
 import bpy, bmesh, math, random, os, sys
 import numpy as np
 from mathutils import Vector, Matrix, Euler, Quaternion
 
-ASSETS = os.environ.get("WILDLORE_ASSETS", "/home/claude/assets")  # HDRIs, textures, models (third-party, not in the repo; see README)
+ASSETS = os.environ.get("WILDLORE_ASSETS", "/home/claude/assets")  # third-party HDRIs, textures, models: run get_assets.py
 FPS = 24
 RES = tuple(int(v) for v in os.environ.get("RES", "1080x1920").split("x"))
 GOLDEN = math.pi * (3 - math.sqrt(5))
@@ -1645,16 +1645,76 @@ def make_trunk(name, loc, height=8.0, r=0.18, seed=0):
     V, F, UV = tube_mesh(P, radii, sides=16)
     UV[:, 0] *= 3
     me = make_mesh(name, V, F, uv=UV)
-    m = mat_image("Bark", os.path.join(ASSETS, "tex", "BroadleafBark.jpg"), os.path.join(ASSETS, "tex", "BroadleafBark_Normal.png"),
-                  scale=1.0, rough=0.85, tint=(0.75, 0.7, 0.65))
+    bark, bark_n = os.path.join(ASSETS, "tex", "BroadleafBark.jpg"), os.path.join(ASSETS, "tex", "BroadleafBark_Normal.png")
+    if os.path.exists(bark):
+        m = mat_image("Bark", bark, bark_n if os.path.exists(bark_n) else None, scale=1.0, rough=0.85, tint=(0.75, 0.7, 0.65))
+    else:  # no bark photo (get_assets.py fetches it): procedural bark instead
+        m = mat_bark_procedural()
     me.materials.append(m)
     o = obj_from_mesh(name, me, loc=loc)
     return o
 
 
 def mat_moss(name="Moss", scale=4.0):
-    return mat_image(name, os.path.join(ASSETS, "tex", "Moss_01_Color.png"), os.path.join(ASSETS, "tex", "Moss_01_Normal.png"), scale=scale,
-                     rough=0.9, tint=(0.85, 0.95, 0.7), uv='Object')
+    col, nrm = os.path.join(ASSETS, "tex", "Moss_01_Color.png"), os.path.join(ASSETS, "tex", "Moss_01_Normal.png")
+    if not os.path.exists(col):  # no moss photo (get_assets.py fetches it): procedural moss instead
+        return mat_moss_procedural(name, scale)
+    return mat_image(name, col, nrm if os.path.exists(nrm) else None, scale=scale, rough=0.9, tint=(0.85, 0.95, 0.7), uv='Object')
+
+
+def mat_bark_procedural(name="Bark"):
+    """grey-brown broadleaf bark: vertical plates split by dark crevices, fine fibres, pale and lichen patches. No image files."""
+    if name in _MATS:
+        return _MATS[name]
+    m, nt = new_mat(name)
+    tc = nt.texcoord()
+    oc = tc.outputs["Object"]
+    # domain-warped, vertically stretched cells give long irregular plates instead of a tile pattern
+    wn = nt.noise(nt.mapping(oc, scale=(4.0, 4.0, 1.0)), scale=2.0, detail=4.0, rough=0.6)
+    ws = nt.new("ShaderNodeVectorMath"); ws.operation = 'SCALE'; ws.inputs["Scale"].default_value = 0.16
+    nt.link(wn.outputs["Color"], ws.inputs[0])
+    wa = nt.new("ShaderNodeVectorMath"); wa.operation = 'ADD'
+    nt.link(oc, wa.inputs[0]); nt.link(ws.outputs[0], wa.inputs[1])
+    plates = nt.voronoi(nt.mapping(wa.outputs[0], scale=(7.0, 7.0, 1.1)), scale=1.0, feature='DISTANCE_TO_EDGE')
+    crev = nt.math('SUBTRACT', 1.0, nt.math('MULTIPLY', plates.outputs["Distance"], 14.0), clamp=True)   # 1 in the cracks
+    fibre = nt.noise(nt.mapping(oc, scale=(60.0, 60.0, 6.0)), scale=3.0, detail=6.0, rough=0.6)
+    patch = nt.noise(oc, scale=2.2, detail=3.0, rough=0.5)
+    lichen = nt.noise(oc, scale=4.0, detail=4.0, rough=0.55)
+    face = nt.ramp(nt.math('ADD', nt.math('MULTIPLY', fibre.outputs["Fac"], 0.6), nt.math('MULTIPLY', patch.outputs["Fac"], 0.5)),
+                   [(0.35, (0.045, 0.038, 0.030)), (0.55, (0.10, 0.085, 0.068)), (0.75, (0.19, 0.17, 0.14))])
+    c = nt.mix(nt.math('POWER', crev, 1.5), face, (0.012, 0.010, 0.008, 1))
+    lp = nt.math('MULTIPLY', nt.math('SUBTRACT', lichen.outputs["Fac"], 0.58), 6.0, clamp=True)
+    c = nt.mix(nt.math('MULTIPLY', lp, 0.6), c, (0.22, 0.26, 0.17, 1))
+    p = principled(nt, Base_Color=c, Roughness=0.9, Specular_IOR_Level=0.25)
+    h = nt.math('SUBTRACT', nt.math('MULTIPLY', fibre.outputs["Fac"], 0.25), nt.math('MULTIPLY', crev, 0.8))
+    nt.link(nt.bump(h, 1.0, 0.02), p.inputs["Normal"])
+    _MATS[name] = m
+    return m
+
+
+def mat_moss_procedural(name="Moss", scale=4.0):
+    """moss in patches over grey stone: clumpy green with yellow-green tips, bare rock between patches. No image files."""
+    if name in _MATS:
+        return _MATS[name]
+    m, nt = new_mat(name)
+    tc = nt.texcoord()
+    oc = tc.outputs["Object"]
+    cover = nt.noise(nt.mapping(oc, scale=(scale * 1.2,) * 3), scale=2.0, detail=5.0, rough=0.6)
+    mask = nt.math('MULTIPLY', nt.math('SUBTRACT', cover.outputs["Fac"], 0.42), 7.0, clamp=True)   # 1 = moss, 0 = bare rock
+    clump = nt.noise(nt.mapping(oc, scale=(scale * 8,) * 3), scale=4.0, detail=8.0, rough=0.7)
+    tips = nt.voronoi(nt.mapping(oc, scale=(scale * 70,) * 3), scale=1.0)
+    t = nt.math('POWER', nt.math('SUBTRACT', 1.0, tips.outputs["Distance"], clamp=True), 3.0)
+    moss = nt.ramp(clump.outputs["Fac"], [(0.30, (0.010, 0.020, 0.005)), (0.52, (0.045, 0.09, 0.018)), (0.72, (0.12, 0.17, 0.03))])
+    moss = nt.mix(nt.math('MULTIPLY', t, 0.4), moss, (0.25, 0.27, 0.05, 1))
+    grit = nt.noise(nt.mapping(oc, scale=(scale * 20,) * 3), scale=3.0, detail=6.0)
+    rock = nt.ramp(grit.outputs["Fac"], [(0.3, (0.05, 0.048, 0.045)), (0.7, (0.14, 0.13, 0.12))])
+    c = nt.mix(mask, rock, moss)
+    p = principled(nt, Base_Color=c, Roughness=0.9, Specular_IOR_Level=0.25, Sheen_Weight=0.35, Sheen_Tint=(0.8, 0.9, 0.6, 1))
+    h = nt.math('ADD', nt.math('MULTIPLY', mask, nt.math('ADD', clump.outputs["Fac"], nt.math('MULTIPLY', t, 0.3))),
+                nt.math('MULTIPLY', grit.outputs["Fac"], 0.3))
+    nt.link(nt.bump(h, 0.7, 0.006), p.inputs["Normal"])
+    _MATS[name] = m
+    return m
 
 
 def make_rock(name, loc, size=0.3, seed=0, mat=None):

@@ -65,7 +65,7 @@ python ../wildlore-title/wildlore_title.py out/berry_macro.png thumb.jpg --prese
 
 ## Dependencies (tested)
 - Blender 4.0.2 (EEVEE Legacy) under `xvfb-run`
-- `../wildlore-blender-kit`, plus its `babylon_forest.hdr`. The board scene also needs `tex/hardwood2_diffuse.jpg` from three.js examples (MIT), in `WILDLORE_ASSETS`.
+- `../wildlore-blender-kit`, plus `hdri/babylon_forest.hdr` and, for the board scene, `tex/hardwood2_diffuse.jpg` (three.js, MIT) from its asset pack. `./setup.sh animal-docs` downloads the pack into `WILDLORE_ASSETS`. Both scenes render pixel-identical from a freshly downloaded pack.
 - Pillow 12.3.0 for `make_board_texture.py`. Ubuntu's Blender package uses the system Python, so `board_scene.py` can build the texture itself. With an official Blender build, which has no Pillow, run `python make_board_texture.py` once first.
 
-No photos of real people. The only third-party image is the three.js wood texture, which `make_board_texture.py` reads at build time; neither it nor the strip board built from it is in the repo.
+No photos of real people. The third-party images, the forest HDRI and the three.js wood texture, come from the asset pack at run time. `make_board_texture.py` builds the strip board from the wood when it runs. None of these files is in the repo.

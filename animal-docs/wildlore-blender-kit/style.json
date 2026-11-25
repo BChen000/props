@@ -151,5 +151,5 @@
     "local_axis": "+z from attachment to tip",
     "drupelet_material": "SSS 0.6 (radius 0.3,0.6,1.0 x 4 mm), coat 0.3 rough 0.07, sheen 0.10, waxy bloom by facing ratio"
   },
-  "assets_dir": "env WILDLORE_ASSETS (default /home/claude/assets), not in the repo"
+  "assets_dir": "env WILDLORE_ASSETS (default /home/claude/assets), filled by get_assets.py; not stored in the repo"
 }

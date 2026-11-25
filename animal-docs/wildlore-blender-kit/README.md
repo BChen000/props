@@ -17,6 +17,8 @@ The preview shows frames from the finished episode, all made with this module: t
 - `../robin`: the robin, whose `bird.py` imports this module
 - `../wildlore-episode-pipeline`: timeline, music, mix and assembly for the episode
 
+The asset pack was checked against the episode's asset folder by SHA-256 (all 12 files identical). A trunk-and-mossy-rock close-up, `../blue-raspberry`'s berry macro and board scene, and `../robin`'s robin scene all render pixel-identical from a pack downloaded by `get_assets.py` into an empty folder.
+
 ## Files
 - `bblib.py`: the module. A docstring at the top lists its sections. The settings at the top are:
   - `ASSETS`: the asset folder, set with env `WILDLORE_ASSETS`, default `/home/claude/assets`
@@ -25,6 +27,8 @@ The preview shows frames from the finished episode, all made with this module: t
   - `LEAF_RES`
   - `BERRY_LOD`
   - `CORE_FACTOR`
+- `get_assets.py`: downloads the asset pack into `ASSETS` (see Assets below). `--check` only reports.
+- `ASSET_LICENSES.md`: where each asset comes from, its licence, and the credit line for video descriptions.
 - `style.json`: render settings, colours and sizes.
 - `preview.png`: six frames from the episode.
 
@@ -62,20 +66,21 @@ Useful pieces:
 - `forest_env(sc, ...)` builds the whole forest floor set in one call: HDRI, ground, litter, ferns, rocks and trunks, with a clearing kept empty for the subject.
 - `load_bee(...)` imports Bee.glb with its skeletal hover action. `bee_land_switch` blends it into a landing.
 
-## Assets (not in this repo)
-These are loaded from `ASSETS`. In Claude sessions they're in `/home/claude/assets`.
+## Assets (downloaded, not stored here)
+`./setup.sh animal-docs` (or `python get_assets.py`) downloads the asset pack into `ASSETS`: 12 files, 56 MB, in about 3 s. Each file comes from a public GitHub repository at a pinned commit and is checked by SHA-256. They're the exact files the episode was rendered with. `ASSET_LICENSES.md` has the commits and licences.
 
-| file | used by | source |
+| file | used by | source (licence) |
 |---|---|---|
-| `hdri/babylon_forest.hdr` | forest shots, thumbnails (`world_hdri`, `forest_env`) | Wildlore asset pack, source not recorded. Any Poly Haven forest HDRI (CC0) works, for example `phalzer_forest_01`. |
-| `hdri/babylon_country.hdr` | farm and table shots | Wildlore asset pack, source not recorded. A Poly Haven countryside HDRI (CC0) works. |
-| `hdri/noon_grass_2k.hdr`, `hdri/kiara_1_dawn_1k.hdr` | one shot each | Poly Haven (CC0) |
-| `tex/rockyGround_basecolor.png`, `tex/rockyGround_normal.png` | `mat_forest_floor` | BabylonJS/Assets `textures/` (CC BY 4.0) |
+| `hdri/babylon_forest.hdr` | forest shots, thumbnails (`world_hdri`, `forest_env`) | Babylon.js playground `forest.hdr` (Apache 2.0) |
+| `hdri/babylon_country.hdr` | farm and table shots | Babylon.js playground `country.hdr` (Apache 2.0) |
+| `hdri/noon_grass_2k.hdr`, `hdri/kiara_1_dawn_1k.hdr` | episode shots P (the pluck) and S (the closing field) | Poly Haven (CC0), via google/filament and pmndrs/drei-assets |
+| `tex/rockyGround_basecolor.png`, `tex/rockyGround_normal.png` | `mat_forest_floor` | Babylon.js playground textures (Apache 2.0) |
+| `tex/BroadleafBark.jpg` + `_Normal.png` | `make_trunk` | BabylonJS/Assets `meshes/Trees/` (CC BY 4.0) |
+| `tex/Moss_01_Color.png` + `_Normal.png` | `mat_moss` | cgbookcase (CC0), via google/filament |
 | `models/Bee.glb` | `load_bee` | BabylonJS/Assets `meshes/Bee.glb` (CC BY 4.0) |
 | `tex/hardwood2_diffuse.jpg` | table, bowl, board texture | three.js `examples/textures/` (MIT) |
-| `tex/BroadleafBark.jpg` + `_Normal.png`, `tex/Moss_01_Color.png` + `_Normal.png` | `make_trunk`, `mat_moss` | Wildlore asset pack, source not recorded |
 
-Credit Babylon.js (CC BY 4.0) in any video that shows the bee or the forest-floor texture.
+**Credit:** the bee and the bark are CC BY 4.0. End every video description with the credit line in `ASSET_LICENSES.md`.
 
 ## Gotchas
 - **Macro depth of field:**
@@ -88,6 +93,7 @@ Credit Babylon.js (CC BY 4.0) in any video that shows the bee or the forest-floo
 - **White band on leaves:** a bright band along leaves and fern fronds is Fresnel specular at grazing angles, not the bump. The fern fronds (`FernLeaf` in `make_fern`) use `spec=0.06, rough=0.8`.
 - **Hairs:** hero berries' hairs read as scratches at macro scale. Hide `BerryHair` (alpha 0, `CLIP`) for close stills.
 - **Temp files:** `render()` writes `<name>_tmp.mp4` and renames it when Blender finishes. Never let a post pass use a temp name another job might be writing. This once corrupted a shot mid-render.
+- **Bark and moss without the pack:** if the bark or moss files are missing, `make_trunk` and `mat_moss` fall back to procedural materials (`mat_bark_procedural`, `mat_moss_procedural`). These read fine at forest distance but look smooth and plain in close-ups. Run `get_assets.py` to get the real textures.
 - **Render times:** on a 2-core CPU, llvmpipe EEVEE at native 1080×1920 with 3 TAA samples takes about 10–25 s a frame for forest shots. Stills at 64 samples take 3–5 min.
 
 ## What it can't do
