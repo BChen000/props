@@ -1,0 +1,73 @@
+{
+  "prop": "marble-spiral-loop",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "aspect": "16:9 livestream background"
+  },
+  "loop": {
+    "length_s": 24.0,
+    "frames": 720,
+    "marbles_per_loop": 14,
+    "gaps_s": [1.2, 2.1, 1.5, 1.0, 2.2, 1.6, 1.9, 1.1, 2.0, 1.7, 1.4, 2.2, 1.0, 3.1],
+    "on_screen": "13-14 marbles",
+    "seam": "instance (slot j, cycle c) at t + 24 s is where (j, c - 1) is at t, same color"
+  },
+  "motion": {
+    "speed_units_per_s": 11.0,
+    "path": "feeder rail (x -80 -> 0, 7 deg) -> helix (4 turns, 163.4 units) -> exit rail (x 0 -> 80, 3 deg)",
+    "joint_blend_units": 2.0
+  },
+  "set": {
+    "helix": {
+      "center_radius": 6.4,
+      "track_width": 3.4,
+      "rise_per_turn": 7.2,
+      "turns": 4,
+      "segments": 28,
+      "segments_per_turn": 7,
+      "segment_length": 5.84,
+      "top_y": 33.4,
+      "bottom_y": 4.6
+    },
+    "segment_colors_srgb": ["#EE3232", "#FA8A1C", "#FACE26", "#2CC460", "#2496F0", "#B054E8"],
+    "glass_wall": "outer wall only, clear, 1.25 high",
+    "pole_radius": 1.3,
+    "dish": {"radius": 11.0, "rim": 0.5, "wall_top": 2.2},
+    "rails": "dark #32363C, 3.4 wide, side walls 0.26; feeder from x = -90, exit to x = 90, both at z = -6.4 (behind the pole)"
+  },
+  "marble_srgb": ["#F6F6F6", "#58C4FA", "#FF7A62", "#FF70BE", "#5CE4A8", "#FFCE40", "#AC80FF"],
+  "camera": {
+    "target": [0.0, 18.6, 0.0],
+    "azimuth_deg": 0.0,
+    "elevation_deg": 20.0,
+    "distance": 104.0,
+    "fovy_deg": 26.5,
+    "note": "straight on; pole top at 10% of the height, dish front at 95%; the feeder rail leaves the frame top left, the exit rail right"
+  },
+  "glow": {
+    "flash": [0.45, 0.30],
+    "hold_while_rolling": 0.30,
+    "note": "calmer than the Shorts (flash 0.85 / 0.22)"
+  },
+  "static_render": "3840x2160 G-buffer, 49 key + 64 ambient samples, 233 s on 2 cores",
+  "encode": {
+    "codec": "H.264 High, yuv420p, preset slow",
+    "bitrate": "6M (maxrate 6M, bufsize 12M)",
+    "keyframes": "every 60 frames (2 s), no scene-cut keyframes",
+    "audio": "none (the stream adds the music)"
+  },
+  "music": {
+    "playlist": ["Twinkle Twinkle Little Star (80 bpm)", "Jingle Bells (112)", "Ode to Joy (88)", "Deck the Halls (100)",
+                 "Row Row Row Your Boat (190 eighths/min, rounds of 2 and 4)", "We Wish You a Merry Christmas (126, 3/4)",
+                 "London Bridge (96)", "Dance of the Sugar Plum Fairy (300 sixteenths/min)",
+                 "God Rest Ye Merry Gentlemen (96)"],
+    "voices": "melody lead bell 0.32, bass 0.19, chord tones 0.072 each, octave sparkles 0.05 (bells.py kinds lead/bass/inner/spark)",
+    "passes": "soft (block chords), flow (broken-chord arpeggio), sparkle (octave sparkles); a final tonic chord with a sparkle run",
+    "loudness": "-16 LUFS per song, -1 dBFS limiter, AAC 192k 48 kHz",
+    "gap_s": 1.8,
+    "length_min": 10.45,
+    "seed": 23
+  }
+}

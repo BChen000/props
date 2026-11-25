@@ -60,6 +60,7 @@ python3 get_fonts.py      # Montserrat into fonts/ (./setup.sh ball-sims runs it
 
 ## Gotchas
 - The compositor needs the G-buffer at exactly 2× the output size (2160×3840 for 1080×1920).
+- Both tracers take the frame aspect from the scene's `res` line, so landscape scenes work (`../marble-spiral-loop` renders 1920×1080). Before Nov 2026 they assumed 9:16 for the background glow and vignette; portrait G-buffers are byte-identical to before.
 - The render cache is keyed on the scene file (and the mesh, via `deps`), not on the tracer binary. After editing a `.c` file, delete `build/*_scene.sha` to re-render.
 - `compositor` is configured per process with one scene (`configure()` sets module globals). Render a second camera, like the staircase thumbnail, in its own process.
 - Render time grows with the number of marbles on screen, resting ones included: their shadows and AO are redrawn every frame, even though the lighting of a marble at rest is cached. The busiest rounds render several times slower than the first, so `run_workers()` splits the frames by `frame_costs()` (1.4 + marbles on screen) unless `SPLIT=even`.

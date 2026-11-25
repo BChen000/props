@@ -186,12 +186,12 @@ static void skyL(const double *w, double *out) {
 static void background(double sx, double sy, double *out) {
   double t = sy < 0 ? 0 : (sy > 1 ? 1 : sy);
   t = t * t * (3 - 2 * t);
-  double dx = sx - gpx, dy = (sy - gpy) * (1920.0 / 1080.0);
+  double dx = sx - gpx, dy = (sy - gpy) * ((double)H / W);
   double g = exp(-(dx * dx + dy * dy) / (grad * grad));
   for (int k = 0; k < 3; k++) out[k] = bgT[k] * (1 - t) + bgB[k] * t + bgG[k] * g;
 }
 static double vigf(double sx, double sy) {
-  double dx = sx - 0.5, dy = (sy - 0.5) * (1920.0 / 1080.0) * 0.62;
+  double dx = sx - 0.5, dy = (sy - 0.5) * ((double)H / W) * 0.62;
   return 1.0 - vig * (dx * dx + dy * dy) * 2.2;
 }
 static double tm(double x) {
