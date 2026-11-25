@@ -12,12 +12,12 @@ N_SONGS = len({it["title"] for it in S.ITEMS if it["kind"] == "song"})   # diffe
 N_GAMES = sum(it["kind"] in ("race", "run") for it in S.ITEMS)
 TITLES = [
     S.TITLE,
-    "Can You Guess Every Marble Song? 🎵",
+    "Guess the Marble Song! 🎵 20 Rounds + a Secret Bonus",
     "Which Song Are the Marbles Playing? 🎵",
 ]
 PREMISE = (f"Marbles roll down rainbow stairs and play {N_SONGS} songs. Guess each one before the answer pops up, "
            f"play {N_GAMES} marble challenges, then stay for a brand-new bonus song!")
-COMMENT_LINE = "Comment your score 🔴🟠🟡🟢🔵🟣"
+COMMENT_LINE = "How many did you guess? Comment your score 🔴🟠🟡🟢🔵🟣"
 MADE_WITH = "Made with a 3D physics simulation"
 HASHTAGS = "#marbles #satisfying #guessthesong #marblemusic #pickyourcolor"
 
@@ -29,7 +29,7 @@ def main():
         if it["kind"] in ("song", "bonus") and it["title"] not in songs:
             songs.append(it["title"])
     text = "\n".join([
-        "TITLES (main first; all three go into Studio's A/B test)", *TITLES, "",
+        "TITLE (use the first; the other two are alternates for Test & Compare)", *TITLES, "",
         "DESCRIPTION", PREMISE, COMMENT_LINE, MADE_WITH, HASHTAGS, "", "Chapters", ch, "",
         "Songs (spoilers!): " + "; ".join(songs),
     ])

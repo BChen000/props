@@ -67,7 +67,7 @@ UPNEXT_Y = 968
 
 INTRO_LINES = ("GUESS THE MARBLE SONG!", "20 ROUNDS + A SECRET BONUS SONG")
 END_LINES = (["THANKS FOR", "WATCHING!"], "How many did you get?", "Comment your score!")
-TITLE = "Guess the Marble Song! 🎵 20 Rounds + a Secret Bonus"
+TITLE = "Can You Guess Every Marble Song? 🎵"        # the pick: a short challenge question (channel rule: short, suspense)
 
 # Running order.  src: ("wide", template, song) a 16:9 template render | ("short", glob) a vertical Short.
 # frame: how a Short fills 16:9 -- dict(track=[colours]) | dict(keys=[(t, top fraction)]) | dict(split=(yl, yr))
