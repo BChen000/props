@@ -24,6 +24,11 @@ Wildlore is GJ's channel of sincere, NatGeo-style documentaries about fictional 
    - `wildlore-2d-comp`
    - `creature-sfx`
    - `two-dragons-episode`, the complete pipeline of a 2:53 episode
+6. For creatures in a full 3D set with flying and moving cameras (cliffs, a nest, a cloud sea), use the Baby Griffin stack, about 7 h of rendering for 2½ min on 2 cores:
+   - `griffin` (bpy 5.3 Cycles; chick, juvenile and adult)
+   - `cliff-nest-set`
+   - `crop-plate-renderer`, which renders the plate and base once and then only a crop per frame
+   - `baby-griffin-episode`, the complete pipeline of a 2:27 episode
 
 ## 2. Set up once per session
 ```bash

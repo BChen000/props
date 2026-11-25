@@ -1,0 +1,85 @@
+{
+  "prop": "crop-plate-renderer",
+  "render": {
+    "engine": "Cycles CPU via bpy 5.3.0",
+    "res": "608x1080 (CPR_RES)",
+    "composite": "1080x1920 (CPR_OUT), Lanczos upscale",
+    "film": "transparent for foreground and base",
+    "denoise": "OpenImageDenoise, albedo+normal",
+    "view": "AgX Base Contrast, exposure -0.9 (blib.render_settings)"
+  },
+  "plates": {
+    "static_camera": "rendered from the shot camera at the render size, 12 spp, HIGH quality",
+    "moving_camera": "a separate wider plate camera, sensor_fit HORIZONTAL, 12-24 spp",
+    "episode_examples": {
+      "s01": "1080x1920, 28 mm",
+      "s10": "912x1620, 24 mm",
+      "s23": "1080x1920, 16 mm",
+      "s24": "2160x3840, 14 mm"
+    },
+    "dof": "off for plates",
+    "coverage_rule": "plate_cover.py worst overflow must be negative"
+  },
+  "foreground": {
+    "spp": {
+      "flight crops": 3,
+      "nest crops": 4,
+      "fast wings with motion blur": "10-12"
+    },
+    "base_spp": 16,
+    "margin_px": "30 (flight) / 60 (nest)",
+    "step": "1, or 2 with optical-flow in-betweens for slow shots",
+    "motion_blur": {
+      "flag": "mblur",
+      "shutter": 0.35
+    },
+    "crop_growth": {
+      "base": "98th percentile of the sigma-3-blurred |crop - base| in 7-px border strips > 0.03 -> grow by max(60 px, 30 %)",
+      "transparent": "alpha > 0.15 on a box edge -> grow by max(40 px, 25 %)",
+      "max_retries": 3
+    }
+  },
+  "composite": {
+    "crop_feather_px": 22,
+    "inbetween": "OpenCV DIS optical flow, both directions, blended by t",
+    "finish": {
+      "sharpen": "unsharp 0.35 at sigma 1.2",
+      "grade": {
+        "warmth": 0.03,
+        "contrast": 1.04,
+        "saturation": 1.05,
+        "vignette": 0.22
+      },
+      "grain": {
+        "sigma": 0.012,
+        "size": "2x2 px",
+        "seed": 1
+      }
+    },
+    "encode": "ffmpeg libx264 CRF 17 veryfast yuv420p (BT.601, untagged), written to .part.mp4 then renamed"
+  },
+  "seams": {
+    "check": "seamcheck.py",
+    "visible_above": 7.5
+  },
+  "episode_timings_2_cores": {
+    "s24 (111 frames, flight crops, 3 spp)": "82 s",
+    "s23 (71 frames, full frame, motion blur, 10 spp)": "14 min",
+    "s18 (266 frames, nest crops, 4 spp)": "21 min",
+    "s11 (147 frames, hair close-up, 4 spp, many crop regrows)": "59 min"
+  },
+  "demo": {
+    "res": "304x540 -> 540x960",
+    "frames": 24,
+    "spp": 4,
+    "plate_spp": 12,
+    "flight": {
+      "plate": "608x1080, 20 mm",
+      "time": "about 50 s"
+    },
+    "perch": {
+      "step": 2,
+      "time": "about 55 s"
+    }
+  }
+}
