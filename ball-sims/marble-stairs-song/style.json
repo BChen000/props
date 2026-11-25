@@ -1,0 +1,115 @@
+{
+  "prop": "marble-stairs-song",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "aspect": "9:16 Short"
+  },
+  "videos": {
+    "twinkle": {
+      "title_card": "Twinkle Twinkle Little Star",
+      "length_s": 32.27,
+      "frames": 968,
+      "marbles": 19,
+      "rounds": [1, 2, 3, 5, 8],
+      "entries": "each round's marbles on consecutive beats",
+      "bpm": 112.5,
+      "beats": 54,
+      "song": "48 beats of the tune + a 6-note ending run E5 G5 C6 E6 G6 C7"
+    },
+    "jingle-bells": {
+      "title_card": "Jingle Bells (chorus)",
+      "length_s": 37.6,
+      "frames": 1128,
+      "marbles": 19,
+      "rounds": [1, 2, 3, 5, 8],
+      "entries": "spread to fit the tune's phrases",
+      "bpm": 112.5,
+      "beats": 64
+    }
+  },
+  "hook": "a marble is already rolling down the chute on frame 1; first tile hit at 1.07 s (2 beats)",
+  "structure": "rounds back to back with no gap; titles change half a beat before each round's first hit; finale C chord with the tiles sweeping bottom to top, then 4.5 beats of tail",
+  "set": {
+    "tiles": 8,
+    "tile_srgb": ["#EE3434", "#FA8A1C", "#FACE26", "#96D630", "#24BE60", "#1CC4CC", "#2C76EE", "#9852E4"],
+    "tile_size": [2.7, 0.7, 7.2],
+    "step": {
+      "dx": 3.0,
+      "dy": 2.4
+    },
+    "top_tile_y": 19.8,
+    "pillars": "dark #32363C, 2.1 x 2.1",
+    "hop_apex": 1.7,
+    "chute": "6 deg, with a feeder tube that hides queued marbles (mouth at -5.4)",
+    "tray": {
+      "inner_x": [22.6, 32.2],
+      "inner_z": [-5.2, 5.2],
+      "wall_top": 2.25
+    }
+  },
+  "camera": {
+    "target": [16.0, 12.6, 0.5],
+    "azimuth_deg": 55.0,
+    "elevation_deg": 24.0,
+    "distance": 126.0,
+    "fovy_deg": 30.0,
+    "note": "the stairs run diagonally toward the camera, tray bottom right"
+  },
+  "thumbnail_camera": {
+    "target": [14.5, 12.8, 0.5],
+    "azimuth_deg": 62.0,
+    "elevation_deg": 26.0,
+    "distance": 126.0,
+    "fovy_deg": 24.0,
+    "frame": "auto: the last round's beat with the most marbles on the stairs, +1 frame (twinkle 769, jingle-bells 897: the uploads' thumbnails)"
+  },
+  "marble_srgb": ["#F6F6F6", "#58C4FA", "#FF7A62", "#FF70BE", "#5CE4A8", "#FFCE40", "#AC80FF", "#FF9634", "#40DEE8", "#F0547C", "#ACE64C", "#4A84FF", "#FFB088", "#CC60E8", "#40CC70", "#F2C22C", "#EC4646", "#78ECFF", "#FF78DC"],
+  "physics": {
+    "tray_dt_s": 0.0008333333333333334,
+    "restitution": {
+      "floor": 0.3,
+      "wall": 0.45,
+      "marble": 0.62
+    },
+    "rolling_decel": 2.4,
+    "handoff_beats_after_last_tile": 0.8
+  },
+  "music": {
+    "rule": "each beat plays the next note of the song; with several hits, highest tile = melody, then bass, 3 chord tones, sparkles",
+    "voice_gains": [1.0, 0.55, 0.3, 0.26, 0.22, 0.17, 0.15, 0.13],
+    "voicings_midi": {
+      "C": {
+        "bass": 48,
+        "inner": [64, 67, 60],
+        "sp": [84, 88, 91]
+      },
+      "F": {
+        "bass": 41,
+        "inner": [69, 60, 65],
+        "sp": [89, 93, 84]
+      },
+      "G": {
+        "bass": 43,
+        "inner": [59, 62, 67],
+        "sp": [86, 91, 83]
+      },
+      "G7": {
+        "bass": 43,
+        "inner": [59, 65, 67],
+        "sp": [86, 89, 91]
+      }
+    },
+    "level_jitter": "+-6%",
+    "tile_pan": "-0.42 (top) to +0.35 (bottom)",
+    "finale": "C chord C2..C6 + 8-note sparkle run",
+    "clacks": "tray impacts from the physics"
+  },
+  "text": {
+    "round_titles": "1 MARBLE, 2 MARBLES, 3 MARBLES, 5 MARBLES, 8 MARBLES (see ../marble-raytrace-kit/style.json)",
+    "watermark": "Marble Pop (the uploads: Fun House 67)",
+    "thumbnail": "no text by default (--thumb-title adds the round title)"
+  },
+  "timing_2_cores": "static set 1.5 min (once) + frames ~3 min + thumbnail set 1.5 min (once)"
+}

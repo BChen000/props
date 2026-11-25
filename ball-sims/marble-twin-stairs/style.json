@@ -1,0 +1,91 @@
+{
+  "prop": "marble-twin-stairs",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "aspect": "9:16 Short"
+  },
+  "videos": {
+    "ode-to-joy": {
+      "title_card": "Ode to Joy",
+      "length_s": 38.0,
+      "frames": 1140,
+      "marbles": 15,
+      "rounds": [1, 2, 4, 8],
+      "entries": "round 2: one per lane on the same beat; rounds 3-4: lane pairs one beat apart",
+      "bpm": 120.0,
+      "beats": 68,
+      "song": "4 x 16 beats of the theme in two parts (melody front, harmony back) + a 4-note rising ending",
+      "titles_s": [0.0, 8.65, 16.65, 25.15],
+      "finale_s": 35.24
+    }
+  },
+  "hook": "the first marble drops into view at 0.65 s and hits the top tile at 1.5 s",
+  "set": {
+    "lanes": 2,
+    "tiles_per_lane": 16,
+    "lane_z": [-3.6, 3.6],
+    "tile_size": [2.4, 0.6, 5.0],
+    "step": {
+      "dx": 2.7,
+      "dy": 1.6
+    },
+    "top_tile_y": 27.0,
+    "hop_apex": 1.4,
+    "tile_srgb": {
+      "back_lane_harmony": ["#F53131", "#F57131", "#F5B131", "#F5F231", "#B8F531", "#77F531", "#37F531", "#31F56B", "#31F5AB", "#31F5EB", "#31BEF5", "#317EF5", "#313DF5", "#6531F5", "#A531F5", "#E531F5"],
+      "front_lane_melody": ["#31F5F5", "#31B5F5", "#3174F5", "#3134F5", "#6E31F5", "#AE31F5", "#EF31F5", "#F531BB", "#F5317B", "#F5313A", "#F56831", "#F5A831", "#F5E831", "#C1F531", "#81F531", "#41F531"]
+    },
+    "tray": {
+      "inner_x": [42.3, 50.3],
+      "inner_z": [-6.6, 6.6],
+      "wall_top": 2.25
+    }
+  },
+  "camera": {
+    "target": [26.0, 10.0, 0.0],
+    "azimuth_deg": 72.0,
+    "elevation_deg": 17.0,
+    "distance": 140.0,
+    "fovy_deg": 28.0,
+    "note": "from the front-right, both staircases descending toward the camera, tray bottom right"
+  },
+  "marble_srgb": ["#F6F6F6", "#58C4FA", "#FF7A62", "#FF70BE", "#5CE4A8", "#FFCE40", "#AC80FF", "#FF9634", "#40DEE8", "#F0547C", "#ACE64C", "#4A84FF", "#FFB088", "#CC60E8", "#F2C22C"],
+  "physics": {
+    "drop_in_s": 0.85,
+    "tray_restitution": {
+      "floor": 0.3,
+      "wall": 0.45,
+      "marble": 0.62
+    },
+    "rolling_decel": 2.4
+  },
+  "music": {
+    "rule": "each beat plays the next note: front lane = melody (lead bell), back lane = harmony (softer lead bell); extra marbles on a lane add octave and chord sparkles (front) or bass and chord tones (back)",
+    "voicings_midi": {
+      "C": {
+        "bass": 48,
+        "mid": [55, 60],
+        "sp": [88, 91]
+      },
+      "G": {
+        "bass": 43,
+        "mid": [50, 55],
+        "sp": [86, 91]
+      }
+    },
+    "lane_pan": {
+      "front": -0.35,
+      "back": 0.35
+    },
+    "level_jitter": "+-5%",
+    "finale": "C chord C2..C6 + 8-note sparkle run when the last marble lands",
+    "seed": 5
+  },
+  "text": {
+    "round_titles": "1 MARBLE, 2 MARBLES, 4 MARBLES, 8 MARBLES; each appears when its first marble drops in",
+    "watermark": "Marble Pop (the upload: Fun House 67)",
+    "thumbnail": "the middle of the last round's beats with all 8 marbles on the stairs, 1 frame after the hit (frame 916), the upload's thumbnail picture; no text by default (--thumb-title adds the round title)"
+  }
+}

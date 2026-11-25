@@ -7,7 +7,8 @@
 #   ./setup.sh animal-docs --no-models  same without the Kokoro and Whisper downloads
 #   ./setup.sh animal-docs --bpy        also Blender 5.3 as a Python module (bpy, scikit-image, fast-simplification)
 #                                       for animal-docs/dragons and animal-docs/two-dragons-episode
-#   ./setup.sh ball-sims                Marble Pop: skia, cairo, numba, OpenCV, matplotlib..., Poppins + DejaVu fonts
+#   ./setup.sh ball-sims                Marble Pop: skia, cairo, numba, OpenCV, matplotlib..., Poppins + DejaVu +
+#                                       Montserrat fonts
 #   ./setup.sh ball-sims --bpy          also Blender 5.3 as a Python module (bpy, OpenEXR, pybullet) for the Blender props
 #   ./setup.sh kids-songs               Story Time with Kenji: skia, Kokoro, numpy/scipy audio, DejaVu fonts,
 #                                       the int8 Kokoro narrator model (~120 MB), ffmpeg check
@@ -32,7 +33,7 @@ done
 PY="${PYTHON:-python3}"
 MISSING=()
 
-usage() { sed -n '2,18p' "$0" | sed 's/^# \{0,1\}//'; }
+usage() { sed -n '2,19p' "$0" | sed 's/^# \{0,1\}//'; }
 
 has_mod() { "$PY" -c "import $1" >/dev/null 2>&1; }
 
@@ -103,11 +104,13 @@ ball_sims() {
   pkgs numpy:numpy scipy:scipy pillow:PIL matplotlib:matplotlib skia-python==144.1:skia pycairo:cairo numba:numba \
        opencv-python:cv2 fonttools:fontTools brotli:brotli scikit-image:skimage
   if [ "$BPY" = 1 ]; then pkgs bpy==5.3.0:bpy OpenEXR:OpenEXR pybullet==3.2.7:pybullet; fi
-  echo "-- fonts (Poppins, DejaVu Sans Bold)"
+  echo "-- fonts (Poppins, DejaVu Sans Bold, Montserrat)"
   run ball-sims/style-kit/get_fonts.py
   run ball-sims/neon-kit/get_fonts.py
+  run ball-sims/marble-raytrace-kit/get_fonts.py
   echo "-- tools"
   tool ffmpeg "apt-get install -y ffmpeg / brew install ffmpeg"
+  tool gcc "apt-get install -y gcc (marble-raytrace-kit compiles its C path tracers with OpenMP)"
   if command -v blender >/dev/null 2>&1; then echo "  info     $(blender --version 2>/dev/null | head -1) (marble-song-battle needs 4.0 or 4.1)"
   else echo "  info     no blender: only marble-song-battle needs it -> apt-get install -y blender (Ubuntu 24.04 ships 4.0.2)"; fi
   if ! has_mod cairo; then echo "  hint     pycairo builds from source on Linux: apt-get install -y libcairo2-dev pkg-config python3-dev"; fi
