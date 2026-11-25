@@ -1,0 +1,123 @@
+{
+  "prop": "storytime-kit",
+  "channel": "Story Time with Kenji (kids-songs/, formerly Rabbit Rhymes)",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "renderer": "skia-python 144.1 raster surface over a numpy RGBA array"
+  },
+  "encode": "ffmpeg libx264 -preset veryfast -crf 18 -pix_fmt yuv420p, one file per scene, joined with the concat demuxer -c copy; audio AAC 192k",
+  "fonts": {
+    "captions_and_hook": "DejaVu Sans Bold",
+    "also_loaded": [
+      "DejaVu Sans",
+      "DejaVu Serif (regular, bold, italic)",
+      "DejaVu Sans Mono Bold",
+      "DejaVu Sans Condensed Bold"
+    ]
+  },
+  "caption": {
+    "size_px": 66,
+    "max_width_px": 960,
+    "line_height": 1.18,
+    "fill": "#FFFFFF",
+    "outline": "#000000 10 px",
+    "shadow": "#000000 55 % offset (2, 6) blur 5",
+    "pop_in": "scale 0.9 -> 1.0 over 0.14 s (ease-out), fade in 0.07 s, appears 0.05 s before the line is spoken",
+    "position": "centred; each scene sets its own cap_y (330-1720 px)"
+  },
+  "hook_card": {
+    "top_px": 140,
+    "box": "x 38, width 1004, radius 30, #0B0B0D at 80 % with a soft shadow",
+    "line1": "white, 56 px",
+    "line2": "#F4C542 yellow, 40 px",
+    "shown": "0 - 3.7 s, fades out over 0.35 s"
+  },
+  "vignette": "radial, black 0 -> 60 % from half radius to 1180 px, centred at 46 % height (scenes can set vig)",
+  "transitions": {
+    "cut": "every scene dips up from black over 0.2 s (except the first)",
+    "end": "fade to black over the last 0.9 s"
+  },
+  "scene_timing": "a scene starts halfway through the pause before its first line and runs to the next scene's start",
+  "camera": "per scene: (zoom_from, zoom_to, focus_x, focus_y) eased over the scene, or a function of time returning zoom, focus and optional screen point",
+  "skin": {
+    "light": "#F2CBA8",
+    "mid": "#E2AE88",
+    "tan": "#C98F68",
+    "dark": "#8E5B3D"
+  },
+  "character": {
+    "height_px": "about 510 x scale, head to feet; feet at (x, y)",
+    "modes": [
+      "stand",
+      "walk",
+      "sit"
+    ],
+    "hair": [
+      "short",
+      "side",
+      "long",
+      "bun",
+      "bald",
+      "messy",
+      "beanie"
+    ],
+    "expressions": [
+      "neutral",
+      "smile",
+      "grin",
+      "worried",
+      "sad",
+      "angry",
+      "shock",
+      "stare",
+      "sinister",
+      "sleep"
+    ],
+    "look_keys": [
+      "skin",
+      "hair",
+      "hair_col",
+      "top",
+      "pants",
+      "shoe",
+      "collar",
+      "apron",
+      "tie",
+      "shirt",
+      "stripe",
+      "hood",
+      "patch",
+      "dress",
+      "necklace",
+      "glasses",
+      "beard",
+      "beard_col",
+      "mustache",
+      "beanie"
+    ]
+  },
+  "props": [
+    "key",
+    "mug",
+    "book",
+    "paper",
+    "phone",
+    "wrench"
+  ],
+  "sets": [
+    "floor_planks",
+    "window",
+    "frame_pic",
+    "lamp",
+    "couch (back/front)",
+    "ctable",
+    "house",
+    "tree",
+    "car",
+    "fog",
+    "sparkle"
+  ],
+  "look": "flat shapes, no outlines on bodies, soft blurred drop shadows, muted interior palettes with one warm light, gentle constant zoom"
+}

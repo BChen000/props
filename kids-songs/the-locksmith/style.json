@@ -1,0 +1,101 @@
+{
+  "prop": "the-locksmith",
+  "title": "The Locksmith",
+  "series": "Story Time with Kenji",
+  "made": "Nov 2026",
+  "hook": [
+    "He kept a copy of every key he ever made...",
+    "then someone got into HIS house"
+  ],
+  "timeline_s": 77.761,
+  "video_frames": 2332,
+  "lines": 46,
+  "scenes": [
+    "shop",
+    "cutting",
+    "drawer",
+    "street",
+    "living",
+    "putback",
+    "couple",
+    "mainst",
+    "morrison",
+    "photo",
+    "locks",
+    "awake",
+    "mug"
+  ],
+  "music": {
+    "preset": "d-minor",
+    "music_db": -3.5
+  },
+  "sfx_cues": [
+    [
+      "cutting",
+      0,
+      -0.1,
+      "grind",
+      0.1,
+      "scene"
+    ],
+    [
+      "street",
+      3,
+      0.2,
+      "click",
+      0.7
+    ],
+    [
+      "putback",
+      1,
+      0.0,
+      "boom",
+      0.35
+    ],
+    [
+      "photo",
+      0,
+      -0.05,
+      "boom",
+      0.8
+    ],
+    [
+      "locks",
+      0,
+      0.2,
+      "drill",
+      0.5,
+      1.6
+    ],
+    [
+      "locks",
+      2,
+      0.0,
+      "click",
+      0.8
+    ],
+    [
+      "awake",
+      2,
+      -0.2,
+      "whoosh",
+      0.4
+    ],
+    [
+      "mug",
+      2,
+      0.0,
+      "boom",
+      0.9
+    ],
+    [
+      "mug",
+      2,
+      0.02,
+      "clink",
+      0.25
+    ]
+  ],
+  "format": "1080x1920, 30 fps, H.264 crf 18 + AAC 192k, -14 LUFS",
+  "video_s": 77.73
+}
