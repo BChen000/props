@@ -25,7 +25,7 @@ The preview shows renders from this folder and from the episode:
 
 Verified from this folder before committing:
 - **Mesh caches:** rebuilt from scratch in an empty `cache/`. Both are identical, array for array, to the ones the episode rendered with: Western 130,002 vertices and 260,000 faces, Chinese 100,002 vertices and 200,000 faces.
-- **Western head still:** `demo.py western` matches the episode's shipped s02a render, apart from a 1/255 difference on 95 of 921,600 pixels (denoiser rounding).
+- **Western head still:** `demo.py western` matches the episode's shipped s02a render, apart from a 1/255 difference on fewer than 100 of 921,600 pixels (denoiser rounding). This held in two runs, one of them from a fresh clone.
 - **Other scenes:** `demo.py chinese` and, at PREVIEW size, `perched`, `flying`, `serpent` and `fossil` all rendered without errors and were looked at.
 
 ## Files

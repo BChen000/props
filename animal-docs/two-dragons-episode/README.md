@@ -26,7 +26,7 @@ Each stage was re-run from this folder and compared with the delivered files:
 | `mix.py` | whole mix | final mix sample-identical (24-bit) |
 | `shots3d.py` | s18b still; u16b_n frames 40 and 100 | within 1/255 on under 0.3 % of pixels (denoiser rounding); `meta.json` identical |
 | `shots2d.py` | 17 frames from 16 shots; the whole of sh02a | the frames byte-identical to the original project's; sh02a's decoded frames identical |
-| `assemble.py` | master | video and audio streams packet-identical to the delivered master |
+| `assemble.py` | master and upload copy | master's video and audio streams packet-identical. Upload copy: same 4,153 frames and duration, size within 0.002 %, 46.30 dB PSNR against the master as delivered (x264 with a rate cap isn't bit-exact between runs; took 16 min alongside other work) |
 | `thumb.py` | both thumbnails | byte-identical to the delivered JPEGs |
 
 ## Files
