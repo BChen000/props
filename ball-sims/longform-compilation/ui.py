@@ -1,8 +1,12 @@
-"""Everything drawn on top of the Shorts: backdrop, card shadow, side-panel game UI, transitions, thumbnail.
+"""Everything drawn over the full-screen rounds: round pill and progress marbles, logo, the game panel (countdown,
+answer, pick-your-colour), banners, up-next pill, intro and end screen, and the marble-pop transition frames.
 
-All sprites are drawn at 2x and downsampled, so circles and rounded boxes are anti-aliased.
+Sprites are drawn at 2x and downsampled, so circles and rounded boxes are anti-aliased. Functions return either an
+RGBA image or (image, x, y) placed on the 1920x1080 frame.
 """
+import itertools
 import os
+
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
@@ -31,20 +35,8 @@ def rgb(h, a=None):
     return c if a is None else c + (a,)
 
 
-class Layout:
-    def __init__(self, mode):
-        crop_h = S.MODES[mode]
-        self.cw = int(round(1080 * S.CARD_H / crop_h / 2)) * 2
-        self.cx = (S.W - self.cw) // 2
-        self.pw = self.cx
-        self.lx = self.pw // 2
-        self.rx = self.cx + self.cw + self.pw // 2
-        self.crop_h = crop_h
-
-
-# ----------------------------------------------------------------------------------------------- primitives
 def layer(w, h):
-    return Image.new("RGBA", (w * SS, h * SS), (0, 0, 0, 0))
+    return Image.new("RGBA", (int(w * SS), int(h * SS)), (0, 0, 0, 0))
 
 
 def down(im):
@@ -63,17 +55,16 @@ def fit_size(lines, key, size, max_w):
 
 
 def draw_text(im, s, cx, y, key, size, fill, stroke=0, stroke_fill=S.OUTLINE, shadow=True, anchor="mt"):
-    """cx, y and sizes in 1x pixels; im is a 2x layer."""
+    """cx, y and size in 1x pixels; im is a 2x layer."""
     f = font(key, size * SS)
+    fill = fill if len(fill) == 4 else tuple(fill) + (255,)
     if shadow:
         sh = Image.new("RGBA", im.size, (0, 0, 0, 0))
-        ImageDraw.Draw(sh).text((cx * SS, (y + size * 0.07) * SS), s, font=f, anchor=anchor,
-                                fill=(0, 0, 0, 150), stroke_width=stroke * SS, stroke_fill=(0, 0, 0, 150))
-        sh = sh.filter(ImageFilter.GaussianBlur(5 * SS))
-        im.alpha_composite(sh)
-    d = ImageDraw.Draw(im)
-    d.text((cx * SS, y * SS), s, font=f, anchor=anchor, fill=fill if len(fill) == 4 else fill + (255,),
-           stroke_width=stroke * SS, stroke_fill=rgb(stroke_fill) if isinstance(stroke_fill, str) else stroke_fill)
+        ImageDraw.Draw(sh).text((cx * SS, (y + size * 0.07) * SS), s, font=f, anchor=anchor, fill=(0, 0, 0, 150),
+                                stroke_width=stroke * SS, stroke_fill=(0, 0, 0, 150))
+        im.alpha_composite(sh.filter(ImageFilter.GaussianBlur(5 * SS)))
+    ImageDraw.Draw(im).text((cx * SS, y * SS), s, font=f, anchor=anchor, fill=fill, stroke_width=stroke * SS,
+                            stroke_fill=rgb(stroke_fill) if isinstance(stroke_fill, str) else stroke_fill)
 
 
 def draw_lines(im, lines, cx, top, key, size, fills, stroke=6, gap=0.98, max_w=None):
@@ -86,245 +77,53 @@ def draw_lines(im, lines, cx, top, key, size, fills, stroke=6, gap=0.98, max_w=N
     return y
 
 
-def pill(im, cx, cy, w, h, fill, outline=None, ow=0):
-    d = ImageDraw.Draw(im)
-    box = [(cx - w / 2) * SS, (cy - h / 2) * SS, (cx + w / 2) * SS, (cy + h / 2) * SS]
-    d.rounded_rectangle(box, radius=h / 2 * SS, fill=fill, outline=outline, width=ow * SS)
+def rrect(im, box, r, fill, outline=None, ow=0):
+    ImageDraw.Draw(im).rounded_rectangle([v * SS for v in box], radius=r * SS, fill=fill, outline=outline,
+                                         width=int(ow * SS))
 
 
-def marble(r, color, glow=False):
-    """A glossy marble sprite (RGBA, 2r x 2r at 1x), lit from the top left like the 3D sets."""
-    n = 2 * r * 4
+def marble(r, color):
+    """Glossy marble sprite (RGBA, 2r x 2r), lit from the top left like the 3D sets."""
+    n = max(4, int(2 * r * 4))
     yy, xx = np.mgrid[0:n, 0:n].astype(np.float32)
     nx = (xx + 0.5) / (n / 2) - 1
     ny = (yy + 0.5) / (n / 2) - 1
     rr = nx ** 2 + ny ** 2
-    inside = rr <= 1
     nz = np.sqrt(np.clip(1 - rr, 0, 1))
     L = np.array([-0.45, -0.6, 0.66])
     L /= np.linalg.norm(L)
     lam = np.clip(nx * L[0] + ny * L[1] + nz * L[2], 0, 1)
-    refl_z = 2 * lam * nz - L[2]
-    spec = np.clip(refl_z, 0, 1) ** 40
-    rim = (1 - nz) ** 3 * 0.35
+    spec = np.clip(2 * lam * nz - L[2], 0, 1) ** 40
     base = np.array(rgb(color), np.float32) / 255
-    col = base[None, None, :] * (0.38 + 0.72 * lam[..., None]) + spec[..., None] * 0.95 + rim[..., None] * 0.6
-    col = np.clip(col, 0, 1)
-    a = inside.astype(np.float32)
-    img = np.dstack([col * 255, a[..., None] * 255]).astype(np.uint8)
-    im = Image.fromarray(img, "RGBA").resize((2 * r, 2 * r), Image.LANCZOS)
-    return im
+    col = base[None, None, :] * (0.38 + 0.72 * lam[..., None]) + spec[..., None] * 0.95 + ((1 - nz) ** 3 * 0.35)[..., None]
+    img = np.dstack([np.clip(col, 0, 1) * 255, (rr <= 1)[..., None] * 255.0]).astype(np.uint8)
+    return Image.fromarray(img, "RGBA").resize((max(2, int(2 * r)), max(2, int(2 * r))), Image.LANCZOS)
 
 
 def paste_center(dst, src, cx, cy):
     dst.alpha_composite(src, (int(round(cx - src.width / 2)), int(round(cy - src.height / 2))))
 
 
-# ----------------------------------------------------------------------------------------------- backdrop
-def backdrop(frame):
-    """Blurred, darkened copy of a clip frame filling the 16:9 canvas."""
-    f = frame.convert("RGB")
-    scale = S.W / f.width
-    f = f.resize((S.W, int(f.height * scale)), Image.BILINEAR)
-    top = (f.height - S.H) // 2
-    f = f.crop((0, top, S.W, top + S.H))
-    small = f.resize((S.W // 8, S.H // 8), Image.BILINEAR).filter(ImageFilter.GaussianBlur(7))
-    f = small.resize((S.W, S.H), Image.BICUBIC)
-    a = np.asarray(f).astype(np.float32) * S.BG_BRIGHTNESS
-    yy, xx = np.mgrid[0:S.H, 0:S.W].astype(np.float32)
-    v = ((xx - S.W / 2) / (S.W / 2)) ** 2 + ((yy - S.H / 2) / (S.H / 2)) ** 2
-    a *= np.clip(1.08 - 0.32 * v, 0.55, 1)[..., None]
-    tint = np.array(rgb("#1e0c33"), np.float32)
-    a = a * 0.86 + tint * 0.14
-    return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8), "RGB")
+def heart(im, cx, cy, s):
+    t = np.linspace(0, 2 * np.pi, 400)
+    x = 16 * np.sin(t) ** 3
+    y = -(13 * np.cos(t) - 5 * np.cos(2 * t) - 2 * np.cos(3 * t) - np.cos(4 * t))
+    ImageDraw.Draw(im).polygon([((cx + a * s / 17) * SS, (cy + b * s / 17) * SS) for a, b in zip(x, y)],
+                               fill=rgb(S.BALL["red"], 255))
 
 
-def card_mask(lay):
-    m = Image.new("L", (lay.cw * 4, S.CARD_H * 4), 0)
-    ImageDraw.Draw(m).rounded_rectangle([0, 0, lay.cw * 4 - 1, S.CARD_H * 4 - 1], radius=S.CARD_R * 4, fill=255)
-    return m.resize((lay.cw, S.CARD_H), Image.LANCZOS)
-
-
-def logo(im, cx, cy):
-    """Channel wordmark: a pink marble + "Marble Pop"."""
-    f = font("blk", 44 * SS)
-    tw = text_w(S.CHANNEL, f) / SS
-    total = 56 + 14 + tw
-    x0 = cx - total / 2
-    m = marble(28 * SS // 2 * 2, S.PINK)
-    paste_center(im, m, (x0 + 28) * SS, cy * SS)
-    draw_text(im, S.CHANNEL, x0 + 56 + 14 + tw / 2, cy, "blk", 44, (255, 255, 255), stroke=5, anchor="mm")
-
-
-def progress(im, lay, idx, total, kind):
-    cx = lay.rx
-    draw_text(im, f"ROUND {min(idx + 1, total)} OF {total}" if kind != "bonus" else "BONUS ROUND",
-              cx, 232, "xb", 34, rgb(S.YELLOW) if kind == "bonus" else (255, 255, 255), stroke=5)
-    cols, step, r = 5, 66, 23
-    gx0 = cx - (cols - 1) * step / 2
-    for i in range(total):
-        x = gx0 + (i % cols) * step
-        y = 330 + (i // cols) * step
-        if i < idx or kind == "bonus":
-            paste_center(im, marble(r * SS, S.MARBLES[i % len(S.MARBLES)]), x * SS, y * SS)
-        elif i == idx:
-            d = ImageDraw.Draw(im)
-            d.ellipse([(x - r - 8) * SS, (y - r - 8) * SS, (x + r + 8) * SS, (y + r + 8) * SS], outline=(255, 255, 255, 255),
-                      width=5 * SS)
-            paste_center(im, marble((r + 3) * SS, S.MARBLES[i % len(S.MARBLES)]), x * SS, y * SS)
-        else:
-            d = ImageDraw.Draw(im)
-            d.ellipse([(x - r) * SS, (y - r) * SS, (x + r) * SS, (y + r) * SS], fill=(255, 255, 255, 38),
-                      outline=(255, 255, 255, 70), width=2 * SS)
-    by = 330 + 4 * step + 30
-    gold = marble(36 * SS, S.GOLD)
-    paste_center(im, gold, cx * SS, by * SS)
-    if kind != "bonus":
-        draw_text(im, "?", cx, by, "blk", 44, (90, 50, 0), shadow=False, anchor="mm")
-        draw_text(im, "SECRET BONUS", cx, by + 50, "xb", 30, rgb(S.GOLD), stroke=4)
-    else:
-        draw_text(im, "!", cx, by, "blk", 44, (90, 50, 0), shadow=False, anchor="mm")
-        draw_text(im, "UNLOCKED!", cx, by + 50, "xb", 30, rgb(S.GOLD), stroke=4)
-
-
-def round_pill(im, lay, idx, kind, label=None):
-    text = label or ("BONUS SONG!" if kind == "bonus" else f"ROUND {idx + 1}")
-    f = font("blk", 40 * SS)
-    w = text_w(text, f) / SS + 70
-    fill = rgb(S.GOLD, 255) if kind == "bonus" or label else rgb(S.PINK, 255)
-    pill(im, lay.lx, 112, w, 76, fill, outline=(255, 255, 255, 255), ow=4)
-    draw_text(im, text, lay.lx, 112, "blk", 40, rgb(S.INK), shadow=False, anchor="mm")
-
-
-def color_row(im, cx, cy, names, r=46, labels=True, gap=None):
-    gap = gap or (2 * r + 26)
-    x0 = cx - (len(names) - 1) * gap / 2
-    for i, n in enumerate(names):
-        x = x0 + i * gap
-        paste_center(im, marble(r * SS, S.BALL[n]), x * SS, cy * SS)
-        if labels:
-            draw_text(im, n.upper(), x, cy + r + 14, "xb", 26 if len(names) < 4 else 22, (255, 255, 255), stroke=4)
-
-
-def static_layer(item, lay, idx, total, bg):
-    """Opaque full frame under the card: backdrop, card shadow, right panel and the static left-panel content."""
-    base = bg.convert("RGBA")
-    sh = Image.new("RGBA", (S.W, S.H), (0, 0, 0, 0))
-    ImageDraw.Draw(sh).rounded_rectangle([lay.cx - 6, S.CARD_Y + 4, lay.cx + lay.cw + 6, S.CARD_Y + S.CARD_H + 18],
-                                         radius=S.CARD_R + 6, fill=(0, 0, 0, 170))
-    base.alpha_composite(sh.filter(ImageFilter.GaussianBlur(18)))
-    ui = layer(S.W, S.H)
-    d = ImageDraw.Draw(ui)
-    d.rounded_rectangle([(lay.cx - 3) * SS, (S.CARD_Y - 3) * SS, (lay.cx + lay.cw + 3) * SS, (S.CARD_Y + S.CARD_H + 3) * SS],
-                        radius=(S.CARD_R + 3) * SS, outline=(255, 255, 255, 120), width=3 * SS)
-    logo(ui, lay.rx, 108)
-    progress(ui, lay, idx, total, item["kind"])
-    round_pill(ui, lay, idx, item["kind"], item.get("label"))
-    k = item["kind"]
-    maxw = lay.pw - 60
-    if k == "race":
-        draw_lines(ui, ["PICK YOUR", "COLOR!"], lay.lx, 210, "blk", 82, [(255, 255, 255), rgb(S.YELLOW)], max_w=maxw)
-        color_row(ui, lay.lx, 560, item["colors"], r=50 if len(item["colors"]) <= 2 else 40)
-        draw_text(ui, item.get("sub", ""), lay.lx, 690, "xb", 34, (255, 255, 255), stroke=5)
-        draw_text(ui, "Comment your pick!", lay.lx, 745, "sb", 30, (230, 230, 240), stroke=4)
-    elif k == "run":
-        fills = [(255, 255, 255)] * (len(item["prompt"]) - 1) + [rgb(S.YELLOW)]
-        y = draw_lines(ui, item["prompt"], lay.lx, 205, "blk", 74, fills, max_w=maxw)
-        if item.get("colors"):
-            n = len(item["colors"])
-            color_row(ui, lay.lx, 640, item["colors"], r=40 if n <= 3 else 30, labels=n <= 3,
-                      gap=None if n <= 3 else 74)
-    return base, down(ui)
-
-
-def compose_static(base, ui):
-    out = base.copy()
-    out.alpha_composite(ui)
-    return out.convert("RGB")
-
-
-# ----------------------------------------------------------------------------------------------- dynamic sprites
-def crop_sprite(im):
-    """Trim a 1x RGBA layer to its content; returns (sprite, x, y)."""
-    bb = im.getbbox()
-    if not bb:
-        return im.crop((0, 0, 2, 2)), 0, 0
-    x0, y0 = max(bb[0] - 2, 0) // 2 * 2, max(bb[1] - 2, 0) // 2 * 2
-    x1, y1 = min(bb[2] + 2, im.width), min(bb[3] + 2, im.height)
-    x1 = x0 + (x1 - x0 + 1) // 2 * 2
-    y1 = y0 + (y1 - y0 + 1) // 2 * 2
-    return im.crop((x0, y0, x1, y1)), x0, y0
-
-
-def song_prompt(lay, kind):
-    ui = layer(S.W, S.H)
-    if kind == "bonus":
-        draw_lines(ui, ["GUESS THE", "NEW SONG!"], lay.lx, 215, "blk", 86, [(255, 255, 255), rgb(S.GOLD)],
-                   max_w=lay.pw - 60)
-        draw_text(ui, "Never posted before!", lay.lx, 880, "xb", 36, rgb(S.GOLD), stroke=5)
-    else:
-        draw_lines(ui, ["GUESS THE", "SONG!"], lay.lx, 215, "blk", 86, [(255, 255, 255), rgb(S.YELLOW)],
-                   max_w=lay.pw - 60)
-        draw_text(ui, "Shout it out!", lay.lx, 880, "xb", 36, (255, 255, 255), stroke=5)
-    return crop_sprite(down(ui))
-
-
-def countdown(lay, n, total):
-    r = 122
-    im = layer(2 * r + 40, 2 * r + 40)
-    c = r + 20
+def check_badge(im, bx, by, br=30):
     d = ImageDraw.Draw(im)
-    d.ellipse([(c - r) * SS, (c - r) * SS, (c + r) * SS, (c + r) * SS], fill=S.PANEL_RGBA)
-    d.ellipse([(c - r) * SS, (c - r) * SS, (c + r) * SS, (c + r) * SS], outline=(255, 255, 255, 70), width=14 * SS)
-    frac = n / total
-    d.arc([(c - r) * SS, (c - r) * SS, (c + r) * SS, (c + r) * SS], start=-90, end=-90 + 360 * frac,
-          fill=rgb(S.YELLOW, 255), width=14 * SS)
-    draw_text(im, str(n), c, c + 6, "blk", 150, rgb(S.YELLOW), stroke=7, anchor="mm")
-    return down(im)
-
-
-def answer_block(lay, title, extra=None, header="IT'S...", icon=None, color=None, points=False):
-    w = lay.pw - 70
-    ui = layer(lay.pw, 640)
-    cx = lay.pw / 2
-    draw_text(ui, header, cx, 10, "blk", 58, rgb(S.YELLOW), stroke=6)
-    key = "blk"
-    lines, size = wrap_balanced(title, key, w - 56)
-    icon_h = 130 if icon else 0
-    box_h = len(lines) * size * 1.08 + 56 + icon_h
-    top = 100
-    d = ImageDraw.Draw(ui)
-    d.rounded_rectangle([(cx - w / 2) * SS, top * SS, (cx + w / 2) * SS, (top + box_h) * SS], radius=34 * SS,
-                        fill=(255, 255, 255, 255), outline=rgb(S.BALL["green"], 255), width=8 * SS)
-    y = top + 28
-    if icon == "heart":
-        heart(ui, cx, y + 58, 62)
-        y += icon_h
-    elif icon == "marble":
-        paste_center(ui, marble(54 * SS, S.BALL[color]), cx * SS, (y + 58) * SS)
-        y += icon_h
-    for l in lines:
-        draw_text(ui, l, cx, y, key, size, rgb(color and S.BALL[color] or S.INK) if icon == "marble" else rgb(S.INK),
-                  shadow=False)
-        y += size * 1.08
-    bx, by, br = cx + w / 2 - 14, top + 8, 34
     d.ellipse([(bx - br) * SS, (by - br) * SS, (bx + br) * SS, (by + br) * SS], fill=rgb(S.BALL["green"], 255),
               outline=(255, 255, 255, 255), width=5 * SS)
-    d.line([((bx - 15) * SS, (by + 1) * SS), ((bx - 4) * SS, (by + 12) * SS), ((bx + 16) * SS, (by - 11) * SS)],
-           fill=(255, 255, 255, 255), width=8 * SS, joint="curve")
-    yb = top + box_h + 26
-    if extra:
-        draw_text(ui, extra, cx, yb, "xb", 36, (255, 255, 255), stroke=5)
-        yb += 52
-    if points:
-        draw_text(ui, "Got it? +1 point!", cx, yb, "xb", 36, rgb(S.YELLOW), stroke=5)
-    return down(ui)
+    d.line([((bx - 13) * SS, by * SS), ((bx - 3) * SS, (by + 10) * SS), ((bx + 14) * SS, (by - 10) * SS)],
+           fill=(255, 255, 255, 255), width=7 * SS, joint="curve")
 
 
-def wrap_balanced(title, key, max_w, min_size={1: 54, 2: 46, 3: 0}):
-    """Fewest lines that still allow a big font; within a line count, the split with the shortest longest line."""
-    import itertools
+def wrap_balanced(title, key, max_w, min_size={1: 50, 2: 42, 3: 0}, top=60):
+    """Fewest lines that still allow a big font; within a line count, the split whose longest line is shortest."""
     words = title.split()
+    best = None
     for n in (1, 2, 3):
         if n > len(words):
             break
@@ -335,108 +134,256 @@ def wrap_balanced(title, key, max_w, min_size={1: 54, 2: 46, 3: 0}):
             wmax = max(text_w(l, font(key, 100)) for l in ls) / 100
             if best is None or wmax < best[0]:
                 best = (wmax, ls)
-        size = min(66, int(max_w / best[0]) // 2 * 2)
+        size = min(top, int(max_w / best[0]) // 2 * 2)
         if size >= min_size[n]:
             return best[1], size
-    return best[1], max(size, 30)
+    return best[1], max(size, 28)
 
 
-def heart(im, cx, cy, s):
-    t = np.linspace(0, 2 * np.pi, 400)
-    x = 16 * np.sin(t) ** 3
-    y = -(13 * np.cos(t) - 5 * np.cos(2 * t) - 2 * np.cos(3 * t) - np.cos(4 * t))
-    pts = [((cx + xi * s / 17) * SS, (cy + yi * s / 17) * SS) for xi, yi in zip(x, y)]
-    ImageDraw.Draw(im).polygon(pts, fill=rgb(S.BALL["red"], 255))
+# ----------------------------------------------------------------------------------------------- always-on corners
+def dots_layout(total):
+    x0, step = S.PILL_XY[0] + 16, 18.5
+    return [(x0 + i * step, S.DOTS_Y) for i in range(total)] + [(x0 + total * step + 12, S.DOTS_Y)]
 
 
-def pop_frames(block, scales=(0.55, 0.82, 1.06, 1.12, 1.05)):
-    out = []
-    for s in scales:
-        w, h = max(2, int(block.width * s) // 2 * 2), max(2, int(block.height * s) // 2 * 2)
-        out.append(block.resize((w, h), Image.LANCZOS))
-    return out
+def corner_left(idx, total, kind, label=None):
+    """Round pill + a row of progress marbles (done: coloured, current: ringed, to come: faint, bonus: gold)."""
+    w, h = 470, 160
+    im = layer(w, h)
+    text = label or ("BONUS SONG!" if kind == "bonus" else f"ROUND {idx + 1}")
+    f = font("blk", 40 * SS)
+    pw = text_w(text, f) / SS + 64
+    x0, y0 = S.PILL_XY
+    fill = rgb(S.GOLD, 255) if (kind == "bonus" or label) else rgb(S.PINK, 255)
+    rrect(im, (0, 0, pw, 70), 35, fill, (255, 255, 255, 255), 4)
+    draw_text(im, text, pw / 2, 35, "blk", 40, rgb(S.INK), shadow=False, anchor="mm")
+    for i, (x, y) in enumerate(dots_layout(total)):
+        x, y = x - x0, y - y0
+        if i == total:
+            paste_center(im, marble(13 * SS, S.GOLD), x * SS, y * SS)
+        elif i < idx or kind == "bonus":
+            paste_center(im, marble(8 * SS, S.MARBLES[i % len(S.MARBLES)]), x * SS, y * SS)
+        elif i == idx:
+            pass
+        else:
+            ImageDraw.Draw(im).ellipse([(x - 6) * SS, (y - 6) * SS, (x + 6) * SS, (y + 6) * SS], fill=(255, 255, 255, 80))
+    return down(im), x0, y0
 
 
-def race_end(lay):
-    ui = layer(lay.pw, 260)
-    cx = lay.pw / 2
-    pill(ui, cx, 130, lay.pw - 60, 210, (10, 4, 20, 215), outline=rgb(S.YELLOW, 255), ow=5)
-    draw_lines(ui, ["DID YOUR", "COLOR WIN?"], cx, 52, "blk", 62, [(255, 255, 255), rgb(S.YELLOW)], max_w=lay.pw - 120)
-    return down(ui)
+def corner_logo():
+    f = font("blk", 40 * SS)
+    tw = text_w(S.CHANNEL, f) / SS
+    w, h = int(tw + 76), 70
+    im = layer(w, h)
+    paste_center(im, marble(25 * SS, S.PINK), 27 * SS, 35 * SS)
+    draw_text(im, S.CHANNEL, 62 + tw / 2, 35, "blk", 40, (255, 255, 255), stroke=5, anchor="mm")
+    img = down(im)
+    return img, S.LOGO_RIGHT - img.width, S.LOGO_Y - img.height // 2
+
+
+# ----------------------------------------------------------------------------------------------- the game panel
+def panel_base(h=None):
+    P = S.PANEL
+    h = h or P["h"]
+    im = layer(P["w"], h)
+    rrect(im, (2, 2, P["w"] - 2, h - 2), 30, S.PANEL_RGBA, (255, 255, 255, 190), 3)
+    return im
+
+
+def panel_guess(kind, label=None):
+    P = S.PANEL
+    im = panel_base()
+    cx = P["w"] / 2
+    if kind == "bonus":
+        draw_lines(im, ["GUESS THE", "NEW SONG!"], cx, 28, "blk", 60, [(255, 255, 255), rgb(S.GOLD)], max_w=P["w"] - 50)
+        draw_text(im, "Never posted before!", cx, P["h"] - 70, "xb", 32, rgb(S.GOLD), stroke=4)
+    else:
+        if label:
+            draw_text(im, label, cx, 22, "blk", 40, rgb(S.GOLD), stroke=5)
+        draw_lines(im, ["GUESS THE", "SONG!"], cx, 74 if label else 28, "blk", 60, [(255, 255, 255), rgb(S.YELLOW)],
+                   max_w=P["w"] - 50)
+        draw_text(im, "Shout it out!", cx, P["h"] - 70, "xb", 34, (255, 255, 255), stroke=5)
+    return down(im), P["x"], P["y"]
+
+
+def countdown(n, total, r=104):
+    im = layer(2 * r + 30, 2 * r + 30)
+    c = r + 15
+    d = ImageDraw.Draw(im)
+    box = [(c - r) * SS, (c - r) * SS, (c + r) * SS, (c + r) * SS]
+    d.ellipse(box, fill=(0, 0, 0, 90))
+    d.ellipse(box, outline=(255, 255, 255, 70), width=13 * SS)
+    d.arc(box, start=-90, end=-90 + 360 * n / total, fill=rgb(S.YELLOW, 255), width=13 * SS)
+    draw_text(im, str(n), c, c + 6, "blk", 128, rgb(S.YELLOW), stroke=7, anchor="mm")
+    img = down(im)
+    return img, S.PANEL["x"] + S.PANEL["w"] // 2 - img.width // 2, S.PANEL["y"] + 300 - img.height // 2
+
+
+def answer_card(title, w, extra=None, points=True, header="IT'S...", icon=None, color=None):
+    """Header + white card with the answer (balanced wrap) + optional lines; sized to its content."""
+    lines, size = wrap_balanced(title, "blk", w - 60)
+    icon_h = 120 if icon else 0
+    box_h = len(lines) * size * 1.08 + 46 + icon_h
+    total_h = 78 + box_h + 24 + (48 if extra else 0) + (48 if points else 0) + 10
+    im = layer(w, total_h)
+    cx = w / 2
+    draw_text(im, header, cx, 4, "blk", 54, rgb(S.YELLOW), stroke=6)
+    top = 78
+    rrect(im, (14, top, w - 14, top + box_h), 30, (255, 255, 255, 255), rgb(S.BALL["green"], 255), 7)
+    y = top + 22
+    if icon == "heart":
+        heart(im, cx, y + 54, 56)
+        y += icon_h
+    elif icon == "marble":
+        paste_center(im, marble(50 * SS, S.BALL[color]), cx * SS, (y + 54) * SS)
+        y += icon_h
+    for l in lines:
+        draw_text(im, l, cx, y, "blk", size, rgb(S.BALL[color]) if (icon == "marble" and color) else rgb(S.INK),
+                  shadow=False)
+        y += size * 1.08
+    check_badge(im, w - 30, top + 6)
+    yb = top + box_h + 22
+    if extra:
+        draw_text(im, extra, cx, yb, "xb", 32, (255, 255, 255), stroke=5)
+        yb += 48
+    if points:
+        draw_text(im, "Got it? +1 point!", cx, yb, "xb", 32, rgb(S.YELLOW), stroke=5)
+    return down(im)
+
+
+def panel_answer(title, extra=None):
+    """Panel after the reveal: the answer card on top, the equalizer (a widget) fills the bottom."""
+    P = S.PANEL
+    im = panel_base()
+    card = answer_card(title, P["w"] - 24, extra=extra)
+    out = down(im)
+    out.alpha_composite(card, (12, 16))
+    return out, P["x"], P["y"]
+
+
+def pop_frames(img, scales=(0.55, 0.82, 1.06, 1.12, 1.05)):
+    return [img.resize((max(2, int(img.width * s) // 2 * 2), max(2, int(img.height * s) // 2 * 2)), Image.LANCZOS)
+            for s in scales]
+
+
+def panel_race_start(colors, sub):
+    P = S.PANEL
+    h = 470
+    im = panel_base(h)
+    cx = P["w"] / 2
+    draw_lines(im, ["PICK YOUR", "COLOR!"], cx, 26, "blk", 66, [(255, 255, 255), rgb(S.YELLOW)], max_w=P["w"] - 50)
+    n = len(colors)
+    r = 44 if n <= 2 else 34
+    gap = 2 * r + (30 if n <= 2 else 16)
+    x0 = cx - (n - 1) * gap / 2
+    for i, c in enumerate(colors):
+        paste_center(im, marble(r * SS, S.BALL[c]), (x0 + i * gap) * SS, 240 * SS)
+        draw_text(im, c.upper(), x0 + i * gap, 240 + r + 10, "xb", 24 if n <= 2 else 20, (255, 255, 255), stroke=4)
+    draw_text(im, sub, cx, 350, "xb", 32, (255, 255, 255), stroke=5)
+    draw_text(im, "Comment your pick!", cx, 400, "sb", 28, (230, 230, 240), stroke=4)
+    return down(im), P["x"], P["y"]
+
+
+def chip_race(colors):
+    n = len(colors)
+    w, h = 64 + 52 * n + 150, 76
+    im = layer(w, h)
+    rrect(im, (2, 2, w - 2, h - 2), 36, S.PANEL_RGBA, (255, 255, 255, 190), 3)
+    draw_text(im, "PICK:", 70, h / 2, "blk", 30, rgb(S.YELLOW), stroke=4, anchor="mm")
+    for i, c in enumerate(colors):
+        paste_center(im, marble(21 * SS, S.BALL[c]), (140 + i * 52) * SS, (h / 2) * SS)
+    img = down(im)
+    return img, S.PANEL["x"] + S.PANEL["w"] - img.width, S.PANEL["y"]
+
+
+def panel_race_end():
+    P = S.PANEL
+    h = 210
+    im = panel_base(h)
+    draw_lines(im, ["DID YOUR", "COLOR WIN?"], P["w"] / 2, 34, "blk", 64, [(255, 255, 255), rgb(S.YELLOW)],
+               max_w=P["w"] - 50)
+    return down(im), P["x"], P["y"]
+
+
+def banner(text, y=22, color=S.YELLOW):
+    f = font("blk", 50 * SS)
+    tw = text_w(text, f) / SS
+    w, h = int(tw + 80), 86
+    im = layer(w, h)
+    rrect(im, (2, 2, w - 2, h - 2), 43, S.PANEL_RGBA, (255, 255, 255, 200), 3)
+    draw_text(im, text, w / 2, h / 2 + 2, "blk", 50, rgb(color), stroke=5, anchor="mm")
+    img = down(im)
+    return img, (S.W - img.width) // 2, y
+
+
+def run_reveal(answer, icon=None, color=None):
+    card = answer_card(answer, 520, points=False, icon=icon, color=color)
+    return card, (S.W - card.width) // 2, (S.H - card.height) // 2 - 40
 
 
 def upnext(text, gold=False):
     f1, f2 = font("xb", 26 * SS), font("blk", 40 * SS)
     tw = max(text_w("UP NEXT", f1), text_w(text, f2)) / SS
-    w, h = int(tw + 150), 124
+    w, h = int(tw + 140), 118
     im = layer(w, h)
+    rrect(im, (2, 2, w - 2, h - 2), 28, (12, 5, 24, 230), rgb(S.GOLD if gold else S.PINK, 255), 4)
     d = ImageDraw.Draw(im)
-    d.rounded_rectangle([0, 0, w * SS - 1, h * SS - 1], radius=28 * SS, fill=(10, 4, 20, 225),
-                        outline=rgb(S.GOLD if gold else S.PINK, 255), width=4 * SS)
-    tx = 34
-    d.polygon([((tx) * SS, (h / 2 - 22) * SS), ((tx) * SS, (h / 2 + 22) * SS), ((tx + 34) * SS, (h / 2) * SS)],
+    tx = 30
+    d.polygon([(tx * SS, (h / 2 - 20) * SS), (tx * SS, (h / 2 + 20) * SS), ((tx + 32) * SS, (h / 2) * SS)],
               fill=rgb(S.YELLOW, 255))
-    d.text(((tx + 58) * SS, 22 * SS), "UP NEXT", font=f1, fill=rgb(S.YELLOW, 255))
-    d.text(((tx + 58) * SS, 52 * SS), text, font=f2, fill=(255, 255, 255, 255))
+    d.text(((tx + 54) * SS, 20 * SS), "UP NEXT", font=f1, fill=rgb(S.YELLOW, 255))
+    d.text(((tx + 54) * SS, 50 * SS), text, font=f2, fill=(255, 255, 255, 255))
     return down(im)
 
 
-def panels_overlay(lay, bg):
-    """Opaque side panels (backdrop only) with a transparent hole over the card."""
-    im = bg.convert("RGBA")
-    hole = Image.new("L", (S.W, S.H), 255)
-    ImageDraw.Draw(hole).rectangle([lay.cx - 8, 0, lay.cx + lay.cw + 8, S.H], fill=0)
-    im.putalpha(hole)
-    return im
-
-
-def intro_overlay(lay, bg):
-    im = panels_overlay(lay, bg)
+# ----------------------------------------------------------------------------------------------- intro / end
+def intro_overlay():
+    im = Image.new("RGBA", (S.W, S.H), (0, 0, 0, 0))
+    yy, xx = np.mgrid[0:S.H, 0:S.W].astype(np.float32)
+    v = np.clip(1 - (((xx - S.W / 2) / (S.W * 0.42)) ** 2 + ((yy - S.H * 0.47) / (S.H * 0.30)) ** 2), 0, 1)
+    shade = (np.clip(v * 1.6, 0, 1) * 150).astype(np.uint8)
+    im.putalpha(Image.fromarray(shade))
     ui = layer(S.W, S.H)
-    left, right = S.INTRO_LINES
-    draw_lines(ui, left, lay.lx, 150, "blk", 150, [(255, 255, 255), (255, 255, 255), rgb(S.YELLOW), rgb(S.YELLOW)],
-               stroke=8, gap=0.93, max_w=lay.pw - 50)
-    logo(ui, lay.rx, 108)
-    draw_lines(ui, right[:1], lay.rx, 290, "blk", 92, [(255, 255, 255)], stroke=7, max_w=lay.pw - 60)
-    draw_lines(ui, right[1:], lay.rx, 430, "blk", 70, [rgb(S.GOLD), rgb(S.GOLD), (255, 255, 255)], stroke=6,
-               max_w=lay.pw - 60)
-    paste_center(ui, marble(60 * SS, S.GOLD), lay.rx * SS, 790 * SS)
-    draw_text(ui, "?", lay.rx, 790, "blk", 74, (90, 50, 0), shadow=False, anchor="mm")
+    t1, t2 = S.INTRO_LINES
+    draw_lines(ui, [t1], S.W / 2, 360, "blk", 118, [rgb(S.YELLOW)], stroke=9, max_w=S.W - 200)
+    draw_text(ui, t2, S.W / 2, 520, "blk", 56, (255, 255, 255), stroke=7)
+    for i in range(7):
+        paste_center(ui, marble(30 * SS, S.MARBLES[i]), (S.W / 2 + (i - 3) * 86) * SS, 660 * SS)
     im.alpha_composite(down(ui))
     return im
 
 
-def endscreen_overlay(lay, bg):
-    im = panels_overlay(lay, bg)
+def endscreen_overlay():
+    """Right-hand end screen: thanks + comment ask, a frame for YouTube's video element and a circle for Subscribe."""
+    im = Image.new("RGBA", (S.W, S.H), (0, 0, 0, 0))
     ui = layer(S.W, S.H)
-    title, l1, l2 = S.END_LINES
-    draw_lines(ui, title, lay.lx, 110, "blk", 76, [(255, 255, 255), rgb(S.YELLOW)], max_w=lay.pw - 60)
-    draw_text(ui, l1, lay.lx, 300, "xb", 36, (255, 255, 255), stroke=5)
-    draw_text(ui, l2, lay.lx, 350, "xb", 36, rgb(S.YELLOW), stroke=5)
+    x0, x1 = 1130, 1890
+    rrect(ui, (x0, 40, x1, 1010), 36, (12, 5, 24, 215), (255, 255, 255, 200), 3)
+    cx = (x0 + x1) / 2
+    t, l1, l2 = S.END_LINES
+    draw_lines(ui, t, cx, 70, "blk", 70, [(255, 255, 255), rgb(S.YELLOW)], max_w=x1 - x0 - 60)
+    draw_text(ui, l1, cx, 238, "xb", 34, (255, 255, 255), stroke=5)
+    draw_text(ui, l2, cx, 284, "xb", 34, rgb(S.YELLOW), stroke=5)
+    bw, bh = 560, 315
+    top = 360
+    rrect(ui, (cx - bw / 2, top, cx + bw / 2, top + bh), 20, (255, 255, 255, 28), (255, 255, 255, 210), 5)
     d = ImageDraw.Draw(ui)
-    r, cy = 112, 640
-    d.ellipse([(lay.lx - r) * SS, (cy - r) * SS, (lay.lx + r) * SS, (cy + r) * SS], fill=(255, 255, 255, 30),
-              outline=(255, 255, 255, 200), width=5 * SS)
-    draw_text(ui, "SUBSCRIBE", lay.lx, cy + r + 24, "blk", 40, rgb(S.BALL["red"]), stroke=6)
-    logo(ui, lay.rx, 108)
-    draw_text(ui, "WATCH NEXT", lay.rx, 300, "blk", 58, (255, 255, 255), stroke=6)
-    bw = lay.pw - 70
-    bh = int(bw * 9 / 16)
-    top = 400
-    d.rounded_rectangle([(lay.rx - bw / 2) * SS, top * SS, (lay.rx + bw / 2) * SS, (top + bh) * SS], radius=22 * SS,
-                        fill=(255, 255, 255, 30), outline=(255, 255, 255, 200), width=5 * SS)
-    tri = [((lay.rx - 26) * SS, (top + bh / 2 - 34) * SS), ((lay.rx - 26) * SS, (top + bh / 2 + 34) * SS),
-           ((lay.rx + 36) * SS, (top + bh / 2) * SS)]
-    d.polygon(tri, fill=(255, 255, 255, 170))
+    d.polygon([((cx - 24) * SS, (top + bh / 2 - 32) * SS), ((cx - 24) * SS, (top + bh / 2 + 32) * SS),
+               ((cx + 34) * SS, (top + bh / 2) * SS)], fill=(255, 255, 255, 170))
+    draw_text(ui, "WATCH NEXT", cx, top + bh + 14, "blk", 36, (255, 255, 255), stroke=5)
+    r, cy = 78, 845
+    d.ellipse([(cx - r) * SS, (cy - r) * SS, (cx + r) * SS, (cy + r) * SS], fill=(255, 255, 255, 28),
+              outline=(255, 255, 255, 210), width=5 * SS)
+    draw_text(ui, "SUBSCRIBE", cx, cy + r + 10, "blk", 34, rgb(S.BALL["red"]), stroke=5)
     im.alpha_composite(down(ui))
     return im
 
 
+# ----------------------------------------------------------------------------------------------- transitions
 _grid = None
 
 
 def _sphere(r, color):
-    """RGB float image of a glossy marble of radius r centred on the frame, plus its distance map."""
     global _grid
     if _grid is None:
         yy, xx = np.mgrid[0:S.H, 0:S.W].astype(np.float32)
@@ -455,8 +402,8 @@ def _sphere(r, color):
 
 
 def transition_frames(color, n=S.TRANSITION_FRAMES):
-    """The "marble pop": n cover frames (a glossy marble grows from the centre until it fills the frame) and
-    n uncover frames (it bursts open from the centre, a white rim racing outward). RGBA, full frame."""
+    """The "marble pop": n cover frames (a glossy marble grows from the centre until it fills the frame) and n uncover
+    frames (it bursts open from the centre, a white rim racing outward). RGBA, full frame."""
     Rmax = 1.04 * np.hypot(S.W / 2, S.H / 2)
     ring_w = 7.0
     full, _ = _sphere(Rmax, color)
@@ -468,67 +415,26 @@ def transition_frames(color, n=S.TRANSITION_FRAMES):
         a = np.clip(r - d + 0.5, 0, 1)
         ring = np.clip(1 - np.abs(d - r) / ring_w, 0, 1) * (0.95 if q < 1 else 0)
         rgbf = col * (1 - ring[..., None]) + ring[..., None]
-        alpha = np.maximum(a, ring)
-        cover.append(Image.fromarray(np.dstack([rgbf * 255, alpha[..., None] * 255]).astype(np.uint8), "RGBA"))
+        cover.append(Image.fromarray(np.dstack([rgbf * 255, np.maximum(a, ring)[..., None] * 255]).astype(np.uint8), "RGBA"))
     for j in range(n):
         q = j / n
-        h = Rmax * (1 - (1 - q) ** 1.8) if j else 0.0
+        hole = Rmax * (1 - (1 - q) ** 1.8) if j else 0.0
         _, d = _sphere(Rmax, color)
-        a = np.clip(d - h + 0.5, 0, 1) if j else np.ones_like(d)
-        ring = np.clip(1 - np.abs(d - h) / (ring_w + 6 * q), 0, 1) * (1 - q) * 0.95 if j else np.zeros_like(d)
+        a = np.clip(d - hole + 0.5, 0, 1) if j else np.ones_like(d)
+        ring = np.clip(1 - np.abs(d - hole) / (ring_w + 6 * q), 0, 1) * (1 - q) * 0.95 if j else np.zeros_like(d)
         rgbf = full * (1 - ring[..., None]) + ring[..., None]
-        alpha = np.maximum(a, ring)
-        uncover.append(Image.fromarray(np.dstack([rgbf * 255, alpha[..., None] * 255]).astype(np.uint8), "RGBA"))
+        uncover.append(Image.fromarray(np.dstack([rgbf * 255, np.maximum(a, ring)[..., None] * 255]).astype(np.uint8), "RGBA"))
     return cover, uncover
 
 
-def thumbnail(frames, size=(1280, 720), seed=7):
-    """No-text thumbnail: three tilted cards cut from 1080x1920 frames (below the round title) on a purple
-    radial gradient with scattered marbles. frames: [left, middle, right] PIL images."""
-    W, H = size
-    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
-    v = np.clip(np.hypot((xx - W / 2) / (W * 0.62), (yy - H / 2) / (H * 0.75)), 0, 1)
-    c0, c1 = np.array(rgb("#4a1d80"), np.float32), np.array(rgb("#12061f"), np.float32)
-    bg = Image.fromarray((c0 * (1 - v[..., None]) + c1 * v[..., None]).astype(np.uint8), "RGB").convert("RGBA")
-    rng = np.random.default_rng(seed)
-    for _ in range(26):
-        r = int(rng.uniform(10, 30))
-        x, y = rng.uniform(0, W), rng.uniform(0, H)
-        if abs(x - W / 2) < 330 and abs(y - H / 2) < 300:
-            continue
-        paste_center(bg, marble(r, S.MARBLES[int(rng.integers(len(S.MARBLES)))]), x, y)
-    glow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    ImageDraw.Draw(glow).ellipse([W / 2 - 330, H / 2 - 300, W / 2 + 330, H / 2 + 300], fill=(255, 140, 220, 90))
-    bg.alpha_composite(glow.filter(ImageFilter.GaussianBlur(70)))
-
-    def card(fr, w):
-        crop = fr.convert("RGB").crop((0, 330, 1080, 1630))
-        h = int(w * crop.height / crop.width)
-        im = crop.resize((w, h), Image.LANCZOS).convert("RGBA")
-        m = Image.new("L", (w * 4, h * 4), 0)
-        ImageDraw.Draw(m).rounded_rectangle([0, 0, w * 4 - 1, h * 4 - 1], radius=26 * 4, fill=255)
-        im.putalpha(m.resize((w, h), Image.LANCZOS))
-        b = 8
-        out = Image.new("RGBA", (w + 2 * b, h + 2 * b), (0, 0, 0, 0))
-        mm = Image.new("L", ((w + 2 * b) * 4, (h + 2 * b) * 4), 0)
-        ImageDraw.Draw(mm).rounded_rectangle([0, 0, (w + 2 * b) * 4 - 1, (h + 2 * b) * 4 - 1], radius=(26 + b) * 4,
-                                             fill=255)
-        white = Image.new("RGBA", out.size, (255, 255, 255, 255))
-        white.putalpha(mm.resize(out.size, Image.LANCZOS))
-        out.alpha_composite(white)
-        out.alpha_composite(im, (b, b))
-        return out
-
-    def place(c, cx, cy, ang):
-        c = c.rotate(ang, resample=Image.BICUBIC, expand=True)
-        sh = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-        a = c.split()[3].point(lambda p: int(p * 0.6))
-        blk = Image.new("RGBA", c.size, (0, 0, 0, 255))
-        blk.putalpha(a)
-        sh.alpha_composite(blk, (int(cx - c.width / 2 + 8), int(cy - c.height / 2 + 16)))
-        bg.alpha_composite(sh.filter(ImageFilter.GaussianBlur(14)))
-        bg.alpha_composite(c, (int(cx - c.width / 2), int(cy - c.height / 2)))
-    place(card(frames[0], 390), W / 2 - 370, H / 2 + 22, 7)
-    place(card(frames[2], 390), W / 2 + 370, H / 2 + 22, -7)
-    place(card(frames[1], 470), W / 2, H / 2, 0)
-    return bg.convert("RGB")
+def polish_thumbnail(img):
+    """No-text thumbnail from a 16:9 render: a touch more saturation and contrast, a soft vignette, 1280x720."""
+    from PIL import ImageEnhance
+    im = img.convert("RGB").resize((1280, 720), Image.LANCZOS)
+    im = ImageEnhance.Color(im).enhance(1.25)
+    im = ImageEnhance.Contrast(im).enhance(1.08)
+    a = np.asarray(im).astype(np.float32)
+    yy, xx = np.mgrid[0:720, 0:1280].astype(np.float32)
+    v = ((xx - 640) / 640) ** 2 + ((yy - 360) / 360) ** 2
+    a *= np.clip(1.06 - 0.22 * v, 0.7, 1.06)[..., None]
+    return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))

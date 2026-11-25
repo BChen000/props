@@ -38,6 +38,46 @@
       "bpm": 112.5,
       "beats": 64,
       "song": "the hymn tune (Antioch) one note per beat; round 1 is the falling scale C6 B5 A5 G5 F5 E5 D5 C5, one note per tile"
+    },
+    "mary-lamb": {
+      "title_card": "Mary Had a Little Lamb",
+      "length_s": 37.6,
+      "frames": 1128,
+      "marbles": 19,
+      "bpm": 112.5,
+      "beats": 64,
+      "song": "written from the public-domain tune, one note per beat; rendered only at 16:9 so far",
+      "rounds": [1, 2, 3, 5, 8]
+    },
+    "old-macdonald": {
+      "title_card": "Old MacDonald Had a Farm",
+      "length_s": 37.6,
+      "frames": 1128,
+      "marbles": 19,
+      "bpm": 112.5,
+      "beats": 64,
+      "song": "written from the public-domain tune, one note per beat; rendered only at 16:9 so far",
+      "rounds": [1, 2, 3, 5, 8]
+    },
+    "deck-the-halls": {
+      "title_card": "Deck the Halls",
+      "length_s": 41.87,
+      "frames": 1256,
+      "marbles": 19,
+      "bpm": 112.5,
+      "beats": 72,
+      "song": "written from the public-domain tune, one note per beat; rendered only at 16:9 so far",
+      "rounds": [1, 2, 3, 5, 8]
+    },
+    "merry-christmas": {
+      "title_card": "We Wish You a Merry Christmas",
+      "length_s": 37.6,
+      "frames": 1128,
+      "marbles": 19,
+      "bpm": 112.5,
+      "beats": 64,
+      "song": "written from the public-domain tune, one note per beat; rendered only at 16:9 so far",
+      "rounds": [1, 2, 3, 5, 8]
     }
   },
   "hook": "a marble is already rolling down the chute on frame 1; first tile hit at 1.07 s (2 beats)",
@@ -122,5 +162,21 @@
     "watermark": "Marble Pop (the uploads: Fun House 67)",
     "thumbnail": "no text by default (--thumb-title adds the round title)"
   },
-  "timing_2_cores": "static set 1.5 min (once) + frames ~3 min + thumbnail set 1.5 min (once)"
+  "timing_2_cores": "static set 1.5 min (once) + frames ~3 min + thumbnail set 1.5 min (once)",
+  "camera_16_9": {
+    "env": "MARBLE_RES=1920x1080 MARBLE_CAM=wide (WIDE_FOVY/AZ/EL/DIST/TARGET override)",
+    "target": [16.5, 10.6, 0.0],
+    "azimuth_deg": 22.0,
+    "elevation_deg": 14.0,
+    "distance": 60.0,
+    "fovy_deg": 30.0
+  },
+  "thumbnail_camera_16_9": {
+    "env": "MARBLE_CAM=widethumb",
+    "target": [15.5, 10.5, 0.0],
+    "azimuth_deg": 30.0,
+    "elevation_deg": 12.0,
+    "distance": 46.0,
+    "fovy_deg": 30.0
+  }
 }

@@ -321,3 +321,11 @@ if __name__ == "__main__":
                     "railL": (-22, Y_S + 22 * math.tan(RAIL_BETA), -RC), "spiralR": (ROUT, 20, 0)}.items():
         x, y, z = project(p)
         print(f"{name}: ({x / W:.2f}, {y / H:.2f})")
+
+
+if os.environ.get("MARBLE_CAM") == "wide":       # 16:9 front camera; use with MARBLE_RES=1920x1080 and its own BUILD_DIR
+    CAM_FOVY = math.radians(float(os.environ.get("WIDE_FOVY", "30")))
+    CAM_AZ = math.radians(float(os.environ.get("WIDE_AZ", "8")))
+    CAM_EL = math.radians(float(os.environ.get("WIDE_EL", "14")))
+    CAM_DIST = float(os.environ.get("WIDE_DIST", "86"))
+    CAM_TARGET = np.array([float(v) for v in os.environ.get("WIDE_TARGET", "7.0,17.5,0.0").split(",")])

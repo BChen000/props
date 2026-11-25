@@ -19,6 +19,56 @@
       "song": "4 x 16 beats of the theme in two parts (melody front, harmony back) + a 4-note rising ending",
       "titles_s": [0.0, 8.65, 16.65, 25.15],
       "finale_s": 35.24
+    },
+    "london-bridge": {
+      "title_card": "London Bridge",
+      "length_s": 38.0,
+      "frames": 1140,
+      "marbles": 15,
+      "bpm": 120.0,
+      "beats": 68,
+      "song": "written from the public-domain tune, one note per beat; rendered only at 16:9 so far",
+      "rounds": [1, 2, 4, 8]
+    },
+    "fur-elise": {
+      "title_card": "Fur Elise",
+      "length_s": 38.0,
+      "frames": 1140,
+      "marbles": 15,
+      "bpm": 120.0,
+      "beats": 68,
+      "song": "written from the public-domain tune, one note per beat; rendered only at 16:9 so far",
+      "rounds": [1, 2, 4, 8]
+    },
+    "happy-birthday": {
+      "title_card": "Happy Birthday",
+      "length_s": 38.0,
+      "frames": 1140,
+      "marbles": 15,
+      "bpm": 120.0,
+      "beats": 68,
+      "song": "written from the public-domain tune, one note per beat; rendered only at 16:9 so far",
+      "rounds": [1, 2, 4, 8]
+    },
+    "good-king": {
+      "title_card": "Good King Wenceslas",
+      "length_s": 38.0,
+      "frames": 1140,
+      "marbles": 15,
+      "bpm": 120.0,
+      "beats": 68,
+      "song": "written from the public-domain tune, one note per beat; rendered only at 16:9 so far",
+      "rounds": [1, 2, 4, 8]
+    },
+    "frere-jacques": {
+      "title_card": "Frere Jacques",
+      "length_s": 40.0,
+      "frames": 1200,
+      "marbles": 15,
+      "bpm": 120.0,
+      "beats": 72,
+      "song": "written from the public-domain tune, one note per beat; rendered only at 16:9 so far",
+      "rounds": [1, 2, 4, 8]
     }
   },
   "hook": "the first marble drops into view at 0.65 s and hits the top tile at 1.5 s",
@@ -87,5 +137,21 @@
     "round_titles": "1 MARBLE, 2 MARBLES, 4 MARBLES, 8 MARBLES; each appears when its first marble drops in",
     "watermark": "Marble Pop (the upload: Fun House 67)",
     "thumbnail": "the middle of the last round's beats with all 8 marbles on the stairs, 1 frame after the hit (frame 916), the upload's thumbnail picture; no text by default (--thumb-title adds the round title)"
+  },
+  "camera_16_9": {
+    "env": "MARBLE_RES=1920x1080 MARBLE_CAM=wide (WIDE_FOVY/AZ/EL/DIST/TARGET override)",
+    "target": [24.5, 12.6, 0.0],
+    "azimuth_deg": 24.0,
+    "elevation_deg": 15.0,
+    "distance": 82.0,
+    "fovy_deg": 30.0
+  },
+  "thumbnail_camera_16_9": {
+    "env": "MARBLE_CAM=widethumb",
+    "target": [22.0, 13.0, 0.0],
+    "azimuth_deg": 28.0,
+    "elevation_deg": 13.0,
+    "distance": 62.0,
+    "fovy_deg": 30.0
   }
 }

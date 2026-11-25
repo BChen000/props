@@ -64,9 +64,46 @@ def _joy():
     return p1 + p2 + p3 + p3 + p5 + p6 + p7, c1 + c2 + c3 + c3 + c5 + c6 + c7
 
 
+G4, A4, B4, FS5, B5 = 67, 69, 71, 78, 83
+
+
+def _mary():
+    v = [E5, D5, C5, D5, E5, E5, E5, -E5, D5, D5, D5, -D5, E5, G5, G5, -G5,
+         E5, D5, C5, D5, E5, E5, E5, E5, D5, D5, E5, D5, C5, -C5, -C5, 0]
+    c = ["C"] * 8 + ["G7"] * 4 + ["C"] * 4 + ["C"] * 8 + ["G7"] * 4 + ["C"] * 4
+    return v + v, c + c
+
+
+def _oldmac():
+    l1 = [C5, C5, C5, G4, A4, A4, G4, -G4, E5, E5, D5, D5, C5, -C5, -C5, G4]
+    l2 = [C5, C5, C5, G4, A4, A4, G4, -G4, E5, E5, D5, D5, C5, -C5, -C5, 0]
+    c = ["C"] * 4 + ["F", "F", "C", "C"] + ["C", "C", "G7", "G7"] + ["C"] * 4
+    return l1 + l2 + l1 + l2, c * 4
+
+
+def _deck():
+    a = [G5, F5, E5, D5, C5, D5, E5, C5, D5, E5, F5, D5, E5, D5, C5, B4, C5, -C5]
+    b = [D5, E5, F5, D5, E5, F5, G5, D5, E5, FS5, G5, A5, B5, C6, B5, A5, G5, -G5]
+    ca = ["C", "C", "C", "G7", "C", "G7", "C", "C", "G7", "C", "F", "G7", "C", "G7", "C", "G", "C", "C"]
+    cb = ["G7", "C", "G7", "G7", "C", "G7", "C", "G7", "C", "G", "G", "F", "G", "C", "G", "F", "G", "G"]
+    return a + a + b + a, ca + ca + cb + ca
+
+
+def _merry():
+    v = [G4, C5, C5, D5, C5, B4, A4, A4, A4, D5, D5, E5, D5, C5, B4, G4,
+         G4, E5, E5, F5, E5, D5, C5, A4, G4, G4, A4, D5, B4, C5, -C5, 0]
+    c = ["G7", "C", "C", "C", "C", "C", "F", "F", "F", "G", "G", "G", "G", "G", "G", "G",
+         "G7", "C", "C", "C", "C", "C", "F", "F", "C", "C", "F", "G7", "G7", "C", "C", "C"]
+    return v + v, c + c
+
+
 _tw_mel, _tw_ch = _twinkle()
 _jb_mel, _jb_ch = _jingle()
 _joy_mel, _joy_ch = _joy()
+_mary_mel, _mary_ch = _mary()
+_om_mel, _om_ch = _oldmac()
+_deck_mel, _deck_ch = _deck()
+_merry_mel, _merry_ch = _merry()
 
 SONGS = {
     "twinkle": dict(
@@ -95,6 +132,42 @@ SONGS = {
         offsets=[[0], [0, 3], [0, 2, 4], [0, 2, 3, 5, 7], [0, 1, 2, 4, 5, 7, 8, 10]],
         melody=_joy_mel,
         chords=_joy_ch,
+    ),
+    "mary-lamb": dict(
+        name="Mary Had a Little Lamb",
+        file="Marble_Staircase_Mary_Had_a_Little_Lamb",
+        bpm=112.5,
+        rounds=[1, 2, 3, 5, 8],
+        offsets=[[0], [0, 3], [0, 2, 4], [0, 2, 3, 5, 7], [0, 1, 2, 4, 5, 7, 8, 10]],
+        melody=_mary_mel,
+        chords=_mary_ch,
+    ),
+    "old-macdonald": dict(
+        name="Old MacDonald Had a Farm",
+        file="Marble_Staircase_Old_MacDonald",
+        bpm=112.5,
+        rounds=[1, 2, 3, 5, 8],
+        offsets=[[0], [0, 3], [0, 2, 4], [0, 2, 3, 5, 7], [0, 1, 2, 4, 5, 7, 8, 10]],
+        melody=_om_mel,
+        chords=_om_ch,
+    ),
+    "deck-the-halls": dict(
+        name="Deck the Halls",
+        file="Marble_Staircase_Deck_the_Halls",
+        bpm=112.5,
+        rounds=[1, 2, 3, 5, 8],
+        offsets=[[0], [0, 4], [0, 3, 6], [0, 2, 4, 6, 8], [0, 2, 3, 5, 7, 9, 11, 14]],
+        melody=_deck_mel,
+        chords=_deck_ch,
+    ),
+    "merry-christmas": dict(
+        name="We Wish You a Merry Christmas",
+        file="Marble_Staircase_We_Wish_You_a_Merry_Christmas",
+        bpm=112.5,
+        rounds=[1, 2, 3, 5, 8],
+        offsets=[[0], [0, 3], [0, 2, 4], [0, 2, 3, 5, 7], [0, 1, 2, 4, 5, 7, 8, 10]],
+        melody=_merry_mel,
+        chords=_merry_ch,
     ),
 }
 

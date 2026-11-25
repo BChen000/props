@@ -2,7 +2,8 @@
 toward the camera, ending in one tray. Marbles drop in from above the top tile and hop one tile per beat; the
 melody lane is in front, the harmony lane behind. The hop physics (G, V_UP, ...) follow BPM.
 
-Overrides (environment): MARBLE_BPM (default 120, the shipped tempo).
+Overrides (environment): MARBLE_BPM (default 120, the shipped tempo), MARBLE_CAM=wide (16:9 front camera; use with
+MARBLE_RES=1920x1080 and its own BUILD_DIR).
 """
 import colorsys
 import math
@@ -124,3 +125,17 @@ def write_scene(path, w, h, ns, na):
     with open(path, "w") as f:
         look.write_scene_header(f, camera(), CAM_FOVY, CAM_SHIFT, w, h, ns, na, FOG_START, FOG_DIST)
         look.write_boxes(f, boxes())
+
+
+if os.environ.get("MARBLE_CAM") == "wide":
+    CAM_FOVY = math.radians(float(os.environ.get("WIDE_FOVY", "30")))
+    CAM_AZ = math.radians(float(os.environ.get("WIDE_AZ", "24")))
+    CAM_EL = math.radians(float(os.environ.get("WIDE_EL", "15")))
+    CAM_DIST = float(os.environ.get("WIDE_DIST", "82"))
+    CAM_TARGET = np.array([float(v) for v in os.environ.get("WIDE_TARGET", "24.5,12.6,0.0").split(",")])
+elif os.environ.get("MARBLE_CAM") == "widethumb":
+    CAM_FOVY = math.radians(float(os.environ.get("WIDE_FOVY", "30")))
+    CAM_AZ = math.radians(float(os.environ.get("WIDE_AZ", "28")))
+    CAM_EL = math.radians(float(os.environ.get("WIDE_EL", "13")))
+    CAM_DIST = float(os.environ.get("WIDE_DIST", "62"))
+    CAM_TARGET = np.array([float(v) for v in os.environ.get("WIDE_TARGET", "22.0,13.0,0.0").split(",")])

@@ -10,13 +10,14 @@ One command for a spiral marble music Short: marbles roll down a rainbow helix a
 - Stills 0, 150, 1080 and 1385 are pixel-identical to the original renders.
 - With `SPLIT=even WATERMARK="Fun House 67"`, the finished mp4's video and audio streams are bit-identical to the upload (same stream MD5).
 - The default thumbnail (frame 1080, set in `songs.py`) is the upload's thumbnail picture. With `--thumb-title` it matches it to within JPEG noise (41.5 dB PSNR); the default leaves the title off, because the channel's thumbnails have no text unless GJ asks.
+- **16:9 version** for the full-screen long-form (`../longform-compilation`, Nov 2026): `row-row-row` with `MARBLE_RES=1920x1080 MARBLE_CAM=wide BUILD_DIR=build_wide WATERMARK=""`, 1448 frames at 1920×1080 with video and audio the same length; its rounds were checked by eye in the long-form's segment, and its title-free thumbnail frame is a cell of the long-form's collage thumbnail.
 
 ## Files
 | file | what |
 |---|---|
 | `make_video.py` | the whole pipeline: track mesh + static set → choreography → marble lighting table → music → frames (2 workers) → mp4 at −13 LUFS → thumbnail |
 | `songs.py` | the songs: notes as (MIDI pitch, eighths) in 6/8, seconds per eighth, rounds; the pitch colors |
-| `scene.py` | the set: helix track built from the song, glass outer wall, pole, feeder rail with gate, dish; the camera |
+| `scene.py` | the set: helix track built from the song, glass outer wall, pole, feeder rail with gate, dish; the camera, plus a 16:9 `wide` one |
 | `timeline.py` | queue on the rail, gate release, constant-speed roll down the helix, dish physics at 1/1200 s; notes, impacts, titles, finale |
 | `music.py` | every note a lead bell panned by the marble's position; dish clacks; finale chord and sparkle run |
 | `style.json` | every value: video facts, helix and dish sizes, colors, camera, physics, glow, music, text |
@@ -28,6 +29,7 @@ One command for a spiral marble music Short: marbles roll down a rainbow helix a
 python3 make_video.py row-row-row            # -> build/row-row-row/Marble_Spiral_Row_Your_Boat.mp4 + thumbnail.png
 python3 make_video.py row-row-row --stills 150,1080   # PNG stills only
 python3 make_video.py row-row-row --thumb-only --thumb-title
+MARBLE_RES=1920x1080 MARBLE_CAM=wide BUILD_DIR=build_wide WATERMARK= python3 make_video.py row-row-row --no-thumb   # 16:9
 ```
 The first run took 7.2 minutes on a 2-core cloud session: about 3.5 min to path-trace the set (a 13k-triangle mesh with glass, cached per song), seconds for the marble lighting table, and about 3 min for the frames. With the set cached, a rebuild takes about 3.5 minutes. `SPLIT=even WATERMARK="Fun House 67"` rebuilds the upload exactly. The defaults split the frames by estimated cost and use the Marble Pop watermark.
 
@@ -44,6 +46,7 @@ The first run took 7.2 minutes on a 2-core cloud session: about 3.5 min to path-
 - **The track is the song.** Change a note's length and every later segment moves, which means a new static render (about 3.5 min). The render is cached per song (`build/<song>/g_*`).
 - **The camera is framed for this song's length:** 48 eighths make 4.2 turns. A much longer song makes a taller spiral that leaves the frame. Raise `CAM_DIST` or `CAM_TARGET` in `scene.py`.
 - **The round's marbles enter 2 bars apart** (`CANON_BARS` in `timeline.py`). Bars are 6/8 unless the song sets `bar_eighths=8` (4/4, for a round like *Frère Jacques*).
+- **16:9:** `MARBLE_RES=1920x1080` (read by `../marble-raytrace-kit/look.py`) with `MARBLE_CAM=wide` frames the spiral and dish for landscape (`WIDE_AZ`, `WIDE_EL`, `WIDE_DIST`, `WIDE_TARGET` and `WIDE_FOVY` override it). The spiral fills the height, so the sides are mostly backdrop. Use its own `BUILD_DIR`, since the set is cached in each song's folder (`build/<song>/g_*`) whatever the camera.
 - Segments flash when a marble reaches them and stay half lit while it rolls over them. With 4 marbles, 4 segments are lit at once.
 - Object ids 1–39 are segments, so a song can have at most 39 notes.
 - Lighting for the marbles comes from a table the mesh tracer computes for every distinct marble position (`build/<song>/env.npz`). If you edit marble paths, rerun the whole script, not just the frames.

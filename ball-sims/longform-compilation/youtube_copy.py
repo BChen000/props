@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Writes build/youtube_copy.txt (title, description with chapters) from settings and build/chapters.txt."""
+"""Writes build/youtube_copy.txt: three titles for YouTube's A/B test, the description with chapters."""
 import os
 import sys
 
@@ -8,10 +8,15 @@ sys.path.insert(0, HERE)
 import settings as S  # noqa: E402
 
 # ===================================================================== SETTINGS (shipped values)
-TITLE = "Guess the Marble Song! 🎵 20 Rounds + a Secret Bonus"
-ALT_TITLES = ["Can You Guess Every Marble Song? 🎵", "Marbles Play 20 Songs 🎵 Can You Guess Them All?"]
-PREMISE = ("Marbles roll down rainbow stairs and play 20 songs. Guess each one before the answer pops up, "
-           "then stay for a brand-new bonus song!")
+N_SONGS = len({it["title"] for it in S.ITEMS if it["kind"] == "song"})   # different songs (Twinkle plays twice)
+N_GAMES = sum(it["kind"] in ("race", "run") for it in S.ITEMS)
+TITLES = [
+    S.TITLE,
+    "Can You Guess Every Marble Song? 🎵",
+    "Which Song Are the Marbles Playing? 🎵",
+]
+PREMISE = (f"Marbles roll down rainbow stairs and play {N_SONGS} songs. Guess each one before the answer pops up, "
+           f"play {N_GAMES} marble challenges, then stay for a brand-new bonus song!")
 COMMENT_LINE = "Comment your score 🔴🟠🟡🟢🔵🟣"
 MADE_WITH = "Made with a 3D physics simulation"
 HASHTAGS = "#marbles #satisfying #guessthesong #marblemusic #pickyourcolor"
@@ -24,9 +29,9 @@ def main():
         if it["kind"] in ("song", "bonus") and it["title"] not in songs:
             songs.append(it["title"])
     text = "\n".join([
-        "TITLE", TITLE, "", "Other title ideas:", *("- " + t for t in ALT_TITLES), "",
+        "TITLES (main first; all three go into Studio's A/B test)", *TITLES, "",
         "DESCRIPTION", PREMISE, COMMENT_LINE, MADE_WITH, HASHTAGS, "", "Chapters", ch, "",
-        "Songs (spoilers!): " + ", ".join(songs),
+        "Songs (spoilers!): " + "; ".join(songs),
     ])
     p = os.path.join(S.BUILD, "youtube_copy.txt")
     open(p, "w").write(text + "\n")
