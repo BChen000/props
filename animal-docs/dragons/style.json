@@ -1,0 +1,276 @@
+{
+  "prop": "dragons",
+  "engine": "Blender 5.3 Python module (bpy), Cycles CPU, AgX Medium High Contrast, film transparent except the fossil",
+  "western": {
+    "latin": "Draco ignivomus",
+    "size_m": {
+      "length": 13.0,
+      "wingspan": 17.0,
+      "head_height": 4.4
+    },
+    "axes": "+x forward (snout at x=4.95), +z up, wings along +-y",
+    "mesh": "SDF at 2.2 cm voxels -> marching cubes -> 260,000-face body + 33,000-face jaw; details, wings and eyes are separate meshes",
+    "rig": "50 bones: root, hips, spine1-2, neck0-4, head, jaw, tail1-7, uparm/forearm/hand and thigh/shin/foot per side, wing1-2 and f1a..f4b per side",
+    "palette_rgba_linear": {
+      "back": [
+        0.035,
+        0.012,
+        0.01,
+        1
+      ],
+      "flank": [
+        0.2,
+        0.03,
+        0.018,
+        1
+      ],
+      "belly": [
+        0.5,
+        0.24,
+        0.08,
+        1
+      ]
+    },
+    "scale_size": 16.0,
+    "eye": {
+      "iris": [
+        1.0,
+        0.45,
+        0.05
+      ],
+      "glow": 1.5,
+      "radius": 0.078,
+      "mesh": "UV sphere 96x48, shader slit pupil"
+    },
+    "glow": "custom property 'glow' on body and jaw (0-1, keyable) lights the throat 'gland' and mouth masks orange",
+    "mouth_empty": [
+      4.95,
+      0,
+      4.24
+    ],
+    "poses": {
+      "w_idle": "breathing period 3.2 s, tail sway 0.22 Hz, fold 0.85 (folded) .. 0 (open), lift 0.32-0.75",
+      "w_flap": "period 1.15 s by default; the episode's loops use 28 frames at 24 fps; body bob 0.22",
+      "rear": "pose_neck pitch 0 -> 0.42, head_pitch -0.1 -> 0.18 (episode shot u06)",
+      "roar": "pose_neck pitch 0.45 + 0.06 sin(14t), jaw 0.7, head_pitch 0.25 (u16b)"
+    }
+  },
+  "chinese": {
+    "latin": "Draco nubivagus",
+    "size_m": {
+      "length": 17.6,
+      "max_body_radius": 0.46
+    },
+    "axes": "rest pose along +x from the tail tip (x=0) to the snout (x=17.6); deformed onto a Bezier path by a Curve modifier",
+    "mesh": "SDF at 2 cm voxels -> 200,000-face body + 21,000-face jaw; mane/beard/whiskers, fins, horns and eyes are separate meshes",
+    "legs_at_x": [
+      8.2,
+      14.0
+    ],
+    "palette_rgba_linear": {
+      "back": [
+        0.006,
+        0.05,
+        0.045,
+        1
+      ],
+      "flank": [
+        0.02,
+        0.16,
+        0.13,
+        1
+      ],
+      "belly": [
+        0.62,
+        0.46,
+        0.17,
+        1
+      ]
+    },
+    "scale_size": 22.0,
+    "thin_film": {
+      "thickness_nm": 320,
+      "ior": 1.45
+    },
+    "eye_iris": [
+      1.0,
+      0.75,
+      0.15
+    ],
+    "whisker_wave": {
+      "height": 0.07,
+      "width": 0.9,
+      "narrowness": 1.2,
+      "speed": -0.05,
+      "start_x": 17.5
+    },
+    "motion": "root empty's x = distance along the path; jaw rotation y 0.1-0.2"
+  },
+  "fossil": {
+    "slab_m": [
+      12,
+      12
+    ],
+    "bones_mesh_faces": 220000,
+    "scale_z": 1.4
+  },
+  "lighting_presets": {
+    "VOLC": {
+      "world_top": [
+        0.16,
+        0.08,
+        0.08
+      ],
+      "world_horizon": [
+        0.95,
+        0.42,
+        0.2
+      ],
+      "world_strength": 0.8,
+      "sun": {
+        "elev": 9,
+        "azim": 115,
+        "energy": 4.2,
+        "color": [
+          1.0,
+          0.5,
+          0.25
+        ]
+      },
+      "lava_area_light": {
+        "energy": 2500,
+        "size": 12
+      }
+    },
+    "GOLD": {
+      "world_top": [
+        0.3,
+        0.38,
+        0.6
+      ],
+      "world_horizon": [
+        1.0,
+        0.72,
+        0.5
+      ],
+      "world_strength": 0.65,
+      "sun": {
+        "elev": 8,
+        "azim": 70,
+        "energy": 4.5,
+        "color": [
+          1.0,
+          0.62,
+          0.36
+        ]
+      }
+    },
+    "MIST": {
+      "world_top": [
+        0.55,
+        0.66,
+        0.74
+      ],
+      "world_horizon": [
+        0.86,
+        0.9,
+        0.88
+      ],
+      "world_strength": 1.1,
+      "sun": {
+        "elev": 28,
+        "azim": 60,
+        "energy": 2.4,
+        "color": [
+          1.0,
+          0.93,
+          0.82
+        ]
+      }
+    },
+    "STORM": {
+      "world_top": [
+        0.1,
+        0.12,
+        0.16
+      ],
+      "world_horizon": [
+        0.28,
+        0.31,
+        0.36
+      ],
+      "world_strength": 0.9,
+      "sun": {
+        "elev": 35,
+        "azim": 40,
+        "energy": 1.0,
+        "color": [
+          0.75,
+          0.82,
+          1.0
+        ]
+      }
+    },
+    "RAIN": {
+      "world_top": [
+        0.32,
+        0.4,
+        0.46
+      ],
+      "world_horizon": [
+        0.6,
+        0.66,
+        0.68
+      ],
+      "world_strength": 1.0,
+      "sun": {
+        "elev": 30,
+        "azim": 50,
+        "energy": 1.2,
+        "color": [
+          0.9,
+          0.95,
+          1.0
+        ]
+      }
+    },
+    "FOSSIL": {
+      "world_top": [
+        0.25,
+        0.28,
+        0.35
+      ],
+      "world_horizon": [
+        0.6,
+        0.5,
+        0.4
+      ],
+      "world_strength": 0.35,
+      "sun": {
+        "elev": 14,
+        "azim": 160,
+        "energy": 5.0,
+        "color": [
+          1.0,
+          0.78,
+          0.55
+        ]
+      }
+    }
+  },
+  "render": {
+    "animated_shots": "720x1280, 6-8 samples, adaptive threshold 0.04, OIDN (albedo+normal, FAST prefilter), motion blur shutter 0.5, bounces 3/2/2/4, indirect clamp 4",
+    "stills": "720x1280 (thumbnails 1080x960), 48-64 samples, no motion blur",
+    "loops": "W 640x360 / 960x540 at 12 samples; C 800x360 to 1600x720 at 10 samples",
+    "rock_plate": "32 samples, rendered once, rock is a holdout afterwards",
+    "auto_border_margin": 0.04,
+    "upscale": "the episode composited 720x1280 renders at 1080x1920 (cubic)"
+  },
+  "timings_2core_cpu_s_per_frame": {
+    "western_full_body": "8-13",
+    "western_head_closeup": 9,
+    "chinese_flight": "5-9",
+    "still_48spp": 25,
+    "mesh_cache_build": "about 10 each"
+  }
+}

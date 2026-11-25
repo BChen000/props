@@ -1,0 +1,235 @@
+{
+  "prop": "creature-sfx",
+  "sample_rate": 48000,
+  "channels": 2,
+  "seed": 11,
+  "beds": {
+    "wind": {
+      "noise": "pink",
+      "band_hz": [
+        120,
+        1400
+      ],
+      "gain": 0.05,
+      "slow_mod": {
+        "rate": 0.25,
+        "depth": 0.6,
+        "seed": 1
+      },
+      "fade_s": 0.6
+    },
+    "volcano": {
+      "rumble": "brown noise low-passed 140 Hz x 0.55",
+      "cracks_per_s": 9.25,
+      "crack_band_hz": [
+        900,
+        6000
+      ],
+      "crack_gain": 0.06,
+      "fade_s": 0.4
+    },
+    "river": {
+      "noise_band_hz": [
+        300,
+        4500
+      ],
+      "gain": 0.045,
+      "bubbles_per_s": 28.9,
+      "bubble_hz": [
+        500,
+        2200
+      ],
+      "bubble_gain": 0.02,
+      "fade_s": 0.8
+    },
+    "rain": {
+      "hiss_highpass_hz": 1800,
+      "gain": 0.06,
+      "ticks_per_s": 115.6,
+      "tick_highpass_hz": 2500,
+      "tick_gain": 0.08,
+      "fade_s": 0.4
+    },
+    "gust": {
+      "band_hz": [
+        80,
+        900
+      ],
+      "gain": 0.06,
+      "slow_mod": {
+        "rate": 0.5,
+        "depth": 0.9,
+        "seed": 5
+      }
+    }
+  },
+  "events": {
+    "thunder": {
+      "dur_s": 4.5,
+      "rumble_lowpass_hz": 260,
+      "decay_s": 1.3,
+      "crack": "0.4 s, 700-7000 Hz, decay 0.06 s",
+      "offset_after_flash_s": 0.12,
+      "film_gain": 0.5
+    },
+    "thunder_distant": {
+      "dur_s": 3.5,
+      "crack": false,
+      "film_gain": 0.5
+    },
+    "whoosh": {
+      "shape": "Gaussian swell, width 0.22 of dur",
+      "film": [
+        [
+          2.4,
+          120,
+          1200,
+          0.45,
+          0.9
+        ],
+        [
+          1.8,
+          90,
+          700,
+          0.5,
+          0.9
+        ],
+        [
+          3.5,
+          100,
+          900,
+          0.35,
+          1.0
+        ],
+        [
+          2.0,
+          150,
+          1500,
+          0.5,
+          0.8
+        ],
+        [
+          3.0,
+          120,
+          1100,
+          0.5,
+          0.7
+        ],
+        [
+          2.2,
+          100,
+          900,
+          0.5,
+          0.6
+        ],
+        [
+          1.6,
+          150,
+          1300,
+          0.5,
+          0.6
+        ],
+        [
+          1.0,
+          200,
+          3000,
+          0.6,
+          0.4
+        ]
+      ],
+      "film_columns": [
+        "dur_s",
+        "lo_hz",
+        "hi_hz",
+        "peak",
+        "gain"
+      ]
+    },
+    "flap": {
+      "dur_s": 0.55,
+      "band_hz": [
+        60,
+        520
+      ],
+      "attack_s": 0.06,
+      "decay_s": 0.16,
+      "loop_period_frames": 28,
+      "phase_frame": 7,
+      "lead_s": 0.1,
+      "film_gains": {
+        "title flight": 0.35,
+        "diverging": 0.18,
+        "volcano flyby": 0.8,
+        "together": 0.35,
+        "flying away": 0.25
+      }
+    },
+    "growl": {
+      "dur_s": 3.2,
+      "f0_hz": 46,
+      "seed": 1,
+      "gain": 0.8,
+      "vibrato_hz": 7,
+      "tremolo_hz": 13
+    },
+    "roar": {
+      "dur_s": 2.1,
+      "f0_hz": 92,
+      "seed": 3,
+      "gain": 0.34,
+      "formants_hz": [
+        [
+          380,
+          900
+        ],
+        [
+          1000,
+          1500
+        ],
+        [
+          2200,
+          3000
+        ]
+      ],
+      "pitch_swell": "+25 % at 0.5 s"
+    },
+    "fire_roar": {
+      "main": {
+        "dur_s": 5.91,
+        "seed": 1,
+        "gain": 0.34,
+        "attack_s": 0.12
+      },
+      "ignite": {
+        "dur_s": 1.3,
+        "seed": 2,
+        "gain": 0.35,
+        "attack_s": 0.5
+      },
+      "short": [
+        {
+          "dur_s": 2.6,
+          "seed": 3,
+          "gain": 0.55,
+          "attack_s": 0.05
+        },
+        {
+          "dur_s": 2.45,
+          "seed": 4,
+          "gain": 0.55,
+          "attack_s": 0.05
+        }
+      ],
+      "flutter_hz": 25,
+      "crackle_per_s": 120,
+      "release_s": 0.5
+    }
+  },
+  "track_peak_limit": 0.9,
+  "film_stem": {
+    "length_s": 173.042,
+    "peak": 0.817,
+    "mix_target_lufs": -24,
+    "duck_under_voice": 0.45
+  }
+}

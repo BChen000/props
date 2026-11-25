@@ -1,0 +1,321 @@
+{
+  "prop": "wildlore-2d-comp",
+  "frame": {
+    "size": [
+      1080,
+      1920
+    ],
+    "fps": 24,
+    "pixels": "float32 RGB 0..1; layers premultiplied RGBA",
+    "renders_upscale": "720x1280 -> 1080x1920, cubic"
+  },
+  "backdrops": {
+    "gold_sky": {
+      "hz": 0.56,
+      "sun": [
+        0.7,
+        0.49
+      ],
+      "top": [
+        0.15,
+        0.19,
+        0.36
+      ],
+      "mid": [
+        0.76,
+        0.48,
+        0.45
+      ],
+      "horizon": [
+        1.0,
+        0.8,
+        0.58
+      ],
+      "cirrus": {
+        "color": [
+          1.0,
+          0.72,
+          0.6
+        ],
+        "amt": 0.45
+      },
+      "peaks_color": [
+        0.17,
+        0.15,
+        0.25
+      ],
+      "peaks_haze": [
+        0.95,
+        0.72,
+        0.6
+      ],
+      "cloud_sea": "cloud_sea_puffs seed 5, lit (1.0, 0.88, 0.74), shade (0.5, 0.45, 0.58)",
+      "drift_zoom_per_s": 0.0025
+    },
+    "volcano": {
+      "function": "volcano_bg via layers.volc",
+      "hz": "from the Blender camera (hz_from)",
+      "vx": 0.66,
+      "vh": 0.3,
+      "vw": 0.55,
+      "seed": 21,
+      "sun": [
+        0.18,
+        0.62
+      ],
+      "creature_haze": [
+        0.75,
+        0.32,
+        0.16
+      ],
+      "creature_gain": [
+        0.96,
+        0.8,
+        0.8
+      ]
+    },
+    "karst_mist": {
+      "sky": [
+        [
+          0.55,
+          0.66,
+          0.76
+        ],
+        [
+          0.78,
+          0.84,
+          0.86
+        ],
+        [
+          0.93,
+          0.93,
+          0.88
+        ]
+      ],
+      "haze": [
+        0.88,
+        0.9,
+        0.88
+      ],
+      "layer_colors": [
+        [
+          0.5,
+          0.6,
+          0.62
+        ],
+        [
+          0.32,
+          0.42,
+          0.42
+        ],
+        [
+          0.18,
+          0.28,
+          0.26
+        ],
+        [
+          0.08,
+          0.15,
+          0.12
+        ]
+      ],
+      "layers": 4,
+      "seed": 40
+    },
+    "karst_rain": {
+      "sky": [
+        [
+          0.32,
+          0.37,
+          0.42
+        ],
+        [
+          0.5,
+          0.55,
+          0.58
+        ],
+        [
+          0.66,
+          0.7,
+          0.7
+        ]
+      ],
+      "haze": [
+        0.6,
+        0.65,
+        0.66
+      ]
+    },
+    "storm": {
+      "gradient": [
+        [
+          0.04,
+          0.05,
+          0.07
+        ],
+        [
+          0.16,
+          0.18,
+          0.22
+        ]
+      ],
+      "cloud_lit": [
+        0.3,
+        0.32,
+        0.38
+      ],
+      "flash_color": [
+        0.75,
+        0.82,
+        1.0
+      ],
+      "flash_envelope_frames": [
+        1.0,
+        0.35,
+        0.9,
+        0.5,
+        0.25,
+        0.12,
+        0.06,
+        0.03
+      ],
+      "bolt_glow": "bolt + blur6*1.5 + blur30*0.6, tint (0.85, 0.9, 1.0)",
+      "streaks": "fft_noise beta 3.0 seed 77 aniso 8, scrolled 700 px/s, 0.22",
+      "rain": {
+        "n": 700,
+        "amt": 0.8
+      }
+    },
+    "bright_sky": {
+      "gradient": [
+        [
+          0.42,
+          0.58,
+          0.78
+        ],
+        [
+          0.88,
+          0.9,
+          0.9
+        ]
+      ],
+      "sun": [
+        0.8,
+        0.12
+      ],
+      "cloud_scroll_px_s": 90
+    }
+  },
+  "fire": {
+    "jet": "fire_jet: w0 0.16 m, w1 2.8 m, length 13 m (in pixels-per-metre from the mouth points), scroll 900/1400 px/s",
+    "colors": {
+      "core": [
+        1.0,
+        0.95,
+        0.75
+      ],
+      "mid": [
+        1.0,
+        0.55,
+        0.12
+      ],
+      "low": [
+        0.9,
+        0.2,
+        0.03
+      ],
+      "smoke": [
+        0.08,
+        0.06,
+        0.06
+      ]
+    },
+    "aim": {
+      "mouth_gap_back_m": 0.15,
+      "mouth_gap_down_m": 0.28,
+      "bias_deg": -22,
+      "glow": "radial 5 m at 3x the mouth_fwd offset, 0.55, (1.0, 0.45, 0.12)"
+    },
+    "timing": "grow over 7 frames from start, fade over the last 8 frames before end",
+    "sparks": {
+      "n": 50,
+      "seed": 7
+    }
+  },
+  "particles": {
+    "embers": {
+      "n": 120,
+      "speed": 70,
+      "tint": [
+        1.0,
+        0.5,
+        0.12
+      ]
+    },
+    "rain": {
+      "n": 900,
+      "speed": 2200,
+      "angle": 0.12,
+      "color": [
+        0.8,
+        0.85,
+        0.9
+      ]
+    },
+    "mist": {
+      "seed": 9,
+      "scale": 200,
+      "aniso": 2.5,
+      "color": [
+        0.9,
+        0.92,
+        0.92
+      ]
+    }
+  },
+  "text": {
+    "font": "EB Garamond 12 Regular / Italic (fonts-ebgaramond 0.016+git20210310.42d4f9f2-1)",
+    "species_label": {
+      "y": 0.19,
+      "name_px": 54,
+      "name_tracking": 4,
+      "latin_px": 40,
+      "latin_alpha": 0.92,
+      "band_strength": [
+        0.34,
+        0.6
+      ]
+    },
+    "title_card": {
+      "y": 0.205,
+      "title_px": 74,
+      "tracking": 9,
+      "latin_px": 40,
+      "text": [
+        "THE TWO DRAGONS",
+        "Draco ignivomus  ·  Draco nubivagus"
+      ]
+    },
+    "end_card": {
+      "y": 0.47,
+      "title_px": 70,
+      "tracking": 9,
+      "latin_px": 38,
+      "latin_alpha": 0.85,
+      "background": "black"
+    },
+    "shadow": "alpha blurred 6 px at 0.55"
+  },
+  "finish": {
+    "grain": 0.018,
+    "vignette": 0.32,
+    "push": "1.0 -> 1.04-1.06 zoom over a shot",
+    "grain_seed": "frame index * 7919 + 13"
+  },
+  "writer": "ffmpeg rawvideo rgb24 -> libx264 CRF 17 veryfast yuv420p, 24 fps, .tmp.mp4 renamed on success",
+  "timings_2core_s_per_frame": {
+    "backdrop_and_sprites": "0.2-0.8",
+    "dragon_render_with_plate_and_fire": "1.0-1.7",
+    "episode_total_min": 40
+  }
+}

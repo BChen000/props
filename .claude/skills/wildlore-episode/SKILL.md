@@ -18,7 +18,12 @@ Wildlore is GJ's channel of sincere, NatGeo-style documentaries about fictional 
    - `wildlore-narrator`: the Kokoro voice
    - `wildlore-episode-pipeline`: timeline, score, mix and ffmpeg assembly
    - `wildlore-title`: thumbnail title
-4. Check the creature and plant props (`robin`, `blue-raspberry`, ...) for anything reusable.
+4. Check the creature and plant props (`robin`, `blue-raspberry`, `dragons`, ...) for anything reusable.
+5. For creatures over painted skies, volcanoes, karst mist, storms or rain (fast on CPU), use the Two Dragons stack:
+   - `dragons` (bpy 5.3 Cycles)
+   - `wildlore-2d-comp`
+   - `creature-sfx`
+   - `two-dragons-episode`, the complete pipeline of a 2:53 episode
 
 ## 2. Set up once per session
 ```bash
@@ -31,6 +36,8 @@ This installs the Python packages, Cinzel and Cormorant fonts, the Kokoro model 
 2. Audition hard words with `narrate.py --say`.
 3. Add phoneme fixes for any mispronunciations.
 4. Run `narrate.py lines.txt --out $WILDLORE_WORK/vo --polish`.
+5. Keep the voice at normal speed. GJ rejected a 1.34× read as "too sped up". Budget about 330 words for a Short under 3:00.
+6. Check every line with `shared/narration-check/check.py words` until there are 0 errors. Then run `phrases` for the cut points.
 
 ## 4. Shots
 Each shot is its own script importing `bblib`.
@@ -55,10 +62,16 @@ Have an independent subagent review the rough cut and the final, from extracted 
 
 Fix every must-fix item before delivering.
 
+`two-dragons-episode/review_brief.md` is a tested brief. It also covers:
+- joins inside renders that were extended or patched: compare crops of the eye and skin, which whole-frame scans miss
+- whether each shot matches the narration's words
+
+After fixing, resume the same reviewer for a verification pass.
+
 ## 7. Thumbnail, title and description
 - **Thumbnail still:** render a still with the top third calm (a macro or creature close-up), then run `wildlore_title.py`. Check it at 180x320, and keep text out of the bottom 20 % (YouTube's overlay).
 - **Title:** a curiosity question the video answers, which complements the thumbnail text instead of repeating it. Example: "What Makes the Blue Raspberry Blue?"
-- **Description:** a short in-character hook paragraph, then `Species: <Latin name>` (plus `Rare variant:` if there is one), then a would-you-rather question, then 3 hashtags (creature tag, #mythicalcreatures, #naturedocumentary). The last line is the credit line from `wildlore-blender-kit/ASSET_LICENSES.md`: the bee and the bark are CC BY 4.0.
+- **Description:** a short in-character hook paragraph, then `Species: <Latin name>` (plus `Rare variant:` if there is one), then a would-you-rather question, then 3 hashtags (creature tag, #mythicalcreatures, #naturedocumentary). If the episode used the kit's asset pack, the last line is the credit line from `wildlore-blender-kit/ASSET_LICENSES.md`: the bee and the bark are CC BY 4.0.
 - **Style:** no emoji, and no "doesn't exist" disclaimers.
 - **Deliver:** the final mp4, the thumbnail JPG, and `title_and_description.txt`.
 
