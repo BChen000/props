@@ -1,0 +1,309 @@
+{
+ "prop": "baby-griffin-episode",
+ "channel": "Wildlore (animal-docs)",
+ "video": {
+  "title": "Meet the Griffins: A Baby Griffin's First Flight",
+  "length_s": 146.958,
+  "frames": 3527,
+  "fps": 24,
+  "size": [1080, 1920],
+  "render_size": [608, 1080],
+  "upload": "x264 slow CRF 23 high@4.2, BT.601->BT.709 converted and tagged, AAC 256k 48 kHz"
+ },
+ "segments": [
+  {"segment": "s01", "frames": 209, "start_s": 0.0, "end_s": 8.71, "lines": [0]},
+  {"segment": "s02", "frames": 51, "start_s": 8.71, "end_s": 10.83, "lines": [1]},
+  {"segment": "s03", "frames": 110, "start_s": 10.83, "end_s": 15.42, "lines": [2]},
+  {"segment": "s04", "frames": 140, "start_s": 15.42, "end_s": 21.25, "lines": [2]},
+  {"segment": "s05", "frames": 102, "start_s": 21.25, "end_s": 25.5, "lines": [3]},
+  {"segment": "s06", "frames": 154, "start_s": 25.5, "end_s": 31.92, "lines": [4]},
+  {"segment": "s07a", "frames": 50, "start_s": 31.92, "end_s": 34.0, "lines": [5]},
+  {"segment": "s08", "frames": 92, "start_s": 34.0, "end_s": 37.83, "lines": [5]},
+  {"segment": "s07b", "frames": 127, "start_s": 37.83, "end_s": 43.12, "lines": [5]},
+  {"segment": "s09", "frames": 85, "start_s": 43.12, "end_s": 46.67, "lines": [6]},
+  {"segment": "s10", "frames": 140, "start_s": 46.67, "end_s": 52.5, "lines": [7]},
+  {"segment": "s11", "frames": 147, "start_s": 52.5, "end_s": 58.62, "lines": [8]},
+  {"segment": "s12", "frames": 106, "start_s": 58.62, "end_s": 63.04, "lines": [8]},
+  {"segment": "s13", "frames": 85, "start_s": 63.04, "end_s": 66.58, "lines": [9]},
+  {"segment": "s14", "frames": 149, "start_s": 66.58, "end_s": 72.79, "lines": [10]},
+  {"segment": "s15", "frames": 121, "start_s": 72.79, "end_s": 77.83, "lines": [11]},
+  {"segment": "s16", "frames": 139, "start_s": 77.83, "end_s": 83.62, "lines": [12]},
+  {"segment": "s17", "frames": 87, "start_s": 83.62, "end_s": 87.25, "lines": [13]},
+  {"segment": "s18", "frames": 266, "start_s": 87.25, "end_s": 98.33, "lines": [14]},
+  {"segment": "s19", "frames": 165, "start_s": 98.33, "end_s": 105.21, "lines": [15]},
+  {"segment": "s20", "frames": 199, "start_s": 105.21, "end_s": 113.5, "lines": [16]},
+  {"segment": "s21", "frames": 79, "start_s": 113.5, "end_s": 116.79, "lines": [17]},
+  {"segment": "s22", "frames": 123, "start_s": 116.79, "end_s": 121.92, "lines": [18]},
+  {"segment": "s23", "frames": 71, "start_s": 121.92, "end_s": 124.88, "lines": [19]},
+  {"segment": "s24", "frames": 111, "start_s": 124.88, "end_s": 129.5, "lines": [20]},
+  {"segment": "s25", "frames": 154, "start_s": 129.5, "end_s": 135.92, "lines": [21]},
+  {"segment": "s26", "frames": 95, "start_s": 135.92, "end_s": 139.88, "lines": [22]},
+  {"segment": "s27", "frames": 56, "start_s": 139.88, "end_s": 142.21, "lines": [23]},
+  {"segment": "s28", "frames": 114, "start_s": 142.21, "end_s": 146.96, "lines": [24]}
+ ],
+ "narration": {
+  "lines": [
+   {
+    "i": 0,
+    "text": "High above the clouds, among the towering peaks of an ancient mountain range, lives one of nature's most formidable predators.",
+    "pause_after_s": 0.75,
+    "start_s": 0.3,
+    "end_s": 8.089
+   },
+   {"i": 1, "text": "The griffin.", "pause_after_s": 0.9, "start_s": 8.952, "end_s": 9.987},
+   {
+    "i": 2,
+    "text": "With the powerful body of a lion and the wings and talons of an eagle, an adult griffin is capable of bringing down prey several times its own size.",
+    "pause_after_s": 0.5,
+    "start_s": 11.022,
+    "end_s": 20.888
+   },
+   {"i": 3, "text": "But even the fiercest creatures must begin life somewhere.", "pause_after_s": 0.55, "start_s": 21.463, "end_s": 25.077},
+   {
+    "i": 4,
+    "text": "Hidden within a nest perched high above the valley, a young griffin has recently emerged from its egg.",
+    "pause_after_s": 0.4,
+    "start_s": 25.71,
+    "end_s": 31.643
+   },
+   {
+    "i": 5,
+    "text": "Covered in soft downy feathers, with oversized paws and wings far too small for flight, the chick bears little resemblance to the terrifying predator it will one day become.",
+    "pause_after_s": 0.4,
+    "start_s": 32.103,
+    "end_s": 42.861
+   },
+   {"i": 6, "text": "For now, it is entirely dependent on its parents.", "pause_after_s": 0.45, "start_s": 43.321, "end_s": 46.356},
+   {
+    "i": 7,
+    "text": "Each morning, the adults return from the hunt, carrying fresh meat to their hungry offspring.",
+    "pause_after_s": 0.4,
+    "start_s": 46.873,
+    "end_s": 52.256
+   },
+   {
+    "i": 8,
+    "text": "The chick's hooked beak is already remarkably sharp, allowing it to tear small pieces of flesh, while its rapidly developing talons help it grip the rocky nest.",
+    "pause_after_s": 0.5,
+    "start_s": 52.716,
+    "end_s": 62.681
+   },
+   {"i": 9, "text": "But growing up in the mountains is no easy task.", "pause_after_s": 0.4, "start_s": 63.256, "end_s": 66.331},
+   {
+    "i": 10,
+    "text": "As the young griffin begins to explore, its curiosity frequently exceeds its coordination.",
+    "pause_after_s": 0.35,
+    "start_s": 66.791,
+    "end_s": 72.584
+   },
+   {"i": 11, "text": "Its first attempts at flapping its wings are little more than clumsy leaps.", "pause_after_s": 0.4, "start_s": 72.986, "end_s": 77.573},
+   {"i": 12, "text": "And a single misstep could send it plunging hundreds of metres into the valley below.", "pause_after_s": 0.5, "start_s": 78.033, "end_s": 83.243},
+   {"i": 13, "text": "Fortunately, its mother is never far away.", "pause_after_s": 0.55, "start_s": 83.818, "end_s": 86.806},
+   {
+    "i": 14,
+    "text": "For nearly a year, the young griffin remains under the protection of its parents, gradually developing the muscular chest and enormous flight feathers required to take to the skies.",
+    "pause_after_s": 0.4,
+    "start_s": 87.438,
+    "end_s": 98.09
+   },
+   {
+    "i": 15,
+    "text": "Its eyesight becomes extraordinarily acute, allowing it to detect movement across vast distances.",
+    "pause_after_s": 0.4,
+    "start_s": 98.55,
+    "end_s": 104.929
+   },
+   {
+    "i": 16,
+    "text": "Meanwhile, its once-soft paws develop into powerful weapons, equipped with curved claws capable of gripping struggling prey.",
+    "pause_after_s": 0.55,
+    "start_s": 105.389,
+    "end_s": 113.066
+   },
+   {"i": 17, "text": "Eventually, the time comes for its first flight.", "pause_after_s": 0.45, "start_s": 113.698, "end_s": 116.491},
+   {"i": 18, "text": "With an uncertain leap from the cliff's edge, the young griffin spreads its wings.", "pause_after_s": 0.4, "start_s": 117.009, "end_s": 121.641},
+   {"i": 19, "text": "For a moment, it falls.", "pause_after_s": 0.95, "start_s": 122.101, "end_s": 123.977},
+   {"i": 20, "text": "But then, catching the rising mountain winds, it begins to soar.", "pause_after_s": 0.55, "start_s": 125.07, "end_s": 129.053},
+   {
+    "i": 21,
+    "text": "The helpless chick has taken its first step toward becoming one of the sky's most feared hunters.",
+    "pause_after_s": 0.5,
+    "start_s": 129.685,
+    "end_s": 135.549
+   },
+   {"i": 22, "text": "And one day, it too will return to these mountains.", "pause_after_s": 0.7, "start_s": 136.124, "end_s": 139.282},
+   {"i": 23, "text": "Not as a fledgling.", "pause_after_s": 0.6, "start_s": 140.087, "end_s": 141.767},
+   {"i": 24, "text": "But as a guardian of the next generation.", "pause_after_s": 0.0, "start_s": 142.457, "end_s": 145.343}
+  ],
+  "voice": {
+   "engine": "Kokoro v1.0 ONNX",
+   "blend": {"bm_george": 0.65, "bm_lewis": 0.35},
+   "lang": "en-gb",
+   "speed": 1.08,
+   "tempo": 1.0,
+   "pause_scale": 1.15,
+   "pitch_semitones": -0.8,
+   "pitch_tool": "rubberband -3 -F (R3, formants kept)",
+   "per_line_speed_tempo": {"1": [0.92, 1.0], "19": [0.95, 1.0], "23": [0.95, 1.0], "24": [0.95, 1.0], "13": [1.0, 1.0], "22": [1.0, 1.0], "3": [1.02, 1.0]},
+   "lead_in_s": 0.3,
+   "text_fixes": {"once-soft": "once soft"}
+  },
+  "first_cut_length_s": 119.54
+ },
+ "mix": {
+  "sample_rate": 48000,
+  "music": {
+   "what": "synthesized string pad (detuned additive voices, reverb) with a bell motif and low drum swells; chords remapped from the first cut's timings",
+   "level": 0.22,
+   "last_3s_to": 0.05,
+   "duck_under_voice": 0.45
+  },
+  "wind": {
+   "band_hz": [150, 1400],
+   "lowpass_hz": 1500,
+   "level_default": 0.025,
+   "level_per_shot": {
+    "s01": 0.05,
+    "s02": 0.05,
+    "s03": 0.045,
+    "s04": 0.06,
+    "s05": 0.05,
+    "s13": 0.06,
+    "s16": 0.055,
+    "s21": 0.06,
+    "s22": 0.06,
+    "s23": 0.09,
+    "s24": 0.07,
+    "s25": 0.05,
+    "s26": 0.045,
+    "s28": 0.035
+   },
+   "gain": 0.75,
+   "duck_under_voice": 0.62
+  },
+  "sfx": {
+   "duck_under_voice": 0.6,
+   "peeps_duck_under_voice": 0.2,
+   "wing_flaps": "whoosh at shot start + period*(k+0.5) - 0.12 s, between t0 and t1",
+   "flaps": [
+    ["s01", 3.0, 4.3, 1.15, 0.14],
+    ["s10", 1.4, 4.9, 1.0, 0.18],
+    ["s18", 0.0, 3.9, 0.55, 0.16],
+    ["s18", 5.45, 8.9, 0.55, 0.2],
+    ["s22", 2.6, 5.1, 0.56, 0.18],
+    ["s23", 0.0, 2.9, 0.42, 0.2]
+   ],
+   "flaps_columns": ["shot", "t0_s", "t1_s", "period_s", "amp"],
+   "whooshes": [
+    ["s04", 4.6, 0.4],
+    ["s17", 0.7, 0.3],
+    ["s22", 2.4, 0.22],
+    ["s24", 1.25, 0.35]
+   ],
+   "whooshes_columns": ["shot", "t_s", "amp"],
+   "peeps": {"s06": [2.0], "s07b": [0.087], "s09": [0.43, 0.78, 1.13, 1.93, 2.23]},
+   "pebble_clicks": {"s16": [1.62, 1.95, 2.35]},
+   "peeps_note": "seconds from the segment's start; only where the beak opens on screen (jaw keys)"
+  },
+  "master": {
+   "peak_before_loudnorm": 0.89,
+   "fade_out_s": 1.0,
+   "loudnorm": {"I": -14, "TP": -1.5, "LRA": 11},
+   "format": "pcm_s16le 48 kHz"
+  }
+ },
+ "render": {
+  "engine": "bpy 5.3.0 Cycles CPU, AgX Base Contrast (see ../griffin)",
+  "queue": ["s01.py plate", "s02.py", "s03.py nodrop", "s03.py noplate keepbase nodrop test 68,70,72,74,76,78", "s04.py", "s05.py", "s06.py", "s07.py", "s07.py noplate keepbase test 26,28,30,32,34,36,72,74,76,78,80,106,108,110,112,114,116", "s08.py", "s09.py", "s10.py", "s11.py", "s12.py", "s13.py", "s14.py oldshells oldgeo", "s15.py oldshells oldgeo", "s16.py", "s17.py", "s18.py nodrop", "s19.py", "s19.py noplate test 44,46,48,50,52,54,56", "s20.py shaderB", "s21.py", "s22.py nodrop mblur", "s22.py noplate keepbase nodrop mblur spp=12 test 60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123", "s23.py mblur spp=10", "s24.py", "s25.py", "s26.py", "s27.py", "s28.py"],
+  "minutes_final_version_2core": {
+   "s01": 7.7,
+   "s02": 5.5,
+   "s03": 4.2,
+   "s04": 2.6,
+   "s05": 0.9,
+   "s06": 28.1,
+   "s07": 17,
+   "s08": 32.1,
+   "s09": 10.5,
+   "s10": 2.6,
+   "s11": 58.8,
+   "s12": 17.2,
+   "s13": 9.3,
+   "s14": 23.9,
+   "s15": 15,
+   "s16": 17.6,
+   "s17": 11.7,
+   "s18": 21.2,
+   "s19": 20.7,
+   "s20": 22,
+   "s21": 5.8,
+   "s22": 28.7,
+   "s23": 13.9,
+   "s24": 1.5,
+   "s25": 2.6,
+   "s26": 1.0,
+   "s27": 1.2,
+   "s28": 7.4
+  },
+  "total_hours_2core": 6.5,
+  "notes": {
+   "s07": "s07a = frames 1-50, s07b = frames 51-177",
+   "s22": "28.7 = 11.9 full + 16.8 for frames 60-123 at spp 12",
+   "s07_s15_s20": "approximate (several partial runs)",
+   "plates": "the minutes are each shot's last logged run; many of those reused a plate from an earlier run (noplate), so a fresh render adds roughly half an hour of plates (nest shots 40-90 s each, s24's 2160x3840 plate about 6.5 min)"
+  },
+  "fresh_render_estimate_hours_2core": 7
+ },
+ "composite": {
+  "per_shot": {
+   "s01": {"zoom": [1.0, 1.04]},
+   "s02": {"zoom": [1.02, 1.05]},
+   "s03": {"zoom": [1.0, 1.05]},
+   "s04": {},
+   "s05": {"zoom": [1.0, 1.03]},
+   "s06": {"bg_blur": 2.0, "zoom": [1.0, 1.06]},
+   "s07": {"bg_blur": 6.0, "zoom": [1.0, 1.04]},
+   "s08": {"bg_blur": 3.0, "zoom": [1.0, 1.03]},
+   "s09": {"bg_blur": 3.0},
+   "s10": {},
+   "s11": {"bg_blur": 5.0},
+   "s12": {"bg_blur": 5.0},
+   "s13": {"zoom": [1.0, 1.1]},
+   "s14": {"bg_blur": 2.0},
+   "s15": {"bg_blur": 2.0},
+   "s16": {"bg_blur": 1.0},
+   "s17": {"bg_blur": 1.0},
+   "s18": {},
+   "s19": {"bg_blur": 8.0, "zoom": [1.0, 1.05]},
+   "s20": {"bg_blur": 4.0},
+   "s21": {"zoom": [1.0, 1.04]},
+   "s22": {},
+   "s23": {},
+   "s24": {},
+   "s25": {},
+   "s26": {"zoom": [1.0, 1.03]},
+   "s27": {"bg_blur": 2.0, "zoom": [1.02, 1.08]},
+   "s28": {"zoom": [1.0, 1.04], "fade_out": 30}
+  },
+  "s18_dissolve_frames_from_s17": 14
+ },
+ "thumbnail": {
+  "top": [
+   "s28",
+   40,
+   [0, 400, 1080, 1495]
+  ],
+  "bottom": [
+   "s07b",
+   40,
+   [0, 300, 1080, 1395]
+  ],
+  "blend_px": 260,
+  "text": "BABY / GRIFFIN, Cinzel Black, dark stroke",
+  "outputs": ["thumbnail_vertical.jpg 1080x1920", "thumbnail_16x9.jpg 1280x720"]
+ },
+ "youtube": {
+  "title": "Meet the Griffins: A Baby Griffin's First Flight",
+  "description": "High above the clouds, a griffin chick hatches on a narrow cliff ledge. It's all fluff, oversized paws and wings far too small to fly with, yet within a year it will take its first leap from the cliff and start becoming one of the most feared hunters in the sky.\n\nSpecies: Griffin (Gryps montanus)\n\nWould you rather raise a griffin chick yourself, or leave the babysitting to Peter Griffin?\n\n#griffin #mythicalcreatures #naturedocumentary"
+ }
+}

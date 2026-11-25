@@ -6,7 +6,7 @@
 #                                       the Wildlore asset pack (~56 MB), tool checks
 #   ./setup.sh animal-docs --no-models  same without the Kokoro and Whisper downloads
 #   ./setup.sh animal-docs --bpy        also Blender 5.3 as a Python module (bpy, scikit-image, fast-simplification)
-#                                       for animal-docs/dragons and animal-docs/two-dragons-episode
+#                                       for the animal-docs dragons and griffin props and their episodes
 #   ./setup.sh ball-sims                Marble Pop: skia, cairo, numba, OpenCV, matplotlib..., Poppins + DejaVu +
 #                                       Montserrat fonts
 #   ./setup.sh ball-sims --bpy          also Blender 5.3 as a Python module (bpy, OpenEXR, pybullet) for the Blender props
@@ -16,7 +16,7 @@
 #   ./setup.sh <channel> --check        only report what's missing, install nothing
 #
 # Packages install with `python3 -m pip` (PYTHON=... to use another interpreter). System tools (Blender, ffmpeg,
-# FluidSynth, xvfb) are only checked, with an install hint, because they need apt/brew.
+# FluidSynth, xvfb, rubberband) are only checked, with an install hint, because they need apt/brew.
 set -u
 cd "$(dirname "$0")"
 CH="${1:-}"
@@ -86,7 +86,9 @@ animal_docs() {
   else echo "  missing  blender  -> apt-get install -y blender (Ubuntu 24.04 ships 4.0.2) or download 4.1"; MISSING+=("blender"); fi
   tool ffmpeg "apt-get install -y ffmpeg / brew install ffmpeg"
   tool fluidsynth "apt-get install -y fluidsynth fluid-soundfont-gm / brew install fluid-synth"
+  tool rubberband "apt-get install -y rubberband-cli / brew install rubberband (the baby griffin narration's pitch shift)"
   if [ "$(uname)" = "Linux" ]; then tool xvfb-run "apt-get install -y xvfb (EEVEE needs a display)"; fi
+  if [ "$BPY" = 1 ]; then echo "  info     the dragons and griffin props render with bpy 5.3 (Cycles), not the Blender binary above"; fi
   sf2="${SF2:-/usr/share/sounds/sf2/FluidR3_GM.sf2}"
   if [ -f "$sf2" ]; then echo "  ok       $sf2"; else echo "  missing  FluidR3_GM.sf2 -> apt-get install -y fluid-soundfont-gm, or set SF2="; MISSING+=("FluidR3_GM.sf2"); fi
   echo "-- third-party assets (downloaded from their original repos; see animal-docs/wildlore-blender-kit/ASSET_LICENSES.md)"
