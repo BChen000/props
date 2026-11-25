@@ -65,4 +65,4 @@ xvfb-run -a blender -b -noaudio --python pluck_shot.py -- anim       # out/pluck
 
 ## Dependencies (tested)
 - Blender 4.0.2 (EEVEE Legacy) under `xvfb-run`
-- `../wildlore-blender-kit` and its `babylon_forest.hdr`
+- `../wildlore-blender-kit`, plus `hdri/babylon_forest.hdr` from its asset pack (`./setup.sh animal-docs` downloads it). `robin_scene.py` renders pixel-identical from a freshly downloaded pack.

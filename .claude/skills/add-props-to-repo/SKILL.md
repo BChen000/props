@@ -33,6 +33,7 @@ The repo holds reusable building blocks, so future animations are faster and mat
   - photos of real people
   - files over 25 MB
   - third-party assets of unclear licence: document them and their sources in the README instead
+  - third-party assets of clear licence: download them instead, like `animal-docs/wildlore-blender-kit/get_assets.py`. It pins a commit, checks each file's SHA-256, and records the licences and credit line in `ASSET_LICENSES.md`. Find a file's origin by hashing it against candidate repos (a `git clone --filter=blob:none --depth 1` lists a repo's files without downloading them).
 
 ## 3. Make the code portable
 - **Paths:** replace absolute paths with paths relative to the script (`HERE = os.path.dirname(os.path.abspath(__file__))`), plus env overrides. Sibling props are imported via `../<prop>`.

@@ -24,7 +24,7 @@ Wildlore is GJ's channel of sincere, NatGeo-style documentaries about fictional 
 ```bash
 cd /home/claude/props && ./setup.sh animal-docs
 ```
-This installs the Python packages, Cinzel and Cormorant fonts and the Kokoro model. It also checks Blender 4.0/4.1 (EEVEE Legacy), ffmpeg, FluidSynth with FluidR3_GM, xvfb, and the third-party assets in `WILDLORE_ASSETS` (default `/home/claude/assets`). If assets are missing, ask GJ for the asset pack, or swap in Poly Haven CC0 HDRIs.
+This installs the Python packages, Cinzel and Cormorant fonts, the Kokoro model and the asset pack. The pack is the HDRIs, textures and bee the episode used: 56 MB, downloaded from their original GitHub repos into `WILDLORE_ASSETS` (default `/home/claude/assets`), pinned and hash-checked. It also checks Blender 4.0/4.1 (EEVEE Legacy), ffmpeg, FluidSynth with FluidR3_GM and xvfb.
 
 ## 3. Script and voice
 1. Use GJ's script as given: one narration line per row in `lines.txt`.
@@ -58,7 +58,7 @@ Fix every must-fix item before delivering.
 ## 7. Thumbnail, title and description
 - **Thumbnail still:** render a still with the top third calm (a macro or creature close-up), then run `wildlore_title.py`. Check it at 180x320, and keep text out of the bottom 20 % (YouTube's overlay).
 - **Title:** a curiosity question the video answers, which complements the thumbnail text instead of repeating it. Example: "What Makes the Blue Raspberry Blue?"
-- **Description:** a short in-character hook paragraph, then `Species: <Latin name>` (plus `Rare variant:` if there is one), then a would-you-rather question, then 3 hashtags (creature tag, #mythicalcreatures, #naturedocumentary).
+- **Description:** a short in-character hook paragraph, then `Species: <Latin name>` (plus `Rare variant:` if there is one), then a would-you-rather question, then 3 hashtags (creature tag, #mythicalcreatures, #naturedocumentary). The last line is the credit line from `wildlore-blender-kit/ASSET_LICENSES.md`: the bee and the bark are CC BY 4.0.
 - **Style:** no emoji, and no "doesn't exist" disclaimers.
 - **Deliver:** the final mp4, the thumbnail JPG, and `title_and_description.txt`.
 

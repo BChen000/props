@@ -2,7 +2,7 @@
 # One-command setup for a session that works from this repo. Safe to re-run: anything already there is skipped.
 #
 #   ./setup.sh animal-docs              Wildlore: audio/voice Python packages, Cinzel + Cormorant fonts,
-#                                       the Kokoro narrator model (~350 MB), tool and asset checks
+#                                       the Kokoro narrator model (~350 MB), the Wildlore asset pack (~56 MB), tool checks
 #   ./setup.sh animal-docs --no-models  same without the Kokoro download
 #   ./setup.sh ball-sims                Marble Pop: skia, cairo, numba, OpenCV, matplotlib..., Poppins + DejaVu fonts
 #   ./setup.sh ball-sims --bpy          also Blender 5.3 as a Python module (bpy, OpenEXR, pybullet) for the Blender props
@@ -75,12 +75,13 @@ animal_docs() {
   if [ "$(uname)" = "Linux" ]; then tool xvfb-run "apt-get install -y xvfb (EEVEE needs a display)"; fi
   sf2="${SF2:-/usr/share/sounds/sf2/FluidR3_GM.sf2}"
   if [ -f "$sf2" ]; then echo "  ok       $sf2"; else echo "  missing  FluidR3_GM.sf2 -> apt-get install -y fluid-soundfont-gm, or set SF2="; MISSING+=("FluidR3_GM.sf2"); fi
-  echo "-- third-party assets (not in the repo; see animal-docs/wildlore-blender-kit/README.md)"
+  echo "-- third-party assets (downloaded from their original repos; see animal-docs/wildlore-blender-kit/ASSET_LICENSES.md)"
+  if [ "$CHECK" = 1 ]; then out="$("$PY" animal-docs/wildlore-blender-kit/get_assets.py --check)"; rc=$?
+  else out="$("$PY" animal-docs/wildlore-blender-kit/get_assets.py)"; rc=$?; fi
+  echo "$out" | sed 's/^/  /'
+  [ $rc -eq 0 ] || MISSING+=("wildlore-assets")
   A="${WILDLORE_ASSETS:-/home/claude/assets}"
-  for f in hdri/babylon_forest.hdr hdri/babylon_country.hdr tex/hardwood2_diffuse.jpg tex/rockyGround_basecolor.png \
-           tex/rockyGround_normal.png tex/BroadleafBark.jpg tex/Moss_01_Color.png models/Bee.glb; do
-    if [ -f "$A/$f" ]; then echo "  ok       $f"; else echo "  missing  $A/$f"; MISSING+=("asset:$f"); fi
-  done
+  if [ ! -f "$A/tex/BroadleafBark.jpg" ]; then echo "  info     no bark/moss textures: trunks and moss fall back to procedural materials"; fi
 }
 
 ball_sims() {
