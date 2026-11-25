@@ -1,0 +1,6 @@
+__pycache__/
+build/
+out/
+fonts/
+*.mp4
+*.mov
