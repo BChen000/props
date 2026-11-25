@@ -1,0 +1,57 @@
+{
+  "prop": "storytime-music",
+  "sample_rate": 48000,
+  "music": {
+    "texture": "single legato organ melody over a long bass note and a quiet held inner note, no drums",
+    "organ_partials": {
+      "1f": 1.0,
+      "2f": 0.3,
+      "3f": 0.1
+    },
+    "melody": "root, 3rd, 5th, 3rd per chord, 0.75 s a note, legato (each note held to the next, +30 ms overlap)",
+    "chord_s": 3.0,
+    "bass": "2.4 s per chord, 1.76 Hz detuned copy, partials 1 : 0.3 : 0.1",
+    "layers_rms": {
+      "melody": 1.0,
+      "bass": 0.9,
+      "inner": 0.22
+    },
+    "reverb_wet": 0.12,
+    "presets": {
+      "d-minor": {
+        "chords": "Dm A Bb Gm | Dm C Bb A"
+      },
+      "g-minor": {
+        "chords": "Gm Eb Cm D | Gm Eb Cm D"
+      }
+    },
+    "starts": "from the first frame, no fade-in"
+  },
+  "level": {
+    "music_vs_voice_db": {
+      "the_locksmith": -3.5,
+      "the_hero": -4.1
+    },
+    "note": "music RMS set relative to the narration RMS while it speaks; measured result in both episodes about 5.9 dB under the voice",
+    "voice_gain": 0.9,
+    "fx_gain": 0.5,
+    "fx_reverb_wet": 0.25,
+    "opening_boom_gain": 0.7
+  },
+  "sfx": [
+    "boom",
+    "splash",
+    "click",
+    "drill",
+    "grind",
+    "gavel",
+    "clink",
+    "whoosh"
+  ],
+  "reverb": "stereo, 2.4 s noise impulse, exp decay 0.55 s, low-passed at 5 kHz",
+  "master": {
+    "peak_normalise": 0.89,
+    "loudnorm": "loudnorm=I=-14:TP=-1.5:LRA=11",
+    "format": "48 kHz stereo 16-bit WAV"
+  }
+}

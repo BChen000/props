@@ -1,0 +1,85 @@
+{
+  "prop": "the-hero",
+  "title": "The Hero",
+  "series": "Story Time with Kenji",
+  "made": "Nov 2026",
+  "hook": [
+    "A homeless man saved a billionaire from drowning...",
+    "nobody asked why he was there"
+  ],
+  "timeline_s": 81.962,
+  "video_frames": 2458,
+  "lines": 47,
+  "scenes": [
+    "jog",
+    "railing",
+    "water",
+    "rescue",
+    "viral",
+    "mansion",
+    "kids",
+    "will",
+    "funeral",
+    "inherit",
+    "court",
+    "reveal",
+    "present"
+  ],
+  "music": {
+    "preset": "g-minor",
+    "music_db": -4.1
+  },
+  "sfx_cues": [
+    [
+      "railing",
+      3,
+      0.1,
+      "whoosh",
+      0.5
+    ],
+    [
+      "railing",
+      3,
+      0.5,
+      "splash",
+      0.9
+    ],
+    [
+      "rescue",
+      1,
+      0.5,
+      "splash",
+      0.8
+    ],
+    [
+      "court",
+      1,
+      -0.05,
+      "gavel",
+      0.9
+    ],
+    [
+      "reveal",
+      0,
+      -0.05,
+      "boom",
+      0.8
+    ],
+    [
+      "reveal",
+      4,
+      -0.25,
+      "whoosh",
+      0.4
+    ],
+    [
+      "present",
+      6,
+      -0.05,
+      "boom",
+      0.9
+    ]
+  ],
+  "format": "1080x1920, 30 fps, H.264 crf 18 + AAC 192k, -14 LUFS",
+  "video_s": 81.93
+}
