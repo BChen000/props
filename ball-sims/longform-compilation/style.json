@@ -70,7 +70,7 @@
     },
     "equaliser": {
       "size": [390, 186],
-      "where": "in the panel after the reveal"
+      "where": "middle of the guess panel while listening, foot of the answer panel after the reveal"
     },
     "progress_bar": {
       "cx": 960,
@@ -100,7 +100,13 @@
     "intro_s": 3.3,
     "race_prompt_s": 6.5,
     "end_screen_s": 15.0,
-    "transition_frames": 8
+    "transition_frames": 8,
+    "reveal_round": 2,
+    "countdown_s": 5,
+    "countdown_long_s": 10,
+    "cut_flash_alpha": [0.85, 0.6, 0.35, 0.15],
+    "cut_audio_fade_s": 0.03,
+    "halfway_banner": "round 11 (the speed round), 0.25-4.4 s, top centre"
   },
   "transition": {
     "name": "marble pop",
@@ -142,6 +148,7 @@
     "polish": "saturation 1.25, contrast 1.08, soft vignette",
     "A": "twin stairs, close 16:9 camera (az 28, el 13, dist 62)",
     "B": "staircase, close 16:9 camera (az 30, el 12, dist 46)",
-    "C": "2x2 collage with 8 px white gutters"
+    "C": "2x2 collage with 8 px white gutters",
+    "notes": "DejaVu Sans Bold ♪/♫, 86-124 px, bolder by dilation, colour gradient, white rim, glow in the note's colour, drop shadow; on A and B, rising off the lit tiles into the empty sky"
   }
 }

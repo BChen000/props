@@ -79,6 +79,14 @@ def first_note(it):
 
 
 # ----------------------------------------------------------------------------------------------- plan
+def titles(it):
+    """A 16:9 template render's round titles ([{t, text}, ...]) from its timeline.json, else None."""
+    if it["src"][0] != "wide" or not it["path"]:
+        return None
+    p = os.path.join(os.path.dirname(it["path"]), "timeline.json")
+    return json.load(open(p))["titles"] if os.path.exists(p) else None
+
+
 def plan():
     items, start = [], 0
     total = sum(1 for it in S.ITEMS if it["kind"] != "bonus")
@@ -91,12 +99,17 @@ def plan():
         ts = it["ts"] if "ts" in it else max(0.0, it["f0"] - S.CUT_BEFORE_NOTE_S)
         te = it["te"] if "te" in it else vdur - S.RENDER_TAIL_S
         ts_f, te_f = int(round(ts * S.FPS)), min(int(round(te * S.FPS)), int(vdur * S.FPS + 1e-6))
+        tl_titles = titles(it)
+        cuts = [(tl_titles[r]["t"], tl_titles[r + 1]["t"]) for r in it.get("skip_rounds", [])] if tl_titles else []
         pieces, cur = [], ts_f
-        for a, b, k in it.get("speed", []):
+        for a, b, k in sorted(list(it.get("speed", [])) + [(a, b, None) for a, b in cuts]):
             a_f, b_f = int(round(a * S.FPS)), int(round(b * S.FPS))
-            pieces += [(cur, a_f, 1.0), (a_f, b_f, k)]
+            pieces.append((cur, a_f, 1.0))
+            if k is not None:                    # a speed-up; None is a cut, which keeps nothing of [a, b)
+                pieces.append((a_f, b_f, k))
             cur = b_f
         pieces.append((cur, te_f, 1.0))
+        pieces = [pc for pc in pieces if pc[1] > pc[0]]
         N = int(np.floor(sum((b - a) / k for a, b, k in pieces))) - 1
         it.update(ts_f=ts_f, te_f=te_f, pieces=pieces, N=N, start=start, D=N / S.FPS, vdur=vdur)
 
@@ -109,11 +122,20 @@ def plan():
             return out / S.FPS
         it["local"] = local
         ev = {}
+        it["cut_t"] = [local(b) for a, b in cuts]
         if it["kind"] in ("song", "bonus"):
             f0 = local(it["f0"]) if it["f0"] > ts else 0.0
-            count = it.get("countdown", S.COUNTDOWN_S)
-            cd = max(f0 + S.COUNTDOWN_LEAD_S, (S.INTRO_S + 0.4) if i == 0 else 0.0)
-            ev.update(f0=f0, cd=cd, count=count, reveal=cd + count)
+            earliest = max(f0 + S.COUNTDOWN_LEAD_S, (S.INTRO_S + 0.4) if i == 0 else 0.0)
+            r = it.get("reveal_round", S.REVEAL_ROUND)
+            if "countdown" in it or not tl_titles or len(tl_titles) <= r:
+                count = it.get("countdown", S.COUNTDOWN_S)
+                cd, reveal = earliest, earliest + count
+            else:                                # reveal as round r's first marble leaves: more of the tune first
+                reveal = local(tl_titles[r]["t"])
+                room = reveal - earliest
+                count = S.COUNTDOWN_LONG_S if room >= S.COUNTDOWN_LONG_S else max(3, min(S.COUNTDOWN_S, int(room)))
+                cd = reveal - count
+            ev.update(f0=f0, cd=cd, count=count, reveal=reveal)
         if it["kind"] == "run" and it.get("reveal"):
             ev["reveal"] = local(it["reveal"])
         if it["kind"] == "race":
@@ -127,8 +149,9 @@ def plan():
         start += N
     for i, it in enumerate(items):
         nxt = items[i + 1] if i + 1 < len(items) else None
-        it["next"] = None if not nxt else {"song": "MYSTERY SONG", "race": "MARBLE RACE", "run": "MARBLE RUN",
-                                           "bonus": "SECRET BONUS!"}[nxt["kind"]]
+        it["next"] = None if not nxt else (nxt.get("next_label") or (nxt.get("label") if nxt["kind"] == "song" else None)
+                                           or {"song": "MYSTERY SONG", "race": "MARBLE RACE", "run": "MARBLE RUN",
+                                               "bonus": "SECRET BONUS!"}[nxt["kind"]])
         it["color_in"] = S.MARBLES[(i - 1) % len(S.MARBLES)]
         it["color_out"] = S.MARBLES[i % len(S.MARBLES)]
     return items
@@ -193,6 +216,9 @@ def make_assets(it):
             img, x, y = ui.run_reveal(it["answer"], "heart" if it.get("answer_icon") else
                                       ("marble" if it.get("answer_color") else None), it.get("answer_color"))
             pop_in(img, x, y, ev["reveal"], "reveal")
+    if it.get("halfway"):
+        img = ui.halfway(*it["halfway"])
+        pop_in(img, (S.W - img.width) // 2, 22, 0.25, "halfway", 4.4)
     it["n_panels"] = len(sprites)
     if it.get("next"):
         u = ui.upnext(it["next"], gold=it["next"].startswith("SECRET"))
@@ -289,11 +315,16 @@ def base_graph(it):
     return g
 
 
-def eq_window(it):
+def eq_windows(it):
+    """(t0, t1, y) for the equaliser: in the middle of the guess panel while listening (before the countdown), then at
+    the foot of the answer panel after the reveal."""
     ev, D = it["ev"], it["D"]
-    if it["kind"] in ("song", "bonus"):
-        return ev["reveal"] + 0.2, (ev["endscreen"] if "endscreen" in ev else D + 1)
-    return None
+    if it["kind"] not in ("song", "bonus"):
+        return []
+    P = S.PANEL
+    start = S.INTRO_S if it["first"] else 0.0
+    w = [(start + 0.2, ev["cd"], P["y"] + 300 - WG.EQ_H // 2)] if ev["cd"] - start > 1.0 else []
+    return w + [(ev["reveal"] + 0.2, ev.get("endscreen", D + 1), P["y"] + P["h"] - WG.EQ_H - 22)]
 
 
 def render_segment(it):
@@ -306,13 +337,19 @@ def render_segment(it):
     inputs = ["-i", vin, "-f", "rawvideo", "-pix_fmt", "rgba", "-s", f"{wg.W}x{wg.H}", "-r", str(S.FPS),
               "-i", "pipe:0"]
     g = base_graph(it)
+    b0 = "base"
+    if it.get("cut_t"):                          # a white flash over each cut-out round
+        fl = [f"drawbox=x=0:y=0:w=iw:h=ih:color=white@{al}:t=fill:enable='eq(n,{int(round(tc * S.FPS)) + j})'"
+              for tc in it["cut_t"] for j, al in enumerate(S.CUT_FLASH)]
+        g.append(f"[base]{','.join(fl)}[basef]")
+        b0 = "basef"
     eh, bh, ph = WG.EQ_H, WG.BAR_H, WG.PULSE
     g.append("[1:v]format=yuva420p,settb=1/30,setpts=N/(30*TB),split=3[w1][w2][w3]")
     g.append(f"[w1]crop={WG.EQ_W}:{eh}:0:0[weq]")
     g.append(f"[w2]crop={WG.BAR_W}:{bh}:0:{eh}[wbar]")
     g.append(f"[w3]crop={ph}:{ph}:0:{eh + bh}[wpm]")
     bx, by = S.BAR["cx"] - WG.BAR_W // 2, S.BAR["y"] - bh // 2
-    g.append(f"[base][wbar]overlay=x={bx}:y={by}[o0]")
+    g.append(f"[{b0}][wbar]overlay=x={bx}:y={by}[o0]")
     cur, k = "o0", 2
     sprites = it["sprites"]
     for j, (f, x, y, t0, t1, xe) in enumerate(sprites):
@@ -326,12 +363,15 @@ def render_segment(it):
             g.append(f"[{cur}][wpm]overlay=x={int(dx - ph / 2)}:y={int(dy - ph / 2)}[vp]")
             cur = "vp"
         if j == it["n_panels"] - 1:
-            win = eq_window(it)
-            if win:
-                P = S.PANEL
-                ex, ey = P["x"] + (P["w"] - WG.EQ_W) // 2, P["y"] + P["h"] - WG.EQ_H - 22
-                g.append(f"[{cur}][weq]overlay=x={ex}:y={ey}:enable='between(t,{win[0]:.4f},{win[1]:.4f})'[veq]")
-                cur = "veq"
+            wins = eq_windows(it)
+            if wins:
+                ex = S.PANEL["x"] + (S.PANEL["w"] - WG.EQ_W) // 2
+                labs = ["weq"] if len(wins) == 1 else [f"weq{q}" for q in range(len(wins))]
+                if len(wins) > 1:
+                    g.append(f"[weq]split={len(wins)}" + "".join(f"[{lb}]" for lb in labs))
+                for q, ((w0, w1, ey), lb) in enumerate(zip(wins, labs)):
+                    g.append(f"[{cur}][{lb}]overlay=x={ex}:y={ey}:enable='between(t,{w0:.4f},{w1:.4f})'[veq{q}]")
+                    cur = f"veq{q}"
             else:
                 g.append("[weq]nullsink")
     if not it["first"]:
@@ -387,6 +427,10 @@ def item_audio(it):
          + "".join(f"[p{j}]" for j in range(len(pcs)))]
     for j, (a, b, k) in enumerate(pcs):
         tempo = f",atempo={k}" if k != 1.0 else ""
+        if j + 1 < len(pcs) and pcs[j + 1][0] != b:           # a cut follows: fade out
+            tempo += f",afade=t=out:st={(b - a) / S.FPS / k - S.CUT_FADE_S:.4f}:d={S.CUT_FADE_S}"
+        if j > 0 and pcs[j - 1][1] != a:                      # a cut precedes: fade in
+            tempo += f",afade=t=in:st=0:d={S.CUT_FADE_S}"
         g.append(f"[p{j}]atrim=start={a / S.FPS:.6f}:end={b / S.FPS:.6f},asetpts=PTS-STARTPTS{tempo}[q{j}]")
     g.append("".join(f"[q{j}]" for j in range(len(pcs))) + f"concat=n={len(pcs)}:v=0:a=1[a]")
     raw = subprocess.check_output(["ffmpeg", "-v", "error", "-i", it["path"], "-filter_complex", ";".join(g),
@@ -478,6 +522,8 @@ def build_audio(items):
                 add("tick", t0 + ev["cd"] + ev["count"] - n)
         if "reveal" in ev:
             add("ding", t0 + ev["reveal"])
+        for tc in it.get("cut_t", []):
+            add("whoosh", t0 + tc - 0.3)
         if "end" in ev:
             add("pop", t0 + ev["end"])
         if "upnext" in ev:

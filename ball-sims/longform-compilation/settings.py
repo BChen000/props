@@ -30,6 +30,10 @@ CUT_BEFORE_NOTE_S = 0.45               # music rounds start this long before the
 TRANSITION_FRAMES = 8
 INTRO_S = 3.3
 COUNTDOWN_S = 5
+COUNTDOWN_LONG_S = 10          # used when a song's guess window has room for it
+REVEAL_ROUND = 2               # the answer pops in as this round of marbles starts (0-based: after the 1- and 2-marble rounds)
+CUT_FLASH = (0.85, 0.6, 0.35, 0.15)   # white flash alpha, one per frame, where a skipped round is cut out
+CUT_FADE_S = 0.03              # audio fade on each side of a cut
 COUNTDOWN_LEAD_S = 1.0
 UPNEXT_LEAD_S = 4.0
 END_SCREEN_S = 15.0
@@ -79,7 +83,8 @@ ITEMS = [
          ts=0.0, te=22.4, prompt="WHAT WILL THE MARBLES MAKE?", reveal=19.5, answer="A HEART!", answer_icon="heart",
          bed="outro"),
     dict(key="elise", src=("wide", "marble-twin-stairs", "fur-elise"), kind="song", title="Für Elise"),
-    dict(key="row", src=("wide", "marble-spiral-round", "row-row-row"), kind="song", title="Row, Row, Row Your Boat"),
+    dict(key="row", src=("wide", "marble-spiral-round", "row-row-row"), kind="song", title="Row, Row, Row Your Boat",
+         skip_rounds=[1]),   # its 2-marble round sings the whole song again: cut out (flash + whoosh), -13.9 s
     dict(key="blue_vs_green", src=("short", "*blue_vs_green_round1.mp4"), kind="race",
          frame=dict(track=["blue", "green"]), ts=0.0, te=32.2, speed=[(21.0, 27.0, 1.4)], colors=["blue", "green"],
          sub="First one out wins!", end_t=29.0, bed="battle"),
@@ -89,6 +94,7 @@ ITEMS = [
          frame=dict(vcam=[(0.0, 540, 690, 608, 0), (9.6, 540, 700, 608, 0), (11.4, 540, 1120, 608, 0),
                           (12.2, 540, 1140, 608, 0)]),   # the ramp at full width, then down to the basket
          ts=0.0, f0=0.0, te=11.9, title="Twinkle Twinkle Little Star", label="SPEED ROUND!", countdown=3,
+         halfway=("HALFWAY THERE!", "Stay for the secret bonus song!"),   # re-hook near the middle of the video
          extra="...on a xylophone!"),
     dict(key="oldmac", src=("wide", "marble-stairs-song", "old-macdonald"), kind="song", title="Old MacDonald Had a Farm"),
     dict(key="run_rainbow", src=("short", "*marble_run_rainbow.mp4"), kind="run", frame=dict(split=(300, 840)),
@@ -117,8 +123,14 @@ ITEMS = [
 
 THUMB_BUILD = os.environ.get("THUMB_BUILD", "build_thumb")  # BUILD_DIR of the templates' widethumb renders
 THUMBNAILS = [   # thumbs.py -> build/thumbnail_<name>.jpg, no text (GJ's best thumbnails had none)
-    dict(name="A_twin_stairs", still=("marble-twin-stairs", "ode-to-joy"), cam="widethumb"),
-    dict(name="B_staircase", still=("marble-stairs-song", "jingle-bells"), cam="wide"),   # spawns widethumb
+    # notes: glowing music notes (x, y, size, angle, colour index, char) rising out of the empty sky, so the
+    # picture says "song" without words
+    dict(name="A_twin_stairs", still=("marble-twin-stairs", "ode-to-joy"), cam="widethumb",
+         notes=[(800, 262, 86, 12, 2, "♪"), (920, 192, 108, -8, 4, "♫"), (1048, 128, 124, 10, 5, "♪"),
+                (1180, 78, 110, -12, 7, "♫")]),
+    dict(name="B_staircase", still=("marble-stairs-song", "jingle-bells"), cam="wide",   # spawns widethumb
+         notes=[(728, 396, 86, 10, 5, "♪"), (850, 312, 108, -8, 6, "♫"), (980, 230, 124, 12, 7, "♪"),
+                (1112, 152, 112, -10, 0, "♫"), (1218, 84, 92, 8, 1, "♪")]),
     dict(name="C_collage", grid=[   # 2x2, all music rounds; "still" = a template's title-free --thumb-only render
         dict(src=("still", "marble-stairs-song", "build_thumb", "jingle-bells")),
         dict(src=("still", "marble-twin-stairs", "build_wide", "happy-birthday"), cam="wide", box=(180, 130, 1600)),

@@ -97,6 +97,8 @@ def main():
             except (SystemExit, subprocess.CalledProcessError, FileNotFoundError) as e:
                 print(f"thumbs: skip {th['name']} ({e})")
                 continue
+        if th.get("notes"):
+            img = ui.add_notes(img, th["notes"])
         out = os.path.join(S.BUILD, f"thumbnail_{th['name']}.jpg")
         img.save(out, quality=92)
         print(out)

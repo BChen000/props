@@ -214,7 +214,7 @@ def countdown(n, total, r=104):
     d.ellipse(box, fill=(0, 0, 0, 90))
     d.ellipse(box, outline=(255, 255, 255, 70), width=13 * SS)
     d.arc(box, start=-90, end=-90 + 360 * n / total, fill=rgb(S.YELLOW, 255), width=13 * SS)
-    draw_text(im, str(n), c, c + 6, "blk", 128, rgb(S.YELLOW), stroke=7, anchor="mm")
+    draw_text(im, str(n), c, c + 6, "blk", 128 if n < 10 else 100, rgb(S.YELLOW), stroke=7, anchor="mm")
     img = down(im)
     return img, S.PANEL["x"] + S.PANEL["w"] // 2 - img.width // 2, S.PANEL["y"] + 300 - img.height // 2
 
@@ -314,6 +314,17 @@ def banner(text, y=22, color=S.YELLOW):
     draw_text(im, text, w / 2, h / 2 + 2, "blk", 50, rgb(color), stroke=5, anchor="mm")
     img = down(im)
     return img, (S.W - img.width) // 2, y
+
+
+def halfway(line1, line2):
+    """The mid-video re-hook: a two-line pill for the top of the screen."""
+    w = int(max(text_w(line1, font("blk", 58 * SS)), text_w(line2, font("xb", 36 * SS))) / SS + 100)
+    h = 152
+    im = layer(w, h)
+    rrect(im, (2, 2, w - 2, h - 2), 44, S.PANEL_RGBA, (255, 255, 255, 220), 3)
+    draw_text(im, line1, w / 2, 14, "blk", 58, rgb(S.YELLOW), stroke=6)
+    draw_text(im, line2, w / 2, 92, "xb", 36, (255, 255, 255), stroke=5)
+    return down(im)
 
 
 def run_reveal(answer, icon=None, color=None):
@@ -425,6 +436,50 @@ def transition_frames(color, n=S.TRANSITION_FRAMES):
         rgbf = full * (1 - ring[..., None]) + ring[..., None]
         uncover.append(Image.fromarray(np.dstack([rgbf * 255, np.maximum(a, ring)[..., None] * 255]).astype(np.uint8), "RGBA"))
     return cover, uncover
+
+
+NOTE_FONT = os.environ.get("NOTE_FONT", "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf")   # has ♪ and ♫
+
+
+def music_note(char, size, color, angle=0.0):
+    """A glossy music note sprite for thumbnails: colour gradient, white outline, soft glow in its colour and a drop
+    shadow. Returns an RGBA image; its centre is the note's centre."""
+    k = 3                                                  # supersampling
+    f = ImageFont.truetype(NOTE_FONT, size * k)
+    x0, y0, x1, y1 = f.getbbox(char)
+    pad = int(size * 0.45) * k
+    w, h = x1 - x0 + 2 * pad, y1 - y0 + 2 * pad
+    mask = Image.new("L", (w, h), 0)
+    ImageDraw.Draw(mask).text((pad - x0, pad - y0), char, font=f, fill=255)
+    mask = mask.filter(ImageFilter.MaxFilter(2 * max(1, size // 26) * k + 1))     # bolder than the font
+    rim = mask.filter(ImageFilter.MaxFilter(2 * max(1, size // 18) * k + 1))
+    col = np.array(color, np.float32)
+    top, bot = np.minimum(255, col * 0.8 + 255 * 0.2), col * 0.72          # light at the top, deeper below
+    grad = (top[None, :] + (bot - top)[None, :] * np.linspace(0, 1, h)[:, None]).astype(np.uint8)
+    fill = Image.fromarray(np.repeat(grad[:, None, :], w, axis=1), "RGB").convert("RGBA")
+    fill.putalpha(mask)
+    glow = Image.new("RGBA", (w, h), tuple(int(c) for c in col) + (0,))
+    glow.putalpha(rim.filter(ImageFilter.GaussianBlur(size * 0.22 * k)).point(lambda v: min(255, int(v * 1.3))))
+    shadow = Image.new("RGBA", (w, h), (10, 8, 30, 0))
+    shadow.putalpha(rim.filter(ImageFilter.GaussianBlur(size * 0.06 * k)).point(lambda v: int(v * 0.55)))
+    out = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    out.alpha_composite(glow)
+    out.alpha_composite(shadow, (int(size * 0.05 * k), int(size * 0.08 * k)))
+    white = Image.new("RGBA", (w, h), (255, 255, 255, 0))
+    white.putalpha(rim)
+    out.alpha_composite(white)
+    out.alpha_composite(fill)
+    out = out.rotate(angle, resample=Image.BICUBIC, expand=True)
+    return out.resize((out.width // k, out.height // k), Image.LANCZOS)
+
+
+def add_notes(img, notes):
+    """notes: [(x, y, size, angle, colour index into S.MARBLES, char)] in thumbnail pixels."""
+    img = img.convert("RGBA")
+    for x, y, size, angle, ci, ch in notes:
+        n = music_note(ch, size, rgb(S.MARBLES[ci % len(S.MARBLES)]), angle)
+        img.alpha_composite(n, (int(x - n.width / 2), int(y - n.height / 2)))
+    return img.convert("RGB")
 
 
 def polish_thumbnail(img):
