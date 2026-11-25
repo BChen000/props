@@ -1,0 +1,155 @@
+{
+  "prop": "wildlore-blender-kit",
+  "engine": {
+    "blender": "4.0.2",
+    "renderer": "EEVEE (Legacy)",
+    "headless": "xvfb-run -a blender -b -noaudio --python <script>"
+  },
+  "frame": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 24,
+    "units": "metres"
+  },
+  "look": {
+    "view_transform": "AgX",
+    "look": "AgX - Medium High Contrast",
+    "exposure_default": 0.0,
+    "taa_samples": {
+      "shots": 3,
+      "shot B (forest establishing)": 5,
+      "stills": 64
+    },
+    "soft_shadows": true,
+    "shadow_cube": "512 (stills 1024)",
+    "shadow_cascade": "1024 (stills 2048)",
+    "gtao_distance": {
+      "default": 0.2,
+      "macro": 0.004,
+      "close-ups": 0.008
+    },
+    "bloom": {
+      "threshold": 1.2,
+      "intensity": 0.035,
+      "radius": 5.0,
+      "default": "off; on for highlights in close-ups"
+    },
+    "bokeh": {
+      "blades": 7,
+      "max_size_px": "60 * width / 720 (stills raise it to 140-220 * width / 1080)",
+      "threshold": 4.0
+    },
+    "compositor": "vignette, optional fog, film grain, optional glare"
+  },
+  "world": {
+    "forest": {
+      "hdri": "babylon_forest.hdr",
+      "rot_rad": 3.4,
+      "strength": "0.8-0.9"
+    },
+    "farm": {
+      "hdri": "babylon_country.hdr"
+    },
+    "camera_backdrop": "world_hdri(cam_strength, clamp_bg) gives the backdrop its own brightness; thumbnails give the camera its own rotated patch of the HDRI"
+  },
+  "palette_linear": {
+    "drupelet_ripe": [
+      0.012,
+      0.05,
+      0.5
+    ],
+    "drupelet_near_ripe": [
+      0.02,
+      0.09,
+      0.62
+    ],
+    "drupelet_teal": [
+      0.2,
+      0.42,
+      0.62
+    ],
+    "drupelet_unripe": [
+      0.3,
+      0.45,
+      0.06
+    ],
+    "waxy_bloom": [
+      0.16,
+      0.24,
+      0.56
+    ],
+    "berry_core": [
+      [
+        0.035,
+        0.03,
+        0.11
+      ],
+      [
+        0.07,
+        0.065,
+        0.19
+      ]
+    ],
+    "berry_core_macro": [
+      [
+        0.02,
+        0.07,
+        0.42
+      ],
+      [
+        0.03,
+        0.09,
+        0.5
+      ]
+    ],
+    "sepal": [
+      0.12,
+      0.22,
+      0.05
+    ],
+    "pedicel": [
+      [
+        0.05,
+        0.08,
+        0.02
+      ],
+      [
+        0.1,
+        0.07,
+        0.03
+      ]
+    ],
+    "leaf_top": [
+      0.035,
+      0.13,
+      0.025
+    ],
+    "leaf_under": [
+      0.3,
+      0.38,
+      0.28
+    ],
+    "fern_top": [
+      0.05,
+      0.16,
+      0.025
+    ]
+  },
+  "berry": {
+    "drupelet_profile_radius_m": 0.0085,
+    "height_m": 0.019,
+    "drupelets": {
+      "hero": 95,
+      "background": 70,
+      "macro": 110,
+      "board": 58
+    },
+    "core_factor": {
+      "default": 0.76,
+      "macro": 0.93
+    },
+    "local_axis": "+z from attachment to tip",
+    "drupelet_material": "SSS 0.6 (radius 0.3,0.6,1.0 x 4 mm), coat 0.3 rough 0.07, sheen 0.10, waxy bloom by facing ratio"
+  },
+  "assets_dir": "env WILDLORE_ASSETS (default /home/claude/assets), not in the repo"
+}

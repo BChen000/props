@@ -1,0 +1,45 @@
+{
+  "prop": "wildlore-narrator",
+  "engine": "Kokoro v1.0 ONNX (kokoro-onnx), 24 kHz mono",
+  "voice": {
+    "blend": {
+      "bm_george": 0.75,
+      "bm_lewis": 0.25
+    },
+    "lang": "en-gb",
+    "speed": 0.97,
+    "clause_pause_s": 0.16,
+    "character": "older British male nature-documentary narrator, unhurried, warm, low"
+  },
+  "phoneme_fixes": {
+    "drupelets": "dɹˈuːplɪts",
+    "anthocyanins": "ˌanθəsˈaɪənɪnz",
+    "trellises": "tɹˈɛlɪsɪz",
+    "cobalt-blue": "kˈəʊbɒlt blˈuː"
+  },
+  "trim": {
+    "top_db": 40,
+    "keep_before_s": 0.03,
+    "keep_after_s": 0.08
+  },
+  "voice_chain_48k": [
+    "high-pass 75 Hz",
+    "low shelf 170 Hz +2 dB",
+    "peak 420 Hz -1.5 dB q1.0",
+    "peak 3.2 kHz +1.5 dB q0.8",
+    "high shelf 9 kHz -1 dB",
+    "compressor -20 dB 2.5:1 attack 8 ms release 120 ms",
+    "reverb room 0.18 damping 0.6 wet 0.07 width 0.6"
+  ],
+  "in_the_mix": {
+    "voice_rms": 0.06,
+    "music_rms": 0.042,
+    "music_duck_under_speech": 0.55,
+    "limiter_dbfs": -4.5,
+    "final_loudness": "-14 LUFS integrated, -1.5 dBTP (assemble.py)"
+  },
+  "pace": {
+    "episode": "21 lines, 2:36 video, lines anchored to shots with ~0.25-0.75 s lead-in",
+    "line_00": "The blue raspberry. (1.39 s)"
+  }
+}

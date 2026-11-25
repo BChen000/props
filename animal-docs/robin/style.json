@@ -1,0 +1,125 @@
+{
+  "prop": "robin",
+  "species": "European robin (Erithacus rubecula), stylised",
+  "size": {
+    "height_m": 0.08,
+    "head_radii_m": [
+      0.0185,
+      0.0195,
+      0.018
+    ],
+    "beak_len_m": 0.0129,
+    "beak_base_r_m": 0.0036,
+    "body": "ellipsoid (0.029, 0.041, 0.031) blended with a breast sphere r 0.027 at (0, 0.016, -0.004)"
+  },
+  "rig": {
+    "root": "feet / perch contact, +Y forward, +Z up",
+    "hip": "local (0, -0.004, 0.040); rotation x = body pitch",
+    "neck": "local (0, 0.021, 0.014) on hip; x = nod (+ up), y = roll, z = turn (+ toward the bird's left)",
+    "beak_tip": "neck-space Vector, head centre at (0, 0.010, 0.009)",
+    "eyes": "(+-0.0142, 0.0068, 0.0042) from head centre"
+  },
+  "plumage": {
+    "masks": "object space: orange face/breast, blue-grey border band 4.2 mm, olive-brown crown/back, white belly",
+    "face_mask_top_z": {
+      "video": 0.0135,
+      "thumbnail close-up": 0.0165
+    },
+    "feathers": "folded wings and tail are individual feather meshes; custom split normals from the smooth body"
+  },
+  "robin_scene": {
+    "output": "1080x1920 PNG, 64 samples, ~5 min on 2 cores",
+    "pose_deg": {
+      "body_yaw_toward_camera": 30,
+      "hip_pitch": -3,
+      "neck_pitch": -26,
+      "neck_roll": 0,
+      "neck_yaw": -14
+    },
+    "berry": {
+      "scale": 1.25,
+      "below_beak_tip_m": 0.0117,
+      "core_emission": 0.15
+    },
+    "camera": {
+      "lens_mm": 85,
+      "fstop": 16,
+      "distance_m": 0.31,
+      "pitch_deg": 8,
+      "focus": "halfway from eye to berry"
+    },
+    "lights": {
+      "key": {
+        "offset_from_head_m": [
+          -0.24,
+          -0.12,
+          0.17
+        ],
+        "size_m": 0.16,
+        "W": 0.6,
+        "shape": "disk"
+      },
+      "rim_sun": {
+        "rotation_deg": [
+          -62,
+          0,
+          -20
+        ],
+        "W": 30,
+        "colour": [
+          1.0,
+          0.8,
+          0.52
+        ]
+      },
+      "fill": {
+        "W": 0.25,
+        "colour": [
+          0.82,
+          0.88,
+          1.0
+        ]
+      },
+      "kick": {
+        "W": 0.4
+      },
+      "catchlight": {
+        "size_m": 0.03,
+        "W": 0.08
+      }
+    },
+    "backdrop": {
+      "hdri": "babylon_forest.hdr",
+      "u": 0.3,
+      "tilt_deg": 12,
+      "tint": [
+        1.0,
+        0.86,
+        0.6
+      ],
+      "strength": 0.55
+    },
+    "in_frame_px": {
+      "eye": [
+        611,
+        900
+      ],
+      "beak_tip": [
+        355,
+        1132
+      ],
+      "berry_centre": [
+        354,
+        1301
+      ],
+      "head_top": [
+        660,
+        680
+      ],
+      "perch": [
+        1047,
+        1732
+      ]
+    }
+  }
+}
