@@ -14,6 +14,7 @@ offsets  per round, the beat each marble leaves the chute, counted from the roun
 chords   one chord name per beat (keys of VOICING)
 """
 
+G4, A4 = 67, 69
 C5, D5, E5, F5, G5, A5 = 72, 74, 76, 77, 79, 81
 C6, E6, G6, C7 = 84, 88, 91, 96
 
@@ -47,8 +48,43 @@ def _jingle():
     return p1 + p2 + p1 + p4, ch1 + ch2 + ch1 + ch4
 
 
+def _mary():
+    a = [E5, D5, C5, D5, E5, E5, E5, -E5]
+    b = [D5, D5, D5, -D5, E5, G5, G5, -G5]
+    a2 = [E5, D5, C5, D5, E5, E5, E5, E5]
+    end = [D5, D5, E5, D5, C5, -C5, 0, 0]
+    ca = ["C"] * 8
+    cb = ["G"] * 4 + ["C"] * 4
+    cend = ["G7", "G7", "C", "G7"] + ["C"] * 4
+    return (a + b + a2 + end) * 2, (ca + cb + ca + cend) * 2
+
+
+def _macdonald():
+    farm = [C5, C5, C5, G4, A4, A4, G4, -G4]
+    eio = [E5, E5, D5, D5, C5, -C5, 0, 0]
+    pickup = eio[:7] + [G4]
+    run = [G4, C5, E5, G5, C6, E6, G6, C7]
+    cf = ["C"] * 4 + ["F", "F", "C", "C"]
+    ce = ["C", "C", "G7", "G7"] + ["C"] * 4
+    return farm + pickup + farm + eio + farm + eio + run, (cf + ce) * 3 + ["C"] * len(run)
+
+
+def _frere():
+    a = [C5, D5, E5, C5]
+    b = [E5, F5, G5, -G5]
+    c = [G5, A5, G5, F5, E5, C5]
+    d = [C5, G4, C5, -C5]
+    ca, cb = ["C"] * 4, ["C", "G7", "C", "C"]
+    cc, cd = ["C", "F", "C", "G7", "C", "C"], ["C", "G", "C", "C"]
+    mel = a + a + b + b + c + c + d + d + c + c + d + d
+    return mel, ca + ca + cb + cb + cc + cc + cd + cd + cc + cc + cd + cd
+
+
 _tw_mel, _tw_ch = _twinkle()
 _jb_mel, _jb_ch = _jingle()
+_ml_mel, _ml_ch = _mary()
+_om_mel, _om_ch = _macdonald()
+_fj_mel, _fj_ch = _frere()
 
 SONGS = {
     "twinkle": dict(
@@ -68,6 +104,33 @@ SONGS = {
         offsets=[[0], [0, 3], [0, 2, 4], [0, 2, 3, 5, 7], [0, 1, 2, 4, 5, 7, 8, 10]],
         melody=_jb_mel,
         chords=_jb_ch,
+    ),
+    "mary-lamb": dict(
+        name="Mary Had a Little Lamb",
+        file="Marble_Staircase_Mary_Had_a_Little_Lamb",
+        bpm=112.5,
+        rounds=[1, 2, 3, 5, 8],
+        offsets=[[0], [0, 3], [0, 3, 6], [0, 2, 4, 6, 8], [0, 1, 2, 3, 4, 5, 6, 7]],
+        melody=_ml_mel,
+        chords=_ml_ch,
+    ),
+    "old-macdonald": dict(
+        name="Old MacDonald Had a Farm",
+        file="Marble_Staircase_Old_MacDonald",
+        bpm=120.0,
+        rounds=[1, 2, 3, 5, 8],
+        offsets=[[0], [0, 1], [0, 2, 4], [0, 1, 2, 3, 4], [0, 1, 2, 3, 4, 5, 6, 7]],
+        melody=_om_mel,
+        chords=_om_ch,
+    ),
+    "frere-jacques": dict(
+        name="Frère Jacques (Are You Sleeping)",
+        file="Marble_Staircase_Frere_Jacques",
+        bpm=112.5,
+        rounds=[1, 2, 3, 5, 8],
+        offsets=[[0], [0, 2], [0, 1, 2], [0, 1, 2, 4, 5], [0, 1, 2, 3, 4, 5, 6, 7]],
+        melody=_fj_mel,
+        chords=_fj_ch,
     ),
 }
 

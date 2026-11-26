@@ -14,6 +14,13 @@ One command for a rainbow-staircase marble music Short, in the "Satisfying 3D Si
   - The notes, chords and timing are the upload's. They were read back from its audio by pitch tracking, and the G-vs-G7 choices by checking for D4 vs F4.
 - Thumbnails: with `--thumb-title`, the automatically picked frames (769 and 897) match the uploads' clean thumbnails to within JPEG noise (43–44 dB PSNR). The default thumbnail is the same picture without the title, because the channel's thumbnails have no text unless GJ asks for it.
 
+Three more songs were added in Nov 2026 and rendered from this folder with the default settings on a 2-core cloud session:
+- `mary-lamb`: *Mary Had a Little Lamb*, two verses at 112.5 bpm (37.6 s, 1128 frames).
+- `old-macdonald`: *Old MacDonald Had a Farm*, the verse three times without the "moo" part, then an 8-note run up to C7, at 120 bpm (31.27 s, 938 frames).
+- `frere-jacques`: *Frère Jacques*, the whole round once, then its second half again, at 112.5 bpm (33.37 s, 1001 frames).
+
+Each new song has its own marble spacing in the early rounds, so its choreography is different from the shipped videos and from the others. For these three, `music.py`'s per-beat log was checked against `songs.py` (beat by beat, the melody voice is the written note), stills of the busiest beats were looked at before the full renders, and each mp4 measured −13.0 LUFS.
+
 ## Files
 | file | what |
 |---|---|
@@ -30,6 +37,7 @@ One command for a rainbow-staircase marble music Short, in the "Satisfying 3D Si
 ./setup.sh ball-sims                       # or: pip install numpy scipy pillow && python3 ../marble-raytrace-kit/get_fonts.py
 python3 make_video.py twinkle              # -> build/twinkle/Marble_Staircase_Twinkle.mp4 + thumbnail.png
 python3 make_video.py jingle-bells         # -> build/jingle-bells/Marble_Staircase_Jingle_Bells.mp4 + thumbnail.png
+python3 make_video.py mary-lamb            # also: old-macdonald, frere-jacques
 python3 make_video.py twinkle --stills 300,650,900    # PNG stills only, to check a change
 python3 make_video.py twinkle --thumb-only --thumb-title --thumb-frame 769
 ```
@@ -48,7 +56,8 @@ On a 2-core cloud session, *Jingle Bells* takes 5.4 minutes once the static sets
 - **The melody is per beat, not per note.** A long note is the note followed by negative copies of it. A marble that hits on a beat with no melody note left plays a high C.
 - **One marble per beat from the chute.** Offsets in a round must all differ; two on the same beat would overlap on every tile.
 - **The voices add up from the top tile down:** melody, bass, then 3 chord tones, then sparkles. Rounds with more marbles automatically sound fuller, so keep the important note on the marble highest up the stairs.
-- **`MARBLE_BPM`** (default: the song's `bpm`) changes the hop physics: gravity is solved so each hop lasts exactly one beat. The chute moves with it, so a new tempo means a new static render (1.5 min).
+- **`MARBLE_BPM`** (default: the song's `bpm`) changes the hop physics: gravity is solved so each hop lasts exactly one beat. The hop's shape doesn't depend on the tempo, so the chute stays where it is and a new tempo reuses the cached static set (checked: 90, 112.5 and 120 bpm write the same scene file).
+- **Same last round, same thumbnail.** In every song but `jingle-bells`, the last round is 8 marbles on consecutive beats (offsets 0–7). Its busiest beat, and so the automatic thumbnail, shows the same 8 marbles on the same tiles in each of those videos; only the tray differs. Pass `--thumb-frame` to pick a different moment.
 - **The thumbnail camera** (`MARBLE_CAM=thumb`, closer, from more to the side) has its own static set in `build/thumb_g_*`. `make_video.py` runs it in a second process.
 - Marble colors cycle after 19 marbles. The tray is sized for the 19 marbles of the shipped videos, so many more will crowd it.
 - Don't commit `build/`: it holds the G-buffers (about 450 MB per camera), the WAVs and the mp4s.
