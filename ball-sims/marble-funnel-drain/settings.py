@@ -33,6 +33,10 @@ SIM = dict(
 # --------------------------------------------------------------------------- colours (picked from the drain order)
 PLACES = ["GREEN", "BLUE", "RED", "YELLOW"]    # 1st = last marble into the hole, 2nd, 3rd, 4th
 FOURTH_OUT_AT = 15.7                           # 4th place: the marble draining closest to this sim time (+-0.5 s)
+TEAM_COLOURS = False                           # True: every marble wears one of the PLACES colours (equal teams), and
+                                               # each place's marble is the last of its colour, so its drop knocks that
+                                               # colour out; False: the 4 place marbles are coloured, the rest chrome
+TEAM_SEED = 1                                  # with TEAM_COLOURS: which marbles get which colour (the race is the same)
 PALETTE = {                                    # linear-light albedo; chrome marbles have none
     "RED": (0.90, 0.03, 0.02),
     "BLUE": (0.03, 0.17, 0.95),

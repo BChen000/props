@@ -93,6 +93,26 @@ class Episode:
         for k, b in enumerate(self.picks):
             self.btype[b] = k + 1
             self.bcol[b] = S.PALETTE[S.PLACES[k]]
+        if getattr(S, "TEAM_COLOURS", False):
+            self.colour_teams(dr)
+
+    def colour_teams(self, dr):
+        """Gives every other marble a team colour, equal teams. A colour only goes to marbles that drain before
+        that colour's place marble, so the place marble is its team's last one: 4th place's colour is out when
+        it drops, and the winner's colour is the last one left."""
+        rng = np.random.default_rng(S.TEAM_SEED)
+        k = len(self.picks)
+        per = self.N // k
+        left = set(range(self.N)) - set(self.picks)
+        for place in reversed(range(k)):
+            pick = self.picks[place]
+            cand = sorted(b for b in left if 0 <= dr[b] < dr[pick])
+            n = len(left) if place == 0 else min(per - 1, len(cand))
+            chosen = [int(b) for b in rng.choice(cand, size=n, replace=False)] if place else sorted(left)
+            for b in chosen:
+                self.btype[b] = place + 1
+                self.bcol[b] = S.PALETTE[S.PLACES[place]]
+            left -= set(chosen)
 
     def places(self):
         dr = self.d['drain_t']
