@@ -39,6 +39,7 @@ python render.py still 0 330 700   # out/stills/f0000.png ... check a few frames
 python build.py                 # about 1 min on 2 CPU cores -> out/ring_escape.mp4
 ```
 - Don't commit `out/` (videos, stills, WAVs, seed lists). Commit the new `assets/race_<SEED>.npz` if you want the episode to rebuild exactly on another machine (it's about 1.2 MB).
+- To render another seed without editing `settings.py`, set `RING_SEED`. `RING_RACE_DIR` (where races are saved and replayed from) and `RING_OUT_DIR` work the same way, e.g. `RING_SEED=7372 RING_RACE_DIR=../marble-live-streams/assets python build.py`. `../marble-live-streams/rounds.py` renders its 8 livestream rounds this way.
 - To change the game, edit `PHYS` in `settings.py` (ring spin, gaps, speeds, speed-up), then run `python tune.py 100` to check race lengths before searching. The shipped settings give a median win of 24.8 s, and 77 of 100 races finish within 40 s.
 - `search.py` gives a small penalty to races won by `AVOID_WINNER` (GREEN, who won the episode before Ring Escape). Set it to the last episode's winner each time, so CYAN for the next one.
 - The thumbnail comes from `../question-thumbnail`, which renders this arena by default.
