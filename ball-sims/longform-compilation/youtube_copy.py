@@ -18,7 +18,7 @@ TITLES = [
 PREMISE = (f"Marbles roll down rainbow stairs and play {N_SONGS} songs. Guess each one before the answer pops up, "
            f"play {N_GAMES} marble challenges, then stay for a brand-new bonus song!")
 COMMENT_LINE = "How many did you guess? Comment your score 🔴🟠🟡🟢🔵🟣"
-MADE_WITH = "Made with a 3D physics simulation"
+MADE_WITH = "Made with a 3D physics simulation, rebuilt in full screen for this video with 9 brand-new songs"
 HASHTAGS = "#marbles #satisfying #guessthesong #marblemusic #pickyourcolor"
 
 
