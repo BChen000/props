@@ -12,6 +12,12 @@ rounds   marbles per round (the "1 MARBLE" ... "8 MARBLES" titles)
 offsets  per round, the beat each marble leaves the chute, counted from the round's first marble. Rounds follow
          each other with no gap, so the song needs sum(last offset + 8) beats; make_video.py checks this.
 chords   one chord name per beat (keys of VOICING)
+optional:
+hue           turns the studio (floor, sky, background, stand) around the colour wheel by this many degrees, so
+              a video doesn't look like the others; the rainbow tiles keep their colours. 0 = the shipped blue-gray.
+              100 rose pink (sat 0.9), -95 sage green (sat 0.7), 40 with bright 0.35 a dark indigo night
+sat, bright   scale the studio's colourfulness and brightness after the turn (1 = as turned)
+marble_shift  starts the marble colours at this index of timeline.MARBLE_SRGB (0 = the white first marble)
 """
 
 G4, A4 = 67, 69
@@ -109,6 +115,9 @@ SONGS = {
         name="Mary Had a Little Lamb",
         file="Marble_Staircase_Mary_Had_a_Little_Lamb",
         bpm=112.5,
+        hue=100.0,
+        sat=0.9,
+        marble_shift=1,
         rounds=[1, 2, 3, 5, 8],
         offsets=[[0], [0, 3], [0, 3, 6], [0, 2, 4, 6, 8], [0, 1, 2, 3, 4, 5, 6, 7]],
         melody=_ml_mel,
@@ -118,6 +127,9 @@ SONGS = {
         name="Old MacDonald Had a Farm",
         file="Marble_Staircase_Old_MacDonald",
         bpm=120.0,
+        hue=-95.0,
+        sat=0.7,
+        marble_shift=5,
         rounds=[1, 2, 3, 5, 8],
         offsets=[[0], [0, 1], [0, 2, 4], [0, 1, 2, 3, 4], [0, 1, 2, 3, 4, 5, 6, 7]],
         melody=_om_mel,
@@ -127,6 +139,9 @@ SONGS = {
         name="Frère Jacques (Are You Sleeping)",
         file="Marble_Staircase_Frere_Jacques",
         bpm=112.5,
+        hue=40.0,
+        bright=0.35,
+        marble_shift=7,
         rounds=[1, 2, 3, 5, 8],
         offsets=[[0], [0, 2], [0, 1, 2], [0, 1, 2, 4, 5], [0, 1, 2, 3, 4, 5, 6, 7]],
         melody=_fj_mel,

@@ -25,7 +25,7 @@ The rendering and sound engine of the 3D marble music Shorts: C path tracers ren
 ## Files
 | file | what |
 |---|---|
-| `look.py` | the shared studio look (cyclorama, key light, sky, ACES, vignette), camera and light helpers, scene-file writers |
+| `look.py` | the shared studio look (cyclorama, key light, sky, ACES, vignette), camera and light helpers, scene-file writers; `set_hue(deg, sat, bright)` recolours the studio for a variant (call it before importing a scene module) |
 | `boxtrace.c` | path tracer for scenes made of boxes (axis-aligned or turned about z), up to 128 boxes |
 | `meshtrace.c` | path tracer for triangle meshes (BVH, smooth normals, clear glass) + `env` mode that lights marble positions |
 | `tracers.py` | compiles the tracers, renders a G-buffer once per scene (cached by the scene's SHA-256), runs `env` queries |

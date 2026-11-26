@@ -10,7 +10,8 @@ Usage:
 Options: --thumb-frame N (default: the busiest beat of the last round), --thumb-title (draw the round title on the
 thumbnail; off by default), --no-thumb.
 Environment: WATERMARK (default "Marble Pop", empty for none), WORKERS (2), CRF (17), SPLIT (balanced | even),
-MARBLE_BPM (song's bpm).
+MARBLE_BPM (song's bpm). A song's `hue`, `sat` and `bright` recolour the studio (static sets are cached per look),
+and its `marble_shift` rotates the marble colours (see songs.py).
 
 Steps: path-trace the static set once (cached by scene hash, ~1.5 min) -> choreography + tray physics (~1 s) ->
 music (~20 s) -> marbles composited per frame in WORKERS processes (~2.5 min) -> concat -> AAC at -13 LUFS ->
@@ -54,6 +55,9 @@ os.environ.setdefault("MARBLE_BPM", str(SONG["bpm"]))
 import numpy as np
 from PIL import Image
 
+import look
+HUE, SAT, BRIGHT = float(SONG.get("hue", 0.0)), float(SONG.get("sat", 1.0)), float(SONG.get("bright", 1.0))
+look.set_hue(HUE, SAT, BRIGHT)  # before importing scene, which copies the studio colours
 import scene as S
 import timeline
 import music
@@ -63,7 +67,9 @@ import pipeline as P
 
 SONG_DIR = os.path.join(BUILD, args.song)
 THUMB = os.environ.get("MARBLE_CAM") == "thumb"
-GPREFIX = os.path.join(BUILD, "thumb_g" if THUMB else "g")
+LOOK_TAG = ((f"_hue{HUE:g}" if HUE else "") + (f"_sat{SAT:g}" if SAT != 1.0 else "")
+            + (f"_bright{BRIGHT:g}" if BRIGHT != 1.0 else ""))
+GPREFIX = os.path.join(BUILD, ("thumb_g" if THUMB else "g") + LOOK_TAG)
 log = P.log
 
 

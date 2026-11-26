@@ -19,13 +19,13 @@ Three more songs were added in Nov 2026 and rendered from this folder with the d
 - `old-macdonald`: *Old MacDonald Had a Farm*, the verse three times without the "moo" part, then an 8-note run up to C7, at 120 bpm (31.27 s, 938 frames).
 - `frere-jacques`: *Frère Jacques*, the whole round once, then its second half again, at 112.5 bpm (33.37 s, 1001 frames).
 
-Each new song has its own marble spacing in the early rounds, so its choreography is different from the shipped videos and from the others. For these three, `music.py`'s per-beat log was checked against `songs.py` (beat by beat, the melody voice is the written note), stills of the busiest beats were looked at before the full renders, and each mp4 measured −13.0 LUFS.
+So that they don't look like the shipped videos or like each other, each new song has its own marble spacing in the early rounds, its own studio colour and its own marble colour order (`hue`, `sat`, `bright` and `marble_shift` in `songs.py`): Mary is rose pink, Old MacDonald sage green, and Frère Jacques a dark indigo night where the lit tiles stand out. For these three, `music.py`'s per-beat log was checked against `songs.py` (beat by beat, the melody voice is the written note), stills of the busiest beats were looked at before the full renders, and each mp4 measured −13.0 LUFS. With the look settings left at their defaults, `twinkle`'s stills 600 and 920, timeline and marble paths are identical to those from the code before them.
 
 ## Files
 | file | what |
 |---|---|
 | `make_video.py` | the whole pipeline: static set → choreography → music → frames (2 workers) → mp4 at −13 LUFS → thumbnail |
-| `songs.py` | the songs: melody (one note per beat), chords, rounds and when each marble leaves the chute |
+| `songs.py` | the songs: melody (one note per beat), chords, rounds and when each marble leaves the chute, plus an optional look (studio colour, marble colour order) |
 | `scene.py` | the set: 8 tiles, pillars, chute with feeder tube, tray; hop physics from the BPM; main and thumbnail cameras |
 | `timeline.py` | exact hops (a parabola per beat) + tray physics at 1/1200 s; hits, impacts, round titles, finale |
 | `music.py` | hits → melody, bass, chord tones and sparkles; tray clacks; finale chord and sparkle run |
@@ -48,6 +48,7 @@ On a 2-core cloud session, *Jingle Bells* takes 5.4 minutes once the static sets
    - `melody`: one MIDI note per beat. A negative number holds the previous note, and 0 is a rest.
    - `chords`: one chord per beat, from `VOICING`: C, F, G or G7.
    - `rounds`, and per round the beat `offsets` at which its marbles leave the chute.
+   - Optionally `hue`, `sat`, `bright` and `marble_shift`, so the video doesn't look like the others: they recolour the studio (`../marble-raytrace-kit/look.py`'s `set_hue`) and pick the first marble's colour. The rainbow tiles keep their colours.
 2. The rounds play `sum(last offset + 8)` beats back to back. `make_video.py` warns if the melody is shorter than that.
 3. Render a few `--stills` first, then the full video.
 4. Write the title and description by the channel's copy rules in the repo's `CLAUDE.md`. The default thumbnail is the busiest beat of the last round, with no text.
@@ -57,10 +58,11 @@ On a 2-core cloud session, *Jingle Bells* takes 5.4 minutes once the static sets
 - **One marble per beat from the chute.** Offsets in a round must all differ; two on the same beat would overlap on every tile.
 - **The voices add up from the top tile down:** melody, bass, then 3 chord tones, then sparkles. Rounds with more marbles automatically sound fuller, so keep the important note on the marble highest up the stairs.
 - **`MARBLE_BPM`** (default: the song's `bpm`) changes the hop physics: gravity is solved so each hop lasts exactly one beat. The hop's shape doesn't depend on the tempo, so the chute stays where it is and a new tempo reuses the cached static set (checked: 90, 112.5 and 120 bpm write the same scene file).
-- **Same last round, same thumbnail.** In every song but `jingle-bells`, the last round is 8 marbles on consecutive beats (offsets 0–7). Its busiest beat, and so the automatic thumbnail, shows the same 8 marbles on the same tiles in each of those videos; only the tray differs. Pass `--thumb-frame` to pick a different moment.
+- **Same last round, same thumbnail.** In every song but `jingle-bells`, the last round is 8 marbles on consecutive beats (offsets 0–7). Its busiest beat, and so the automatic thumbnail, has a marble on every lit tile. Without its own `hue` and `marble_shift`, a song's thumbnail looks like Twinkle's except for the tray. To show a different moment, pass `--thumb-frame`.
 - **The thumbnail camera** (`MARBLE_CAM=thumb`, closer, from more to the side) has its own static set in `build/thumb_g_*`. `make_video.py` runs it in a second process.
 - Marble colors cycle after 19 marbles. The tray is sized for the 19 marbles of the shipped videos, so many more will crowd it.
-- Don't commit `build/`: it holds the G-buffers (about 450 MB per camera), the WAVs and the mp4s.
+- **Each look renders its own static sets.** A song with a new `hue`/`sat`/`bright` path-traces the set again for both cameras (about 1.5 min each, cached per look as `build/g_hue…` and `build/thumb_g_hue…`).
+- Don't commit `build/`: it holds the G-buffers (about 450 MB per camera and look), the WAVs and the mp4s.
 
 ## What it can't do
 - The staircase always has 8 tiles. The tile pans, the voicing order and the camera framing assume 8.

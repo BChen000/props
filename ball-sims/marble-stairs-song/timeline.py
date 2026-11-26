@@ -200,7 +200,9 @@ def build(song, outdir):
     rounds, offsets = song["rounds"], song["offsets"]
     ent = entries(offsets)
     nm = len(ent)
-    colors = [MARBLE_SRGB[i % len(MARBLE_SRGB)] for i in range(nm)]
+    k = song.get("marble_shift", 0) % len(MARBLE_SRGB)
+    pal = MARBLE_SRGB[k:] + MARBLE_SRGB[:k]
+    colors = [pal[i % len(pal)] for i in range(nm)]
     vz = [VZ[i % len(VZ)] for i in range(nm)]
     last_beat = ent[-1][1] + S.T
     t_end = beat_time(last_beat) + TAIL_BEATS * S.TAU
