@@ -90,3 +90,12 @@ WORKERS = 2
 SPLIT_AT = 385     # first frame of the second worker (balances the shipped timeline on 2 cores)
 CRF, PRESET = 17, "fast"
 VOLUME_DB = -2.5   # applied when muxing; the shipped soundtrack lands at -14.1 LUFS
+
+# --------------------------------------------------------------------------- other episodes
+# The values above are the shipped first episode (seed 3). EPISODE=<name> runs episodes/<name>.py right here, so an
+# episode file only has to reassign what differs (seed, colours, close-up and thumbnail aim, finale timing).
+EPISODE = os.environ.get("EPISODE", "")
+if EPISODE:
+    _ep = os.path.join(HERE, "episodes", EPISODE + ".py")
+    with open(_ep, encoding="utf-8") as _f:
+        exec(compile(_f.read(), _ep, "exec"))

@@ -19,6 +19,11 @@ The physics really decides the order the marbles drain in. Every marble is ident
 - `python make_video.py --max-frames 60` builds a 2-second test video end to end (two workers, concat, soundtrack, mux).
 - `python make_video.py` with the shipped settings rebuilt `build/marble_funnel_drain.mp4` byte-identical to the delivered file (same MD5 for the whole file, 82,965,910 bytes) in 18.9 minutes, and `build/thumbnail.jpg` byte-identical to the delivered thumbnail.
 
+**Episode 2** (`EPISODE=ep2`, Nov 2026, delivered as `last_marble_wins_ep2.mp4`; 29.6 s, 888 frames, −14.0 LUFS): the race of seed 7. Green drops out 4th at 18.0 s, then in the finale yellow (26.2 s), red (27.2 s) and blue, the winner (28.1 s). The video was rendered in 18.5 minutes from a copy of this folder with the same settings. In this folder, verified on the same 2-core session:
+- `EPISODE=ep2 python sim.py --compare` re-simulates seed 7 bit-identical to `assets/drain_seed7.npz`.
+- `--info` gives the same places and times, and `--stills 0,300,760` and `--thumb-only` match the delivered video's frames and thumbnail pixel for pixel. `audio.py` reproduces its soundtrack WAV sample for sample.
+- Without `EPISODE`, `--info` still describes episode 1 exactly as before.
+
 ## Files
 | file | what |
 |---|---|
@@ -29,6 +34,8 @@ The physics really decides the order the marbles drain in. Every marble is ident
 | `audio.py` | the soundtrack, synthesized from the simulation's impacts and drops: steel clicks, rolling noise, drops into the hole, whooshes on camera moves, chimes |
 | `make_video.py` | the whole pipeline: frames in 2 workers → soundtrack → mux → thumbnail; also `--stills`, `--thumb-only`, `--info`, `--where`, `--max-frames`, `--style` |
 | `assets/drain_seed3.npz` | the recorded race for seed 3 (6.8 MB), so it replays identically on any machine |
+| `episodes/ep2.py` | episode 2 (`EPISODE=ep2`): only the settings that differ from episode 1 |
+| `assets/drain_seed7.npz` | the recorded race for seed 7, used by episode 2 (6.7 MB) |
 | `style.json` | every value plus the episode facts (frames, places, out times), camera moves and the YouTube copy |
 | `preview.png` | six moments: opening close-up, overview, low close-up, push-in, finale, last two |
 
@@ -38,21 +45,24 @@ The physics really decides the order the marbles drain in. Every marble is ident
 python3 make_video.py --info    # length, camera keys, when each colour drops out
 python3 make_video.py --stills 0,300,600,720
 python3 make_video.py           # -> build/marble_funnel_drain.mp4 + build/thumbnail.png/.jpg
+EPISODE=ep2 python3 make_video.py   # episode 2 -> build/last_marble_wins_ep2.mp4 (use BUILD_DIR to keep both thumbnails)
 ```
 A full build takes about 19 minutes on a 2-core cloud session. A fresh clone adds about 20 s to build the board's world maps, which are then cached in `build/cache/`. The slowest frames are the low close-up (about 3–5 s each); overview frames with a still camera take about 1 s.
 
-**A new episode:**
-1. Pick a new race: `SEED=7 USE_RECORDED_SIM=0 python3 sim.py`, then `SEED=7 USE_RECORDED_SIM=0 python3 make_video.py --info`. Look at the last gaps it prints. A good finale has the last three marbles dropping about a second apart, not together.
+**A new episode:** copy `episodes/ep2.py` to `episodes/<name>.py`, change it as below, and run everything with `EPISODE=<name>`. The episode file runs at the end of `settings.py`, so it only reassigns what differs.
+1. Pick a new race: run `SEED=<n> USE_RECORDED_SIM=0 python3 sim.py` for a few seeds (about 10 s each) and compare the "last 6 gaps" they print. A good finale has the last three marbles dropping about a second apart, not together, and several marbles still circling the rim a few seconds before. Then set `SEED` in the episode file.
 2. Change `PLACES` for other colours or another order. 4th place is the marble draining closest to `FOURTH_OUT_AT`; pick a time in the overview so that elimination is visible.
 3. Aim the shots: `--where 7.8` prints where the coloured marbles are at a sim time. Move `SHOTS["CLOSE"]` (and the `KEYS` around it) to where they roll past, and point `THUMB` at a moment with several colours close together.
-4. Render `--stills` of the busiest moments, then the full video. To keep the new race reproducible, copy `build/sim_seed7.npz` to `assets/drain_seed7.npz`.
-5. Copy (Marble Pop style, see the repo's `CLAUDE.md`): title `Last Marble Left WINS 🕳️ Pick Your Color`; description `480 marbles swirl into one hole. The last color left wins!` / `Pick your color in the comments 🔴🔵🟢🟡` / `Made with a 3D physics simulation` / `#marbles #satisfying #3d #pickyourcolor #whowillwin`. The thumbnail has no text.
+4. Move the finale with the race: `--info` prints when each colour drops out. Shift the last four `KEYS`, the `SPEED` points from 19.2 s on, and `T_END` so the camera reaches the hole about 2.9 s before 3rd place drops and holds until about 0.2 s after the winner drops, as in episode 1.
+5. Render `--stills` of the busiest moments, then the full video (until the race is in `assets/`, add `USE_RECORDED_SIM=0`). To keep the race reproducible, copy `build/sim_seed<n>.npz` to `assets/drain_seed<n>.npz`.
+6. Copy (Marble Pop style, see the repo's `CLAUDE.md`): title `Last Marble Left WINS 🕳️ Pick Your Color`; description `480 marbles swirl into one hole. The last color left wins!` / `Pick your color in the comments 🔴🔵🟢🟡` / `Made with a 3D physics simulation` / `#marbles #satisfying #3d #pickyourcolor #whowillwin`. The thumbnail has no text.
 
 ## Gotchas
 - **The colours are assigned after the simulation.** The winner is whichever marble happens to drain last, 2nd and 3rd are the two before it, and 4th is picked by time. The race itself is real physics with identical marbles.
 - **Re-simulating on another machine can give a different race.** The sim is chaotic and numba's floating point can differ between CPUs. That's why the recorded race ships in `assets/` and is used by default (`USE_RECORDED_SIM=1`).
 - **The finale depends on friction.** With `crr=8, gam=0.2` and a 2.05 hole, the last 20 marbles drop within 0.4 s and you can't see who's last. The shipped `crr=4, gam=0.15, RH=2.2` leaves about 40 marbles circling the rim and dropping one by one. Much lower friction (`crr=3, gam=0.1`) leaves stragglers orbiting for 15 s.
-- **The hole is drawn smaller than the physics hole** (`LOOK["RH"]=2.05` vs `SIM["RH"]=2.2`). These are the shipped values, kept so the video reproduces; for a new video set them equal.
+- **The hole is drawn smaller than the physics hole** (`LOOK["RH"]=2.05` vs `SIM["RH"]=2.2`). These are the shipped values, kept so the video reproduces; for a new video set them equal, as `episodes/ep2.py` does.
+- **`--style` describes the selected episode.** It rewrites `style.json` from whatever `EPISODE` is set, so run it without `EPISODE` to keep the shipped description.
 - **Keep the spawn band out of every shot.** Marbles appear at y 52.5–55.5; a shot that sees past y ≈ 51 on the board shows them popping in. The walls are invisible, so shots also shouldn't look past the board's edges, where no marble ever goes.
 - **Camera elevation 29° or more.** The board ray-cast assumes rays steeper than the board's slopes, and grazing views can glitch at the funnel rim. Keep the top edge of the frame below the horizon too.
 - **Depth of field cheats on blurry marbles.** Chrome marbles blurred by more than 7 px skip neighbour reflections and motion blur. That's invisible under the blur and roughly halves the close-up render time.
