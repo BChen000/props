@@ -1,0 +1,59 @@
+{
+  "prop": "marble-stairs-loops",
+  "canvas": {"width": 1920, "height": 1080, "fps": 30, "strip_9x16": [656, 1264],
+             "framing": "each set's camera is its Short's camera, so the middle 9:16 strip is the Short's framing"},
+  "tempo": {"hop_s": 0.5, "frames_per_hop": 15, "beat": "eighth note", "quarter_bpm": 60},
+  "loops": {
+    "stairs": {
+      "set": "8 tiles of ../marble-stairs-song (DX 3.0, DY 2.4, top tile y 19.8), feeder chute and tube from the Short",
+      "tiles_srgb": [[238, 52, 52], [250, 138, 28], [250, 206, 38], [150, 214, 48], [36, 190, 96], [28, 196, 204],
+                     [44, 118, 238], [152, 82, 228]],
+      "hop_apex": 1.7,
+      "exit": "trough at y 0.6 (where tile 8 would be), inner half-width 3.2, into a tunnel block from x 33.5 to 40.5",
+      "camera": {"target": [16.0, 12.6, 0.5], "az_deg": 55, "el_deg": 24, "dist": 126, "fovy_deg": 30},
+      "gaps_beats": [2, 3, 2, 3, 2, 2, 3, 3],
+      "drift": "up to 0.5 units/s sideways on the stairs",
+      "medley": "Marble Lullabies: Twinkle Twinkle Little Star; Are You Sleeping (Frere Jacques), then as a 2-voice round; Mary Had a Little Lamb; Silent Night",
+      "length": {"beats": 472, "seconds": 236.0, "frames": 7080},
+      "marbles_per_loop": 189,
+      "panels": {"pick": [1404, 60, 1856, 392], "now_playing": [1404, 760, 1856, 1010], "label": [64, 878, 592, 1010],
+                 "label_text": ["MARBLE LULLABIES", "calm bells, nonstop"]},
+      "file": "marble_lullaby_stairs.mp4"
+    },
+    "twin": {
+      "set": "2 lanes of 16 tiles of ../marble-twin-stairs (DX 2.7, DY 1.6, lanes at z -3.6 and 3.6); marbles drop in from above",
+      "tiles": "back lane red to violet, front lane starting half way round the color wheel (HSV s 0.80, v 0.96)",
+      "hop_apex": 1.4,
+      "exit": "wide trough at y 1.4, inner half-width 6.3, into a tunnel block from x 52 to 56.5, height 2.7",
+      "camera": {"target": [26.0, 10.0, 0.0], "az_deg": 72, "el_deg": 17, "dist": 140, "fovy_deg": 28},
+      "gaps_beats": {"front": [7, 8, 6, 9, 8, 7], "back": [8, 6, 9, 7, 6, 9], "back_starts_at_beat": 3},
+      "drift": "up to 0.2 units/s sideways",
+      "medley": "Marble Music Box classics: Ode to Joy; Minuet in G; Greensleeves; Row, Row, Row Your Boat, then as a 2-voice round",
+      "length": {"beats": 550, "seconds": 275.0, "frames": 8250},
+      "marbles_per_loop": 146,
+      "panels": {"pick": [64, 60, 516, 392], "now_playing": [64, 760, 516, 1010], "label": [1328, 878, 1856, 1010],
+                 "label_text": ["MARBLE MUSIC BOX", "classics on bells, nonstop"]},
+      "file": "marble_twin_stairs_loop.mp4"
+    }
+  },
+  "marbles_srgb": [[246, 246, 246], [88, 196, 250], [255, 122, 98], [255, 112, 190], [92, 228, 168], [255, 206, 64],
+                   [172, 128, 255]],
+  "tile_glow": {"amplitude": 1.0, "decay_s": 0.2},
+  "music": {
+    "notes_per_beat": "one per hit: tune onset, canon onset, bass on the bar's main beats, broken chord, second chord tone, then sparkles",
+    "gains": {"tune": 0.32, "canon": 0.25, "bass": 0.19, "arpeggio": 0.085, "arpeggio_2": 0.055, "sparkle": 0.045,
+              "trough_knock": 0.05},
+    "arpeggio_range": "the 15 semitones below the song's lowest tune note",
+    "gap_between_songs_beats": 6,
+    "loudness_lufs": -16,
+    "peak_max_dbfs": -1,
+    "loop": "notes wrap round the loop end; reverb (2.4 s, 34% wet) and 35 Hz high-pass applied circularly by FFT",
+    "bells": "../marble-raytrace-kit/bells.py"
+  },
+  "panels": {"font": "Montserrat (../marble-raytrace-kit/fonts)", "fill_rgba": [8, 12, 30, 165], "radius": 34,
+             "gold": "#FFCE40", "soft": "#C8D2E6"},
+  "encode": {"video": "H.264 medium, 6 Mbps (maxrate 6M, bufsize 12M), keyframe every 60 frames, no scene cuts, yuv420p",
+             "audio": "AAC 192k, 48 kHz stereo"},
+  "streams_sh": {"hours": 11, "table": ["spiral loop.mp4 + mix.m4a", "stairs marble_lullaby_stairs.mp4", "twin marble_twin_stairs_loop.mp4"],
+                 "reconnect_s": 5}
+}
