@@ -34,7 +34,7 @@ Reusable props for GJ's animated YouTube Shorts: the code, settings and styles b
     | `cloth-faces` | 1 Face vs 1,000,000 Faces Blanket | `HERO=duck ./make_video.sh` (`--bpy`) | ~2.5 h |
     | `glass-shatter` | 1 KG vs 1,000 KG ball smashing glass | `./make_video.sh` (`--bpy`) | ~2 h |
     | `marble-song-battle` | Naughty or Nice? marble song battle | `./make_video.sh` (Blender 4.0) | ~1 h 50 min |
-    | `marble-stairs-song` | 3D rainbow staircase (Twinkle, Jingle Bells) | `python3 make_video.py twinkle` | ~8.5 min first, ~5.5 min per song |
+    | `marble-stairs-song` | 3D rainbow staircase (Twinkle, Jingle Bells, Mary Had a Little Lamb, Old MacDonald, Frère Jacques) | `python3 make_video.py twinkle` | ~8.5 min first, ~5.5 min per song |
     | `marble-spiral-round` | 3D spiral round (Row Row Row Your Boat) | `python3 make_video.py row-row-row` | ~7 min first, ~3.5 min after |
     | `marble-twin-stairs` | 3D twin staircases (Ode to Joy) | `python3 make_video.py ode-to-joy` | ~6.5 min first, ~4 min after |
     | `marble-funnel-drain` | Last Marble Left WINS (480 chrome marbles drain into a hole; glossy 3D, zooms, loop) | `python3 make_video.py` | ~19 min |

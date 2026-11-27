@@ -27,6 +27,45 @@
       "entries": "spread to fit the tune's phrases",
       "bpm": 112.5,
       "beats": 64
+    },
+    "mary-lamb": {
+      "title_card": "Mary Had a Little Lamb",
+      "length_s": 37.6,
+      "frames": 1128,
+      "marbles": 19,
+      "rounds": [1, 2, 3, 5, 8],
+      "offsets": [[0], [0, 3], [0, 3, 6], [0, 2, 4, 6, 8], [0, 1, 2, 3, 4, 5, 6, 7]],
+      "bpm": 112.5,
+      "beats": 64,
+      "song": "two 32-beat verses",
+      "look": {"hue": 100, "sat": 0.9, "marble_shift": 1, "studio": "rose pink", "first_marble": "#58C4FA"},
+      "thumbnail_frame": 929
+    },
+    "old-macdonald": {
+      "title_card": "Old MacDonald Had a Farm",
+      "length_s": 31.27,
+      "frames": 938,
+      "marbles": 19,
+      "rounds": [1, 2, 3, 5, 8],
+      "offsets": [[0], [0, 1], [0, 2, 4], [0, 1, 2, 3, 4], [0, 1, 2, 3, 4, 5, 6, 7]],
+      "bpm": 120.0,
+      "beats": 56,
+      "song": "'Old MacDonald had a farm, E-I-E-I-O' three times (no 'moo' part) + an 8-note run G4 C5 E5 G5 C6 E6 G6 C7",
+      "look": {"hue": -95, "sat": 0.7, "marble_shift": 5, "studio": "sage green", "first_marble": "#FFCE40"},
+      "thumbnail_frame": 751
+    },
+    "frere-jacques": {
+      "title_card": "Frère Jacques",
+      "length_s": 33.37,
+      "frames": 1001,
+      "marbles": 19,
+      "rounds": [1, 2, 3, 5, 8],
+      "offsets": [[0], [0, 2], [0, 1, 2], [0, 1, 2, 4, 5], [0, 1, 2, 3, 4, 5, 6, 7]],
+      "bpm": 112.5,
+      "beats": 56,
+      "song": "the whole round once (36 beats; 'morning bells are ringing' as six even beats) + its second half again",
+      "look": {"hue": 40, "bright": 0.35, "marble_shift": 7, "studio": "dark indigo night", "first_marble": "#FF9634"},
+      "thumbnail_frame": 801
     }
   },
   "hook": "a marble is already rolling down the chute on frame 1; first tile hit at 1.07 s (2 beats)",

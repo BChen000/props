@@ -33,6 +33,26 @@ def srgb2lin(c):
 DARK_LIN = srgb2lin((50, 54, 60))
 
 
+def set_hue(deg, sat=1.0, bright=1.0):
+    """Turns the studio (floor, sky, background, glow and the dark stand) around the colour wheel by deg degrees,
+    keeping its brightness, then scales its colourfulness by sat and its brightness by bright; 0, 1, 1 leave the
+    shipped blue-gray. Call it before importing a scene module, which copies these values when it's imported."""
+    global FLOOR_LIN, SKY_Z, SKY_H, BG_TOP, BG_BOT, BG_GLOW, DARK_LIN
+    if not deg and sat == 1.0 and bright == 1.0:
+        return
+    a, b = math.cos(math.radians(deg)), math.sin(math.radians(deg))
+    m = np.array([[0.213 + 0.787 * a - 0.213 * b, 0.715 - 0.715 * a - 0.715 * b, 0.072 - 0.072 * a + 0.928 * b],
+                  [0.213 - 0.213 * a + 0.143 * b, 0.715 + 0.285 * a + 0.140 * b, 0.072 - 0.072 * a - 0.283 * b],
+                  [0.213 - 0.213 * a - 0.787 * b, 0.715 - 0.715 * a + 0.715 * b, 0.072 + 0.928 * a + 0.072 * b]])
+    def turn(c):
+        c = m @ c
+        lum = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
+        return np.maximum(lum + sat * (c - lum), 0.0) * bright
+
+    FLOOR_LIN, SKY_Z, SKY_H, BG_TOP, BG_BOT, BG_GLOW, DARK_LIN = (
+        turn(c) for c in (FLOOR_LIN, SKY_Z, SKY_H, BG_TOP, BG_BOT, BG_GLOW, DARK_LIN))
+
+
 def camera_from(target, az, el, dist):
     pos = target + dist * np.array([math.sin(az) * math.cos(el), math.sin(el), math.cos(az) * math.cos(el)])
     fwd = target - pos
