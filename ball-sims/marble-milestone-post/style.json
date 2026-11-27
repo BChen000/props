@@ -1,0 +1,94 @@
+{
+ "prop": "marble-milestone-post",
+ "canvas": {
+  "width": 2160,
+  "height": 2160,
+  "out": 1080,
+  "renderer": "../marble-funnel-drain/render.py"
+ },
+ "text": {
+  "text": "500",
+  "font": "Poppins-Regular.ttf",
+  "height": 22.0,
+  "stroke": 4.15,
+  "track": 3.0,
+  "spacing": 2.06,
+  "lanes": "two per stroke (iso-lines 1 radius inside the monoline outline)"
+ },
+ "colours": [
+  "RED",
+  "BLUE",
+  "GREEN",
+  "YELLOW"
+ ],
+ "palette_linear": {
+  "RED": [
+   0.9,
+   0.03,
+   0.02
+  ],
+  "BLUE": [
+   0.03,
+   0.17,
+   0.95
+  ],
+  "GREEN": [
+   0.04,
+   0.72,
+   0.06
+  ],
+  "YELLOW": [
+   0.98,
+   0.72,
+   0.02
+  ]
+ },
+ "colour_seed": 1,
+ "hole_in": 1,
+ "camera": {
+  "T": [
+   -0.6,
+   -7.0,
+   0.0
+  ],
+  "D": 123.0,
+  "yaw": 0.0,
+  "elev": 60.0,
+  "hf": 0.25,
+  "kd": 30.0
+ },
+ "look": "../marble-funnel-drain settings.LOOK, unchanged",
+ "result": {
+  "text": "500",
+  "marbles": 142,
+  "per_colour": {
+   "RED": 36,
+   "BLUE": 36,
+   "GREEN": 35,
+   "YELLOW": 35
+  },
+  "per_character": {
+   "0:5": 50,
+   "1:0": 46,
+   "2:0": 46
+  },
+  "visible": 142
+ },
+ "copy": {
+  "post": [
+   "🎉 WE HIT 500 SUBSCRIBERS! 🎉",
+   "Thank you SO much for watching and picking your colors. You made this happen! 💛",
+   "",
+   "How many marbles did it take to make this 500? 🤔",
+   "Comment your guess 👇 Closest guess gets pinned 📌",
+   "",
+   "Next stop: 1,000! 🔴🔵🟢🟡"
+  ],
+  "answer": 142,
+  "image_text": [
+   "THANK YOU!",
+   "SUBSCRIBERS",
+   "HOW MANY MARBLES?"
+  ]
+ }
+}

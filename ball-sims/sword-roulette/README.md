@@ -37,7 +37,7 @@ bash build.sh                               # about 40 s on 2 CPU cores -> out/s
 ```
 - Don't commit `out/` or `stills/`, which are render outputs.
 - The physics really decides the outcome. `search.py` only picks which match to show. The shipped balance gives the big sword about a 51 % win rate and a median fight of 17 s (`python tune.py 150`).
-- To rename or recolour the balls, change `NAMES`/`COLORS` in `settings.py` (the defaults come from `../style-kit`). The chip row is laid out for exactly 6 balls.
+- To rename or recolour the balls, change `NAMES`/`COLORS` in `settings.py` (the defaults come from `../style-kit`). The chip row centres itself for the number of balls: 6 start at x = 42 as shipped, and 4 at x = 210, as in the Marble Olympics special (`../marble-olympics`). With 4 balls `search.py`'s filters are too strict (the BIG sword can't make 3 KOs and lose); `../marble-olympics/pick_seeds.py` has looser ones.
 - To make a different game on the same look, copy this folder, replace the rules in `sim.py` (keep its `events`/`states` output), and reuse `render.py`'s composition.
 
 ## How time works
