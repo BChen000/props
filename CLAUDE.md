@@ -37,7 +37,7 @@ Reusable props for GJ's animated YouTube Shorts: the code, settings and styles b
     | `marble-stairs-song` | 3D rainbow staircase (Twinkle, Jingle Bells) | `python3 make_video.py twinkle` | ~8.5 min first, ~5.5 min per song |
     | `marble-spiral-round` | 3D spiral round (Row Row Row Your Boat) | `python3 make_video.py row-row-row` | ~7 min first, ~3.5 min after |
     | `marble-twin-stairs` | 3D twin staircases (Ode to Joy) | `python3 make_video.py ode-to-joy` | ~6.5 min first, ~4 min after |
-    | `marble-funnel-drain` | Last Marble Left WINS (480 chrome marbles drain into a hole; glossy 3D, zooms, loop); episode 2: `EPISODE=ep2`, all marbles in team colours: `EPISODE=ep2-teams` | `python3 make_video.py` | ~19 min |
+    | `marble-funnel-drain` | Last Marble Left WINS (480 chrome marbles drain into a hole; glossy 3D, zooms, loop); episode 2: `EPISODE=ep2`, all marbles in team colours: `EPISODE=ep2-teams`; episode 3 (purple/orange/pink/cyan teams): `EPISODE=ep3`; new races: `pick_race.py` | `python3 make_video.py` | ~19 min |
   - YouTube copy: titles short and easy for young kids, built on suspense or what's unique; descriptions are a one-line premise, a "Pick your … in the comments" line with coloured circles, `Made with …` and a few hashtags; thumbnails have no text unless GJ asks (his best Shorts had none).
 - **`kids-songs/`: Story Time with Kenji** (formerly Rabbit Rhymes, now for adults). Short stories with a sinister twist, in the style of Zack D. Films: vertical 1080×1920 at 30 fps, flat 2D drawings in skia-python, a calm American narrator with one caption per spoken line, and a slow organ melody underneath.
   - Start from `storytime-kit`, `storytime-narrator` and `storytime-music`.

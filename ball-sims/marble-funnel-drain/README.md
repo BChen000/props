@@ -26,6 +26,12 @@ The physics really decides the order the marbles drain in. Every marble is ident
 
 **Episode 2 in team colours** (`EPISODE=ep2-teams`, delivered as `last_marble_wins_ep2_colors.mp4`; 29.6 s, 888 frames, −14.0 LUFS) is GJ's follow-up: the same race, but all 480 marbles are red, blue, yellow or green, 120 each, and a colour is out when its last marble drops (`TEAM_COLOURS`). Green goes at 18.0 s, then yellow (26.2 s) and red (27.2 s), and blue's last marble wins (28.1 s). It rendered in 20.6 minutes from a copy of this folder. In this folder, `--info`, `--stills 0,300,760`, `--thumb-only` and `audio.py` match it exactly, and episode 2's stills and thumbnail are unchanged by the team-colour code.
 
+**Episode 3** (`EPISODE=ep3`, Nov 2026, delivered as `last_color_left_wins_ep3.mp4`; 31.6 s, 947 frames, −14.0 LUFS): another team-colour Short, in new colours so it doesn't look like episode 2. The teams are purple, orange, pink and cyan, and the race is seed 30. `pick_race.py races` chose it from seeds 1–40, and `pick_race.py teams` chose `TEAM_SEED` 19 for a neck-and-neck finish. Pink goes out at 18.0 s, then cyan (26.8 s) and orange (28.3 s), and purple wins (30.1 s).
+- It was rendered from this folder in 17.7 minutes.
+- This race's soundtrack is quieter (−15.4 LUFS at the shipped level), so the episode sets `VOLUME_DB` to −1.1 dB. The delivered file was re-muxed at that level with `make_video.py`'s own mux command.
+- `sim.py --compare` re-simulates seed 30 bit-identical to `assets/drain_seed30.npz`.
+- Episodes 1, 2 and 2-teams still give the same places with `--info`.
+
 ## Files
 | file | what |
 |---|---|
@@ -39,6 +45,9 @@ The physics really decides the order the marbles drain in. Every marble is ident
 | `episodes/ep2.py` | episode 2 (`EPISODE=ep2`): only the settings that differ from episode 1 |
 | `episodes/ep2-teams.py` | episode 2 in team colours (`EPISODE=ep2-teams`): ep2 plus `TEAM_COLOURS` |
 | `assets/drain_seed7.npz` | the recorded race for seed 7, used by episode 2 (6.7 MB) |
+| `episodes/ep3.py` | episode 3 (`EPISODE=ep3`): seed 30 in purple, orange, pink and cyan teams, purple wins |
+| `assets/drain_seed30.npz` | the recorded race for seed 30, used by episode 3 (6.8 MB) |
+| `pick_race.py` | ranks seeds for a new race (`races 1-40`) and team colourings for an episode (`teams 1-40`) |
 | `style.json` | every value plus the episode facts (frames, places, out times), camera moves and the YouTube copy |
 | `preview.png` | six moments: opening close-up, overview, low close-up, push-in, finale, last two |
 
@@ -49,12 +58,15 @@ python3 make_video.py --info    # length, camera keys, when each colour drops ou
 python3 make_video.py --stills 0,300,600,720
 python3 make_video.py           # -> build/marble_funnel_drain.mp4 + build/thumbnail.png/.jpg
 EPISODE=ep2 python3 make_video.py   # episode 2 -> build/last_marble_wins_ep2.mp4 (use BUILD_DIR to keep both thumbnails)
+EPISODE=ep3 python3 make_video.py   # episode 3 -> build/last_marble_wins_ep3.mp4
+python3 pick_race.py races 1-40     # simulate and rank races for a new episode
+EPISODE=ep3 python3 pick_race.py teams 1-40   # rank team colourings of an episode's race
 ```
 A full build takes about 19 minutes on a 2-core cloud session. A fresh clone adds about 20 s to build the board's world maps, which are then cached in `build/cache/`. The slowest frames are the low close-up (about 3–5 s each); overview frames with a still camera take about 1 s.
 
 **A new episode:** copy `episodes/ep2.py` to `episodes/<name>.py`, change it as below, and run everything with `EPISODE=<name>`. The episode file runs at the end of `settings.py`, so it only reassigns what differs.
-1. Pick a new race: run `SEED=<n> USE_RECORDED_SIM=0 python3 sim.py` for a few seeds (about 10 s each) and compare the "last 6 gaps" they print. A good finale has the last three marbles dropping about a second apart, not together, and several marbles still circling the rim a few seconds before. Then set `SEED` in the episode file.
-2. Change `PLACES` for other colours or another order. 4th place is the marble draining closest to `FOURTH_OUT_AT`; pick a time in the overview so that elimination is visible. For every marble in a team colour, set `TEAM_COLOURS = True` and try a few `TEAM_SEED`s for a close finish (how `episodes/ep2-teams.py` picked 22).
+1. Pick a new race: `python3 pick_race.py races 1-40` simulates any seed not yet in `build/` (about 10 s each) and ranks them. A good finale has the last three marbles dropping about a second apart, not together, and several marbles still circling the rim when the camera arrives; rows marked `*` pass. Then set `SEED` in the episode file. (Seeds 3, 7 and 30 are taken.)
+2. Change `PLACES` for other colours or another order: `PALETTE` has red, blue, green and yellow (episodes 1 and 2) and purple, orange, pink and cyan (episode 3). 4th place is the marble draining closest to `FOURTH_OUT_AT`; pick a time in the overview so that elimination is visible. For every marble in a team colour, set `TEAM_COLOURS = True` and pick a `TEAM_SEED` with `EPISODE=<name> python3 pick_race.py teams 1-40`: it prints how many marbles each finalist colour has left at 17 s, when the camera reaches the hole and 3 s before the end.
 3. Aim the shots: `--where 7.8` prints where the coloured marbles are at a sim time. Move `SHOTS["CLOSE"]` (and the `KEYS` around it) to where they roll past, and point `THUMB` at a moment with several colours close together.
 4. Move the finale with the race: `--info` prints when each colour drops out. Shift the last four `KEYS`, the `SPEED` points from 19.2 s on, and `T_END` so the camera reaches the hole about 2.9 s before 3rd place drops and holds until about 0.2 s after the winner drops, as in episode 1.
 5. Render `--stills` of the busiest moments, then the full video (until the race is in `assets/`, add `USE_RECORDED_SIM=0`). To keep the race reproducible, copy `build/sim_seed<n>.npz` to `assets/drain_seed<n>.npz`.
