@@ -1,0 +1,63 @@
+{
+  "prop": "marble-run-picture",
+  "canvas": {"width": 1080, "height": 1920, "fps": 30, "aspect": "9:16 Short"},
+  "video": {
+    "file": "Marble_Run_Heart.mp4",
+    "length_s": 25.13,
+    "frames": 754,
+    "marbles": 130,
+    "hook": "frame 1 already has a packed queue on the rail and marbles rolling through the first levels; the first marble lands on the mat at 3.2 s",
+    "structure": "marbles leave the rail at 7 per second in three colour batches; each one runs the whole course in 4.78 s, rolls out of the front face and pushes into the picture; the heart is finished at 22.5 s, a sparkle plays and the picture holds for 2.6 s",
+    "model": "a viral real-life-style wooden marble run Short GJ sent (blue, white and red marbles making a heart on a green mat); this one is gold, white and red"
+  },
+  "run": {
+    "cube": 6.4,
+    "marble_radius": 1.0,
+    "groove_radius": 1.2,
+    "hole_and_tunnel_radius": 1.25,
+    "rounded_edges": 0.16,
+    "layout": "4 columns x 5 rows; rail (row 0) and level 1 (row 1) at 4 cubes high, then levels 2-4 one cube lower and one row closer each",
+    "course": ["rail queue from off-screen right", "U-turn on the tower top", "wave piece (3 waves, 1.1 deep)", "U-turn into hole 1", "meander (2 swings of 1.0)", "U-turn into hole 2", "straight", "U-turn into hole 3", "straight into the exit hole", "tunnel out of the front face"],
+    "run_length_radii": 133,
+    "speeds": {"queue": 14.0, "grooves": 27.0, "wave_swing": 0.16, "drop_gravity": 520.0, "rate_per_s": 7.0}
+  },
+  "picture": {
+    "shape": "heart (16 sin^3 t, 13 cos t - 5 cos 2t - 2 cos 3t - cos 4t), notch 5.6 radii in front of the exit hole, cut just in front of the face",
+    "lattice": "hex, 2.05 radii apart",
+    "batches": [
+      {"name": "gold", "srgb": "#FAC024", "count": 55, "where": "outer band"},
+      {"name": "white", "srgb": "#F4F4F4", "count": 45, "where": "middle band"},
+      {"name": "red", "srgb": "#E4242E", "count": 30, "where": "the heart in the middle"}
+    ],
+    "growth": "equal-area: a marble's point sits at sqrt(marbles after it / marbles from it on) of the way from the notch to its final spot; 240 Hz spring (2.2 Hz, damping 0.9) + contact physics; same-colour marbles re-matched every frame"
+  },
+  "look": {
+    "wood_srgb": "#E0C8A6",
+    "floor_srgb": "#D6D0C8",
+    "wall_srgb": "#CED0D2",
+    "baseboard_srgb": "#EEEEEC",
+    "mat_srgb": "#5A944A",
+    "textures": "baked after the trace: growth rings per block (1.25-1.75 rings per radius, late wood 13% darker), 9-wide whitewashed floor boards with end joints every 70, felt grain, faint wall mottling",
+    "key_light": {"from": [-0.45, 1.0, 0.12], "angle_deg": 16.0, "color_linear": [2.05, 1.98, 1.86]},
+    "sky_linear": {"zenith": [0.9, 0.93, 0.98], "horizon": [0.78, 0.8, 0.84]},
+    "exposure": 0.92,
+    "vignette": 0.1,
+    "static_samples": [25, 36]
+  },
+  "camera": {"target": [-2.4, 7.0, -4.0], "azimuth_deg": 0.0, "elevation_deg": 54.0, "distance": 120.0, "fovy_deg": 31.0},
+  "text": {"watermark": "Marble Pop, Montserrat 650, 44 px, at 0.962 of the height (under the picture)", "titles": "none"},
+  "sound": {
+    "rolling": "white noise through wood resonances 620/1250/2950/6200 Hz, level following the summed marble speed, left/right by x",
+    "ticks": "26 per second per rolling marble, 4 ms bursts at 2.6/3.9/5.6 kHz",
+    "clonk": "560-760 Hz knock, low-passed at 2.6 kHz, at the bottom of every hole",
+    "felt": "240-320 Hz thud as a marble rolls out onto the mat",
+    "clack": "2.7-3.5 kHz marble clack when a marble reaches the picture, plus 2-4 quieter ones",
+    "finish": "spark arpeggio C6 E6 G6 C7 E7 over a C5 bell when the picture is done",
+    "loudness": "-13 LUFS integrated, AAC 192 kb/s"
+  },
+  "youtube": {
+    "title": "Can 130 Marbles Make a Heart? ❤️",
+    "description": ["130 marbles race down a wooden marble run and build a heart, one marble at a time ❤️", "Pick your color in the comments 🟡⚪🔴", "Made with a 3D physics simulation", "#marbles #marblerun #satisfying #pickyourcolor #asmr"],
+    "thumbnail": "the finished heart (last frame), no text"
+  }
+}

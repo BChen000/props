@@ -66,6 +66,19 @@
       "song": "the whole round once (36 beats; 'morning bells are ringing' as six even beats) + its second half again",
       "look": {"hue": 40, "bright": 0.35, "marble_shift": 7, "studio": "dark indigo night", "first_marble": "#FF9634"},
       "thumbnail_frame": 801
+    },
+    "joy-to-the-world": {
+      "title_card": "Joy to the World",
+      "length_s": 35.47,
+      "frames": 1064,
+      "marbles": 19,
+      "rounds": [1, 2, 3, 5, 8],
+      "offsets": [[0], [0, 3], [0, 2, 4], [0, 1, 3, 4, 6], [0, 1, 2, 3, 4, 5, 6, 7]],
+      "bpm": 112.5,
+      "beats": 60,
+      "song": "the verse with one syllable per beat; round 1's lone marble plays the opening C6-C5 scale, one stair per note",
+      "look": {"hue": 130, "sat": 1.7, "bright": 0.45, "marble_shift": 4, "studio": "Christmas red", "first_marble": "#5CE4A8"},
+      "thumbnail_frame": 865
     }
   },
   "hook": "a marble is already rolling down the chute on frame 1; first tile hit at 1.07 s (2 beats)",
