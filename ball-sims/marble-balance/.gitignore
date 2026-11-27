@@ -1,0 +1,4 @@
+build/
+build_preview/
+__pycache__/
+*.log

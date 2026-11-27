@@ -1,0 +1,200 @@
+{
+  "prop": "marble-hide-seek",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "aspect": "9:16 Short"
+  },
+  "video": {
+    "file": "Marble_Hide_and_Seek.mp4",
+    "length_s": 36.1,
+    "frames": 1074,
+    "cast": "a white seeker with googly eyes and six hiders",
+    "winner": "PURPLE",
+    "hook": "the countdown starts at 0.6 s with every marble already rolling to its hiding place",
+    "structure": "count 5..1 with the seeker's eyes shut and facing the wall; READY OR NOT! (it turns round and opens its eyes); it checks the spots one by one (FOUND! and a ding for each, a ? at an empty spot); a last search with a heartbeat; TIME'S UP!; the hider nobody found rolls out and wins",
+    "requested_by": "the Marble Pop audience"
+  },
+  "cast": {
+    "seeker_srgb": "#F6F6F4",
+    "hiders": [
+      {
+        "name": "RED",
+        "srgb": "#EC4144"
+      },
+      {
+        "name": "BLUE",
+        "srgb": "#3D83F7"
+      },
+      {
+        "name": "GREEN",
+        "srgb": "#32C664"
+      },
+      {
+        "name": "YELLOW",
+        "srgb": "#FBC932"
+      },
+      {
+        "name": "PURPLE",
+        "srgb": "#A75BED"
+      },
+      {
+        "name": "ORANGE",
+        "srgb": "#F78B2C"
+      }
+    ],
+    "marble_radius": 1.55,
+    "eyes": {
+      "apart": 0.42,
+      "up": 0.7,
+      "size": 0.43,
+      "pupil": 0.21,
+      "ring": 0.07,
+      "gaze": 0.55
+    }
+  },
+  "story": {
+    "hide_at": {
+      "GREEN": "bridge",
+      "RED": "pen",
+      "YELLOW": "corner",
+      "ORANGE": "stack",
+      "BLUE": "tunnel",
+      "PURPLE": "base"
+    },
+    "found_order": [
+      "GREEN",
+      "RED",
+      "YELLOW",
+      "ORANGE",
+      "BLUE"
+    ],
+    "winner": "PURPLE",
+    "count_from": 5,
+    "t_count": 0.6,
+    "t_ready": 5.6,
+    "seek_speed": 13.0,
+    "hide_speed": 13.5,
+    "look_s": 0.9,
+    "hold_s": 3.2
+  },
+  "playground": {
+    "cube": 6.4,
+    "rounded_edges": 0.16,
+    "tunnel_radius": 2.15,
+    "low_wall_height": 2.6,
+    "pieces": [
+      "base tower (the seeker counts here)",
+      "stack of two cubes",
+      "tunnel block",
+      "arch",
+      "pen (four low walls)",
+      "bridge",
+      "corner (L of low walls)"
+    ],
+    "mat": {
+      "x": [
+        -21.0,
+        21.0
+      ],
+      "z": [
+        -34.0,
+        24.0
+      ],
+      "thickness": 0.22
+    }
+  },
+  "look": {
+    "wood_srgb": "#E0C8A6",
+    "floor_srgb": "#D6D0C8",
+    "wall_srgb": "#CED0D2",
+    "baseboard_srgb": "#EEEEEC",
+    "mat_srgb": "#5A944A",
+    "key_light": {
+      "from": [
+        -0.45,
+        1.0,
+        0.18
+      ],
+      "angle_deg": 16.0,
+      "color_linear": [
+        2.05,
+        1.98,
+        1.86
+      ]
+    },
+    "sky_linear": {
+      "zenith": [
+        0.9,
+        0.93,
+        0.98
+      ],
+      "horizon": [
+        0.78,
+        0.8,
+        0.84
+      ]
+    },
+    "exposure": 0.92,
+    "vignette": 0.1,
+    "static_samples": [
+      25,
+      36
+    ]
+  },
+  "camera": {
+    "target": [
+      0.0,
+      0.0,
+      -10.5
+    ],
+    "azimuth_deg": 0.0,
+    "elevation_deg": 58.0,
+    "distance": 120.0,
+    "fovy_deg": 31.0
+  },
+  "text": {
+    "title": "HIDE AND SEEK",
+    "title_y": 0.055,
+    "status_y": 0.128,
+    "chips_y": 0.2,
+    "status": [
+      "PICK YOUR COLOR!",
+      "5 4 3 2 1",
+      "READY OR NOT!",
+      "N STILL HIDING",
+      "1 LEFT... WHERE?",
+      "TIME'S UP!",
+      "<COLOUR> WINS!"
+    ],
+    "pops": [
+      "FOUND! over a found marble",
+      "? over the seeker at an empty spot"
+    ],
+    "font": "Montserrat 800 with a dark stroke",
+    "watermark": "Marble Pop at 0.968 of the height"
+  },
+  "sound": {
+    "countdown": "a tick per number over a quiet suspense bed",
+    "ready": "whoosh and ding",
+    "music": "Grieg's In the Hall of the Mountain King (public domain, synthesized), 104/132/160 BPM as hiders are found, cut at TIME'S UP!",
+    "found": "a ding that climbs with every marble found",
+    "empty_spot": "an uh-oh",
+    "last_search": "heartbeat",
+    "times_up": "buzzer and boom, then a riser",
+    "winner": "brass fanfare, claps, confetti pops, then a happy loop at 118 BPM",
+    "rolling": "a soft felt rumble following the marbles' speed",
+    "loudness": "-13 LUFS integrated"
+  },
+  "youtube": {
+    "title": "Marble Hide and Seek 👀 Who Hides Best?",
+    "description": [
+      "Six marbles hide, one googly-eyed marble seeks. Who stays hidden?",
+      "Pick your color in the comments 🔴🔵🟢🟡🟣🟠",
+      "Made with 3D animation",
+      "#marbles #hideandseek #satisfying #shorts"
+    ],
+    "thumbnail": "frame 189: the seeker turned round with its eyes open, hiders in their spots; no text"
+  }
+}
