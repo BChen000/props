@@ -78,14 +78,18 @@ stream() {  # name key video sound
 
 trap 'trap - INT TERM; echo; echo "Stopping all streams..."; kill 0; exit 130' INT TERM
 caffeinate -i -w $$ 2>/dev/null &
+awake=$!
 
+pids=()
 i=0
 while [ $i -lt $N ]; do
   stream "${names[$i]}" "${keys[$i]}" "${videos[$i]}" "${sounds[$i]}" &
+  pids+=($!)
   i=$((i + 1))
 done
 
 echo "$N streams started at $(clock "$(date +%s)"). They stop by themselves at $(clock "$END")."
 echo "Keep this window open. Ctrl+C stops them all early."
-wait
+wait "${pids[@]}"   # only the streams: a bare wait also waits for caffeinate, which waits for this script, so it never returns
+kill "$awake" 2>/dev/null
 echo "All $N streams finished at $(clock "$(date +%s)")."

@@ -59,6 +59,8 @@ To stream: put `streams.sh`, the loop files and `../marble-spiral-loop`'s two fi
 - **Panels switch half way through the 3 s gap between songs.** The first song's card also covers the last 1.5 s of the loop, and the last song's card must end there: two semi-transparent cards stacked made a visible jump at the seam.
 - **The trough is a 9th step.** Marbles land in it one beat after the last tile, so the landing (a soft knock) is on the beat too. The exit block hides them (`hidden`) once they are 1 radius inside.
 - **Check a rebuild with stills and the WAV.** Those, and the timeline, come out exactly the same from a fresh clone. The 6 Mbps final encode wasn't compared; `../marble-live-streams` found the same settings aren't bit-exact between runs.
+- **The script must wait for the streams only.** It used to end with a bare `wait`, which also waits for `caffeinate -w $$`, which waits for the script: on GJ's Mac every stream printed `done` but the script never ended, so Terminal showed `caffeinate` and no prompt, and typed commands went nowhere. It now waits for the stream PIDs and then stops `caffeinate`. Linux has no `caffeinate`, so the first tests missed it.
+- **Streams can end a few minutes after the printed stop time.** `-t` counts video time, and video time fell behind the clock during the night: the Nov 26 run started at 06:55 with a 17:55 stop and ended at 17:56 (twin) and 18:03 (spiral, stairs), still well under YouTube's 12 h archive limit. A dropped connection (all three dropped at once at 11:19 that day) reconnected after 5 s on its own.
 
 ## What it can't do
 - Nothing reacts to chat; each loop repeats every 4–4.6 minutes.

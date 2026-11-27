@@ -77,6 +77,8 @@ Thumbnails are 1280×720 frames in the stream layout, with no added text: `compo
 - **The Mac must stay awake and online.** `streams.sh` runs `caffeinate` while it streams, but closing a MacBook's lid still sleeps it.
 - **`rounds.py` numbers rounds in the order given,** and `compose.py ring` plays `build/rounds/` in file-name order. Delete old rounds before rendering a new set.
 - **The stream files aren't bit-exact between runs.** Two identical runs of the first song differed in 958 of 968 video frames, though the audio was identical and the frames looked the same. To check a rebuild, compare PSNR (`ffmpeg -i a.mp4 -i b.mp4 -lavfi psnr -f null -`), not bytes. The rounds (CRF encode) do come out byte-identical.
+- **The script must wait for the streams only.** It used to end with a bare `wait`, which also waits for `caffeinate -w $$`, which waits for the script: on GJ's Mac every stream printed `done` but the script never ended, so Terminal showed `caffeinate` and no prompt, and typed commands went nowhere. It now waits for the stream PIDs and then stops `caffeinate`. Linux has no `caffeinate`, so the first tests missed it.
+- **Streams can end a few minutes after the printed stop time.** `-t` counts video time, and video time fell behind the clock during the night: the Nov 26 run started at 06:55 with a 17:55 stop and ended at 17:56 (twin) and 18:03 (spiral, stairs), still well under YouTube's 12 h archive limit. A dropped connection (all three dropped at once at 11:19 that day) reconnected after 5 s on its own.
 
 ## What it can't do
 - Nothing reacts to chat: the picks people comment don't change anything, and the rounds are pre-rendered, so each file repeats every 2.6–3.6 minutes (about 180–250 times in 11 hours).
