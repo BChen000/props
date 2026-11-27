@@ -1151,7 +1151,7 @@ class Renderer:
             if kd > 0.4:
                 zb = (bx[b] - cam[0]) * cam[3] + (by[b] - cam[1]) * cam[4] + (bz[b] - cam[2]) * cam[5]
                 coc = kd * abs(zb - zf) / max(zb, 1e-3)
-                if coc > 7.0 and btype[b] == 0:
+                if coc > 7.0 and (btype[b] == 0 or S.TEAM_COLOURS):
                     lowq = True
                     offs = z0
             draw_ball(cam, b, bx[b], by[b], bz[b], offs, bx, by, bz, btype, bcol, nbs, nbi,

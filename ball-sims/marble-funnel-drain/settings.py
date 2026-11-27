@@ -33,11 +33,19 @@ SIM = dict(
 # --------------------------------------------------------------------------- colours (picked from the drain order)
 PLACES = ["GREEN", "BLUE", "RED", "YELLOW"]    # 1st = last marble into the hole, 2nd, 3rd, 4th
 FOURTH_OUT_AT = 15.7                           # 4th place: the marble draining closest to this sim time (+-0.5 s)
+TEAM_COLOURS = False                           # True: every marble wears one of the PLACES colours (equal teams), and
+                                               # each place's marble is the last of its colour, so its drop knocks that
+                                               # colour out; False: the 4 place marbles are coloured, the rest chrome
+TEAM_SEED = 1                                  # with TEAM_COLOURS: which marbles get which colour (the race is the same)
 PALETTE = {                                    # linear-light albedo; chrome marbles have none
     "RED": (0.90, 0.03, 0.02),
     "BLUE": (0.03, 0.17, 0.95),
     "GREEN": (0.04, 0.72, 0.06),
     "YELLOW": (0.98, 0.72, 0.02),
+    "PURPLE": (0.30, 0.03, 0.85),
+    "ORANGE": (0.95, 0.24, 0.01),
+    "PINK": (0.95, 0.10, 0.40),
+    "CYAN": (0.02, 0.60, 0.80),
 }
 
 # --------------------------------------------------------------------------- look (render.py)
@@ -90,3 +98,12 @@ WORKERS = 2
 SPLIT_AT = 385     # first frame of the second worker (balances the shipped timeline on 2 cores)
 CRF, PRESET = 17, "fast"
 VOLUME_DB = -2.5   # applied when muxing; the shipped soundtrack lands at -14.1 LUFS
+
+# --------------------------------------------------------------------------- other episodes
+# The values above are the shipped first episode (seed 3). EPISODE=<name> runs episodes/<name>.py right here, so an
+# episode file only has to reassign what differs (seed, colours, close-up and thumbnail aim, finale timing).
+EPISODE = os.environ.get("EPISODE", "")
+if EPISODE:
+    _ep = os.path.join(HERE, "episodes", EPISODE + ".py")
+    with open(_ep, encoding="utf-8") as _f:
+        exec(compile(_f.read(), _ep, "exec"))
