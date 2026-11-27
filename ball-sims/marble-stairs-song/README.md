@@ -19,13 +19,15 @@ Three more songs were added in Nov 2026 and rendered from this folder with the d
 - `old-macdonald`: *Old MacDonald Had a Farm*, the verse three times without the "moo" part, then an 8-note run up to C7, at 120 bpm (31.27 s, 938 frames).
 - `frere-jacques`: *Frère Jacques*, the whole round once, then its second half again, at 112.5 bpm (33.37 s, 1001 frames).
 
-So that they don't look like the shipped videos or like each other, each new song has its own marble spacing in the early rounds, its own studio colour and its own marble colour order (`hue`, `sat`, `bright` and `marble_shift` in `songs.py`): Mary is rose pink, Old MacDonald sage green, and Frère Jacques a dark indigo night where the lit tiles stand out. For these three, `music.py`'s per-beat log was checked against `songs.py` (beat by beat, the melody voice is the written note), stills of the busiest beats were looked at before the full renders, and each mp4 measured −13.0 LUFS. With the look settings left at their defaults, `twinkle`'s stills 600 and 920, timeline and marble paths are identical to those from the code before them.
+So that they don't look like the shipped videos or like each other, each new song has its own marble spacing in the early rounds, its own studio colour and its own marble colour order (`hue`, `sat`, `bright` and `marble_shift` in `songs.py`): Mary is rose pink, Old MacDonald sage green, and Frère Jacques a dark indigo night where the lit tiles stand out. For these three, `music.py`'s per-beat log was checked against `songs.py` (beat by beat, the melody voice is the written note), stills of the busiest beats were looked at before the full renders, and each mp4 measured −13.0 LUFS. `check_song.py` passes for all five songs. With the look settings left at their defaults, `twinkle`'s stills 600 and 920, timeline and marble paths are identical to those from the code before them.
 
 ## Files
 | file | what |
 |---|---|
 | `make_video.py` | the whole pipeline: static set → choreography → music → frames (2 workers) → mp4 at −13 LUFS → thumbnail |
 | `songs.py` | the songs: melody (one note per beat), chords, rounds and when each marble leaves the chute, plus an optional look (studio colour, marble colour order) |
+| `check_song.py` | checks a song's soundtrack against `songs.py` beat by beat (melody, holds, rests, bass and chord tones), without listening |
+| `preview_look.py` | a 540×960 preview of a studio colour (`hue`, `sat`, `bright`) without marbles, in a few seconds |
 | `scene.py` | the set: 8 tiles, pillars, chute with feeder tube, tray; hop physics from the BPM; main and thumbnail cameras |
 | `timeline.py` | exact hops (a parabola per beat) + tray physics at 1/1200 s; hits, impacts, round titles, finale |
 | `music.py` | hits → melody, bass, chord tones and sparkles; tray clacks; finale chord and sparkle run |
@@ -38,6 +40,8 @@ So that they don't look like the shipped videos or like each other, each new son
 python3 make_video.py twinkle              # -> build/twinkle/Marble_Staircase_Twinkle.mp4 + thumbnail.png
 python3 make_video.py jingle-bells         # -> build/jingle-bells/Marble_Staircase_Jingle_Bells.mp4 + thumbnail.png
 python3 make_video.py mary-lamb            # also: old-macdonald, frere-jacques
+python3 check_song.py mary-lamb            # every beat's voices vs songs.py (~4 s a song)
+python3 preview_look.py 100 0.9            # or a song name: its studio colour -> build/look_previews/*.png
 python3 make_video.py twinkle --stills 300,650,900    # PNG stills only, to check a change
 python3 make_video.py twinkle --thumb-only --thumb-title --thumb-frame 769
 ```
@@ -49,7 +53,7 @@ On a 2-core cloud session, *Jingle Bells* takes 5.4 minutes once the static sets
    - `chords`: one chord per beat, from `VOICING`: C, F, G or G7.
    - `rounds`, and per round the beat `offsets` at which its marbles leave the chute.
    - Optionally `hue`, `sat`, `bright` and `marble_shift`, so the video doesn't look like the others: they recolour the studio (`../marble-raytrace-kit/look.py`'s `set_hue`) and pick the first marble's colour. The rainbow tiles keep their colours.
-2. The rounds play `sum(last offset + 8)` beats back to back. `make_video.py` warns if the melody is shorter than that.
+2. The rounds play `sum(last offset + 8)` beats back to back. `make_video.py` warns if the melody is shorter than that. Run `check_song.py <song>` to confirm every beat plays what you wrote, and `preview_look.py` to try studio colours.
 3. Render a few `--stills` first, then the full video.
 4. Write the title and description by the channel's copy rules in the repo's `CLAUDE.md`. The default thumbnail is the busiest beat of the last round, with no text.
 
