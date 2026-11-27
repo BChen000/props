@@ -20,6 +20,7 @@ import timeline as T  # noqa: E402
 import arena_board as board  # noqa: E402
 import battle_fx as fx  # noqa: E402
 import color_chips as chips  # noqa: E402
+chips.CHIP_X0 = (S.W - (len(S.NAMES) - 1) * chips.CHIP_STEP - chips.CHIP_W) // 2   # centred row (= 42 for 6 balls)
 import subscribe_cta as cta  # noqa: E402
 import winner_card as wc  # noqa: E402
 from glossy_ball import draw_ball  # noqa: E402

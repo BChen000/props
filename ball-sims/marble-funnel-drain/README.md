@@ -8,6 +8,8 @@ The complete code behind the Marble Pop Short **"Last Marble Left WINS 🕳️ P
 - 22–29.6 s: a close-up at the hole in slow motion. Red drops at 26.3 s, then blue at 27.5 s, and green, the last marble on the board, wins at 29.3 s. A chime plays for each colour that drops out, and a short arpeggio for the winner.
 - The camera then glides back to the opening shot over the empty board, so frame 0 follows the last frame seamlessly.
 
+**Marble Olympics Grand Final** (`EPISODE=olympics500`, Nov 2026, for the 500-subscriber special in `../marble-olympics`; 30.77 s, 923 frames): 500 marbles instead of 480, one per subscriber, in red, blue, green and yellow teams of 125. The race is seed 12 of the 500-marble seeds 1–26, recorded in `assets/drain500_seed12.npz`. The last three marbles drain at 21.81, 22.77 and 24.70 s, so the last two circle the hole for almost 2 s. `TEAM_SEED` 18 leaves the finalists even, 5/5/5 at 17 s and 3/3/3 when the camera arrives. Green goes out at 15.8 s, then red, then yellow, and blue wins at 29.27 s video. Its sims and renders go to `build/olympics500/`. It rendered in 18.0 minutes on a 2-core session.
+
 The physics really decides the order the marbles drain in. Every marble is identical; the colours are given afterwards, from the drain order (see **Gotchas**).
 
 ![preview](preview.png)
@@ -47,6 +49,8 @@ The physics really decides the order the marbles drain in. Every marble is ident
 | `assets/drain_seed7.npz` | the recorded race for seed 7, used by episode 2 (6.7 MB) |
 | `episodes/ep3.py` | episode 3 (`EPISODE=ep3`): seed 30 in purple, orange, pink and cyan teams, purple wins |
 | `assets/drain_seed30.npz` | the recorded race for seed 30, used by episode 3 (6.8 MB) |
+| `episodes/olympics500.py` | the Marble Olympics Grand Final (`EPISODE=olympics500`): 500 marbles, seed 12, blue wins |
+| `assets/drain500_seed12.npz` | the recorded 500-marble race for seed 12, used by the Olympics final (7.0 MB) |
 | `pick_race.py` | ranks seeds for a new race (`races 1-40`) and team colourings for an episode (`teams 1-40`) |
 | `style.json` | every value plus the episode facts (frames, places, out times), camera moves and the YouTube copy |
 | `preview.png` | six moments: opening close-up, overview, low close-up, push-in, finale, last two |

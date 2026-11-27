@@ -1,0 +1,368 @@
+{
+ "prop": "marble-olympics",
+ "canvas": {
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "panel_width": 608,
+  "crf": 20,
+  "preset": "veryfast",
+  "loudness_lufs": -14,
+  "bed_level": 0.75
+ },
+ "teams": {
+  "RED": "#ec4144",
+  "BLUE": "#3d83f7",
+  "GREEN": "#32c664",
+  "YELLOW": "#fbc932"
+ },
+ "points": [
+  3,
+  2,
+  1,
+  0
+ ],
+ "final_multiplier": 2,
+ "events": [
+  {
+   "key": "power-balls",
+   "name": "POWER BALLS",
+   "rule": "Every hit UPGRADES your power",
+   "template": "ability-battle-template",
+   "set": {
+    "SEED": 2494
+   },
+   "places": [
+    "GREEN",
+    "YELLOW",
+    "BLUE",
+    "RED"
+   ],
+   "result": [
+    "GREEN",
+    "YELLOW",
+    "BLUE",
+    "RED"
+   ],
+   "win_video_s": 49.279
+  },
+  {
+   "key": "sword-roulette",
+   "name": "SWORD ROULETTE",
+   "rule": "One random ball gets the BIG sword",
+   "template": "sword-roulette",
+   "set": {
+    "SEED": 2496,
+    "NAMES": [
+     "RED",
+     "BLUE",
+     "GREEN",
+     "YELLOW"
+    ]
+   },
+   "places": [
+    "YELLOW",
+    "RED",
+    "GREEN",
+    "BLUE"
+   ],
+   "result": [
+    "YELLOW",
+    "RED",
+    "GREEN",
+    "BLUE"
+   ],
+   "win_video_s": 24.354
+  },
+  {
+   "key": "laser-wars",
+   "name": "LASER WARS",
+   "rule": "Everyone gets a LASER",
+   "template": "ability-battle-template",
+   "set": {
+    "SEED": 2900,
+    "ABILITIES": [
+     "laser",
+     "laser",
+     "laser",
+     "laser"
+    ],
+    "ABILITY_LABELS": [
+     "LASER",
+     "LASER",
+     "LASER",
+     "LASER"
+    ],
+    "ABILITY_NAMES": [
+     "LASER BEAM",
+     "LASER BEAM",
+     "LASER BEAM",
+     "LASER BEAM"
+    ],
+    "TITLE": "LASER WARS",
+    "SUBTITLE": "Everyone gets a LASER"
+   },
+   "places": [
+    "RED",
+    "BLUE",
+    "YELLOW",
+    "GREEN"
+   ],
+   "result": [
+    "RED",
+    "BLUE",
+    "YELLOW",
+    "GREEN"
+   ],
+   "win_video_s": 50.063
+  },
+  {
+   "key": "blaster-battle",
+   "name": "BLASTER BATTLE",
+   "rule": "Everyone gets the 360° BLASTER",
+   "template": "ability-battle-template",
+   "set": {
+    "SEED": 2241,
+    "ABILITIES": [
+     "blaster",
+     "blaster",
+     "blaster",
+     "blaster"
+    ],
+    "ABILITY_LABELS": [
+     "BLASTER",
+     "BLASTER",
+     "BLASTER",
+     "BLASTER"
+    ],
+    "ABILITY_NAMES": [
+     "360° BLASTER",
+     "360° BLASTER",
+     "360° BLASTER",
+     "360° BLASTER"
+    ],
+    "TITLE": "BLASTER BATTLE",
+    "SUBTITLE": "Everyone gets the 360° BLASTER"
+   },
+   "places": [
+    "BLUE",
+    "GREEN",
+    "RED",
+    "YELLOW"
+   ],
+   "result": [
+    "BLUE",
+    "GREEN",
+    "RED",
+    "YELLOW"
+   ],
+   "win_video_s": 44.825
+  },
+  {
+   "key": "grand-final",
+   "name": "GRAND FINAL",
+   "rule": "500 marbles, one for every subscriber. Last color left WINS",
+   "template": "marble-funnel-drain",
+   "episode": "olympics500",
+   "double": true,
+   "keep": 0.7,
+   "places": [
+    "BLUE",
+    "YELLOW",
+    "RED",
+    "GREEN"
+   ],
+   "result": [
+    "BLUE",
+    "YELLOW",
+    "RED",
+    "GREEN"
+   ],
+   "win_video_s": 29.27
+  }
+ ],
+ "cards_s": {
+  "title": 7.0,
+  "thanks": 6.0,
+  "teams": 7.5,
+  "rules": 7.0,
+  "intro": 4.0,
+  "results": 7.5,
+  "standings": 7.0,
+  "tied": 7.0,
+  "champion": 11.0,
+  "outro": 10.0
+ },
+ "keep_after_win_s": 2.6,
+ "wipe_s": 0.5,
+ "running_order": [
+  {
+   "start_s": 0.0,
+   "kind": "title",
+   "dur_s": 7.0,
+   "event": null
+  },
+  {
+   "start_s": 7.0,
+   "kind": "thanks",
+   "dur_s": 6.0,
+   "event": null
+  },
+  {
+   "start_s": 13.0,
+   "kind": "teams",
+   "dur_s": 7.5,
+   "event": null
+  },
+  {
+   "start_s": 20.5,
+   "kind": "rules",
+   "dur_s": 7.0,
+   "event": null
+  },
+  {
+   "start_s": 27.5,
+   "kind": "intro",
+   "dur_s": 4.0,
+   "event": "POWER BALLS"
+  },
+  {
+   "start_s": 31.5,
+   "kind": "event",
+   "dur_s": 51.87,
+   "event": "POWER BALLS"
+  },
+  {
+   "start_s": 83.37,
+   "kind": "results",
+   "dur_s": 7.5,
+   "event": "POWER BALLS"
+  },
+  {
+   "start_s": 90.87,
+   "kind": "standings",
+   "dur_s": 7.0,
+   "event": "POWER BALLS"
+  },
+  {
+   "start_s": 97.87,
+   "kind": "intro",
+   "dur_s": 4.0,
+   "event": "SWORD ROULETTE"
+  },
+  {
+   "start_s": 101.87,
+   "kind": "event",
+   "dur_s": 26.97,
+   "event": "SWORD ROULETTE"
+  },
+  {
+   "start_s": 128.83,
+   "kind": "results",
+   "dur_s": 7.5,
+   "event": "SWORD ROULETTE"
+  },
+  {
+   "start_s": 136.33,
+   "kind": "standings",
+   "dur_s": 7.0,
+   "event": "SWORD ROULETTE"
+  },
+  {
+   "start_s": 143.33,
+   "kind": "intro",
+   "dur_s": 4.0,
+   "event": "LASER WARS"
+  },
+  {
+   "start_s": 147.33,
+   "kind": "event",
+   "dur_s": 52.67,
+   "event": "LASER WARS"
+  },
+  {
+   "start_s": 200.0,
+   "kind": "results",
+   "dur_s": 7.5,
+   "event": "LASER WARS"
+  },
+  {
+   "start_s": 207.5,
+   "kind": "standings",
+   "dur_s": 7.0,
+   "event": "LASER WARS"
+  },
+  {
+   "start_s": 214.5,
+   "kind": "intro",
+   "dur_s": 4.0,
+   "event": "BLASTER BATTLE"
+  },
+  {
+   "start_s": 218.5,
+   "kind": "event",
+   "dur_s": 47.43,
+   "event": "BLASTER BATTLE"
+  },
+  {
+   "start_s": 265.93,
+   "kind": "results",
+   "dur_s": 7.5,
+   "event": "BLASTER BATTLE"
+  },
+  {
+   "start_s": 273.43,
+   "kind": "standings",
+   "dur_s": 7.0,
+   "event": "BLASTER BATTLE"
+  },
+  {
+   "start_s": 280.43,
+   "kind": "tied",
+   "dur_s": 7.0,
+   "event": null
+  },
+  {
+   "start_s": 287.43,
+   "kind": "intro",
+   "dur_s": 4.0,
+   "event": "GRAND FINAL"
+  },
+  {
+   "start_s": 291.43,
+   "kind": "event",
+   "dur_s": 29.97,
+   "event": "GRAND FINAL"
+  },
+  {
+   "start_s": 321.4,
+   "kind": "results",
+   "dur_s": 7.5,
+   "event": "GRAND FINAL"
+  },
+  {
+   "start_s": 328.9,
+   "kind": "standings",
+   "dur_s": 7.0,
+   "event": "GRAND FINAL"
+  },
+  {
+   "start_s": 335.9,
+   "kind": "champion",
+   "dur_s": 11.0,
+   "event": null
+  },
+  {
+   "start_s": 346.9,
+   "kind": "outro",
+   "dur_s": 10.0,
+   "event": null
+  }
+ ],
+ "duration_s": 356.9,
+ "copy": {
+  "title": "MARBLE OLYMPICS 🏅 Pick Your Color! (500 Subscriber Special)",
+  "description": "4 teams. 5 events. Only 1 champion! Thank you for 500 subscribers 🎉\nPick your color in the comments 🔴🔵🟢🟡\n\n0:00 Intro\n0:27 Event 1: Power Balls\n1:37 Event 2: Sword Roulette\n2:23 Event 3: Laser Wars\n3:34 Event 4: Blaster Battle\n4:40 Grand Final: 500 Marbles\n5:35 The Champion\n\nMade with physics simulations\n#marbles #satisfying #pickyourcolor #whowillwin #marbleolympics",
+  "thumbnail": "no text: the 500-marble board, a crown and the four team balls"
+ }
+}
