@@ -7,8 +7,8 @@ One command for a "Last One Spinning Wins" Short: eight marbles spin around a tu
 **Used in:** "Last One Spinning Wins" made for Marble Pop (Nov 2026; 25.03 s, 742 frames, 1080×1920, 30 fps; seed 1207, orange wins). Verified on a 2-core cloud session, running from this folder:
 - `python3 make_video.py` with both sets cached took 1 min 31 s for the 742 frames, the mux and the thumbnail. The two sets had taken about 1 min (main camera) and 2 min (close-up) to path-trace and bake.
 - The soundtrack was then rebuilt (a louder opening and the winner loop, now the shipped `audio.py`) and muxed with the same frames: −13.1 LUFS integrated, −1.5 dBFS peak, no silent stretch.
-- `--thumb-only` reproduces the delivered thumbnail (frame 120, the first marble on the edge of the hole) byte for byte.
-- `PREVIEW=1 python3 make_video.py --stills 30,98,176,330,450,600,612,624,700,735` built everything at half size and wrote the ten stills in 38 s.
+- The delivered thumbnail is `--thumb-only`'s default (frame 120, the first marble on the edge of the hole).
+- From a fresh clone of this branch: `PREVIEW=1 python3 make_video.py --stills 30,330,612` built both half-size sets and three stills (one from the close-up) in 38 s, and `python3 sim.py --search 1-20` ranked 20 races in about a second.
 
 ## How it works
 1. **The dish.** `dish.py` turns 2D profiles into meshes: the dish (a gentle cone with a funnel dip around the hole, a raised rounded rim and a thick outer wall), the three pegs and a black disc deep in the hole. The floor profile is the same function the physics uses (`sim.floor_y`), so marbles sit exactly on the surface. The table is the tracer's ground plane.

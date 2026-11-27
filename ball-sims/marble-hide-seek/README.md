@@ -8,6 +8,7 @@ One command for a 3D marble hide-and-seek Short: six marbles race off to hide ar
 - With the set cached, the 1074 frames took 2 min 50 s in two worker processes (about 0.3 s a frame).
 - The soundtrack was then rebuilt (a quiet bed under the countdown, a felt rumble that actually follows the marbles, a riser after TIME'S UP! and the winner loop, all now in `audio.py`) and muxed with the same frames: −13.1 LUFS integrated, −1.1 dBFS peak, no silent stretch.
 - After the video, `story.py` was changed to take who hides where from `settings.HIDE_AT`. With the shipped `HIDE_AT` it gives exactly the shipped story (every position, eye pose and cue identical), and an episode with green and purple swapped runs (green wins).
+- From a fresh clone of this branch: `PREVIEW=1 python3 make_video.py --stills 150,250,420` built the half-size set, the lighting table and three stills in 39 s, and `python3 make_video.py --stills 189` (full-size set traced and baked, lighting table, one still) took 5 min 11 s. That still matches frame 189 of the delivered mp4 at 40.1 dB PSNR (H.264 noise).
 
 ## How it works
 1. **Playground.** `layout.py` places the pieces on the mat: the base tower the seeker counts against, a stack of two cubes, a tunnel block, an arch, a pen of four low walls, a bridge and a corner of two low walls, plus the hiding spots (`SPOTS`: where a marble hides, where the seeker stands to look, how a found marble leaves, and whether it has to hop a wall). `mesh.py` builds plain blocks as analytic rounded boxes and the tunnel and arch with marching cubes on signed distance fields (copied from `../marble-run-picture`).
@@ -40,6 +41,7 @@ PREVIEW=1 python3 make_video.py --stills 150,250,420   # half-size set and still
 python3 make_video.py --stills 189,420,1000            # full-size stills (path-traces the set the first time)
 python3 make_video.py                                  # -> build/Marble_Hide_and_Seek.mp4 + build/thumbnail.png
 ```
+The first full build takes about 8 minutes on a 2-core cloud session: about 5 to trace the set and light the mat, then about 3 for the frames.
 
 **A new episode:** make `episodes/<name>.py` with only what changes and run with `EPISODE=<name>`:
 - `HIDE_AT`: which colour hides where (`bridge`, `pen`, `corner`, `stack`, `tunnel`, `base`). The seeker always checks bridge, pen, the empty arch, corner, stack, tunnel in that order, so the marble at `base` wins and the order of the others is the order they're found.

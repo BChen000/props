@@ -8,6 +8,7 @@ One command for a "30 GLASS vs 10 STEEL — WHICH SIDE WINS?" balance Short: red
 - The first full build path-traced the level set and the two end poses (51 s each), found the window (41% of the image) and path-traced the 66 beam poses in 23.7 minutes (about 21.5 s each).
 - With the poses cached, `python3 make_video.py` took 3 min 29 s: physics, soundtrack, the 733 frames in four parts two at a time, the mux and the thumbnail. The delivered mp4 is that run: −13.1 LUFS integrated, −0.7 dBFS peak.
 - The physics lands every marble within 0.21 s of its scheduled time, ends with all 40 marbles in their own baskets, and the beam changes sides at 0.63, 2.59, 5.55, 6.97, 12.23 and 13.32 s before the decisive tip at 21.05 s, the 7 changes `schedule.py` predicts on paper.
+- From a fresh clone of this branch: `python3 schedule.py` prints the 7 lead changes, and `PREVIEW=1 python3 make_video.py --stills 15,124,560,700` traced the half-size level set, the end poses and the 4 poses those frames need and wrote the stills in 1 min 4 s, with the same physics and lead changes as the full run.
 - The window's feathered edge leaves no seam: across its top and bottom edges, frames with the beam tilted (10 s and 22 s) differ from the level opening frame by at most 1.5 levels of 255 in row means away from marbles and text, with no step at the edge.
 
 ## How it works
