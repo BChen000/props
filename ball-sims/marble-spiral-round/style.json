@@ -92,5 +92,13 @@
     "round_titles": "1 MARBLE, 2 MARBLES, 4 MARBLES; each appears when its round's first marble leaves the gate",
     "watermark": "Marble Pop (the upload: Fun House 67)",
     "thumbnail": "frame 1080 (36.0 s, all 4 marbles of the last round on the track), the upload's thumbnail picture; no text by default (--thumb-title adds the round title)"
+  },
+  "camera_16_9": {
+    "env": "MARBLE_RES=1920x1080 MARBLE_CAM=wide (WIDE_FOVY/AZ/EL/DIST/TARGET override)",
+    "target": [7.0, 17.5, 0.0],
+    "azimuth_deg": 8.0,
+    "elevation_deg": 14.0,
+    "distance": 86.0,
+    "fovy_deg": 30.0
   }
 }

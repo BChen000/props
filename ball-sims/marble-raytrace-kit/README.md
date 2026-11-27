@@ -60,6 +60,7 @@ python3 get_fonts.py      # Montserrat into fonts/ (./setup.sh ball-sims runs it
 
 ## Gotchas
 - The compositor needs the G-buffer at exactly 2× the output size (2160×3840 for 1080×1920).
+- **Landscape:** `MARBLE_RES=1920x1080` sets `look.W, H` for every scene module (default 1080x1920). Each music template has a `MARBLE_CAM=wide` camera framed for it, used for the 16:9 long-form. The round title and watermark stay centred.
 - The render cache is keyed on the scene file (and the mesh, via `deps`), not on the tracer binary. After editing a `.c` file, delete `build/*_scene.sha` to re-render.
 - `compositor` is configured per process with one scene (`configure()` sets module globals). Render a second camera, like the staircase thumbnail, in its own process.
 - Render time grows with the number of marbles on screen, resting ones included: their shadows and AO are redrawn every frame, even though the lighting of a marble at rest is cached. The busiest rounds render several times slower than the first, so `run_workers()` splits the frames by `frame_costs()` (1.4 + marbles on screen) unless `SPLIT=even`.

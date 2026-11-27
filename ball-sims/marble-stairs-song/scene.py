@@ -1,7 +1,8 @@
 """Geometry and camera of the single rainbow staircase: 8 tiles on dark pillars, a feeder chute with a tube,
 and a tray. Marbles hop one tile per beat, so the hop physics (G, V_UP, ...) and the chute position follow BPM.
 
-Overrides (environment): MARBLE_BPM (default 112.5, the shipped tempo), MARBLE_CAM=thumb (closer thumbnail camera).
+Overrides (environment): MARBLE_BPM (default 112.5, the shipped tempo), MARBLE_CAM=thumb (closer thumbnail camera),
+MARBLE_CAM=wide (16:9 front camera; use with MARBLE_RES=1920x1080 and its own BUILD_DIR).
 """
 import math
 import os
@@ -162,3 +163,15 @@ if os.environ.get("MARBLE_CAM") == "thumb":
     CAM_EL = math.radians(26.0)
     CAM_DIST = 126.0
     CAM_TARGET = np.array([14.5, 12.8, 0.5])
+elif os.environ.get("MARBLE_CAM") == "wide":
+    CAM_FOVY = math.radians(float(os.environ.get("WIDE_FOVY", "30")))
+    CAM_AZ = math.radians(float(os.environ.get("WIDE_AZ", "22")))
+    CAM_EL = math.radians(float(os.environ.get("WIDE_EL", "14")))
+    CAM_DIST = float(os.environ.get("WIDE_DIST", "60"))
+    CAM_TARGET = np.array([float(v) for v in os.environ.get("WIDE_TARGET", "16.5,10.6,0.0").split(",")])
+elif os.environ.get("MARBLE_CAM") == "widethumb":
+    CAM_FOVY = math.radians(float(os.environ.get("WIDE_FOVY", "30")))
+    CAM_AZ = math.radians(float(os.environ.get("WIDE_AZ", "30")))
+    CAM_EL = math.radians(float(os.environ.get("WIDE_EL", "12")))
+    CAM_DIST = float(os.environ.get("WIDE_DIST", "46"))
+    CAM_TARGET = np.array([float(v) for v in os.environ.get("WIDE_TARGET", "15.5,10.5,0.0").split(",")])

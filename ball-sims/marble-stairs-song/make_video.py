@@ -62,7 +62,7 @@ import compositor as C
 import pipeline as P
 
 SONG_DIR = os.path.join(BUILD, args.song)
-THUMB = os.environ.get("MARBLE_CAM") == "thumb"
+THUMB = os.environ.get("MARBLE_CAM") in ("thumb", "widethumb")
 GPREFIX = os.path.join(BUILD, "thumb_g" if THUMB else "g")
 log = P.log
 
@@ -139,7 +139,7 @@ def main():
     tl, _, _ = timeline.build(SONG, SONG_DIR)
     log(f"timeline: {tl['n_frames']} frames ({tl['n_frames'] / S.FPS:.2f} s), {len(tl['entries'])} marbles, "
         f"{len(tl['impacts'])} tray impacts")
-    env = dict(os.environ, MARBLE_CAM="thumb")
+    env = dict(os.environ, MARBLE_CAM="widethumb" if os.environ.get("MARBLE_CAM") in ("wide", "widethumb") else "thumb")
     if args.thumb_only:
         subprocess.run([sys.executable, __file__, args.song, *sys.argv[2:]], env=env, check=True)
         return

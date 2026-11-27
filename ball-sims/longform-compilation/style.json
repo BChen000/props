@@ -1,0 +1,154 @@
+{
+  "prop": "longform-compilation",
+  "version": "2 (full screen)",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "aspect": "16:9 long-form, every round full-bleed"
+  },
+  "sources": {
+    "music_rounds": "16:9 template renders: MARBLE_RES=1920x1080 MARBLE_CAM=wide BUILD_DIR=build_wide WATERMARK=''",
+    "shorts": "1080x1920 at 30 fps, reframed per frame mode"
+  },
+  "frame_modes": {
+    "track": {
+      "window": [1080, 608],
+      "upscale": "lanczos to 1920x1080 + unsharp 5:5:0.55",
+      "tracker": "colour masks at 10 fps on 108x192, centroid, Gaussian sigma 0.6 s, keys every 0.5 s"
+    },
+    "keys": {
+      "window": [1080, 608],
+      "top": "fraction of 1920, linear between keys"
+    },
+    "vcam": {
+      "keys": "(t, cx, cy, view height, roll deg), smoothstep between keys",
+      "warp": "cv2.warpAffine LANCZOS4, reflect border (never reached)",
+      "push_in": "view height <= min(1080/(16/9 cos r + sin r), 1920/(16/9 sin r + cos r))",
+      "intermediate": "x264 CRF 14 + unsharp 5:5:0.45"
+    },
+    "split": {
+      "windows": [[960, 1080], [960, 1080]],
+      "x": 60,
+      "divider": "10 px white at 92%"
+    },
+    "extend": {
+      "centre": [608, 1080],
+      "sides": "fillborders smear + boxblur 26:2"
+    }
+  },
+  "overlay": {
+    "round_pill": {
+      "xy": [40, 30],
+      "fill": "#fb7fd3 (labels and bonus #ffcd46)",
+      "font": "Poppins Black"
+    },
+    "progress_marbles": {
+      "y": 126,
+      "x0": 56,
+      "step": 18.5,
+      "r_done": 8,
+      "r_todo": 6
+    },
+    "logo": {
+      "right": 1880,
+      "y": 62,
+      "text": "Marble Pop"
+    },
+    "panel": {
+      "x": 1430,
+      "y": 196,
+      "w": 450,
+      "h": 556,
+      "fill": [14, 6, 30, 178]
+    },
+    "countdown": {
+      "radius": 104,
+      "centre_y": "panel y + 300",
+      "song_s": 5,
+      "speed_round_s": 3
+    },
+    "equaliser": {
+      "size": [390, 186],
+      "where": "middle of the guess panel while listening, foot of the answer panel after the reveal"
+    },
+    "progress_bar": {
+      "cx": 960,
+      "y": 1046,
+      "w": 1180,
+      "h": 64,
+      "fill": "rainbow",
+      "marble_r": 24,
+      "end": "checkered flag"
+    },
+    "pulse": {
+      "h": 48,
+      "base_r": 8,
+      "bonus_r": 11
+    },
+    "up_next": {
+      "y": 968,
+      "slide_in_px_per_s": 3200,
+      "lead_s": 4.0
+    },
+    "run_banner_y": 22
+  },
+  "timings": {
+    "cut_before_first_note_s": 0.45,
+    "render_tail_cut_s": 1.2,
+    "countdown_lead_s": 1.0,
+    "intro_s": 3.3,
+    "race_prompt_s": 6.5,
+    "end_screen_s": 15.0,
+    "transition_frames": 8,
+    "reveal_round": 2,
+    "countdown_s": 5,
+    "countdown_long_s": 10,
+    "cut_flash_alpha": [0.85, 0.6, 0.35, 0.15],
+    "cut_audio_fade_s": 0.03,
+    "halfway_banner": "round 11 (the speed round), 0.25-4.4 s, top centre"
+  },
+  "transition": {
+    "name": "marble pop",
+    "frames_out": 8,
+    "frames_in": 8,
+    "colours": ["#EE3434", "#FA8A1C", "#FACE26", "#96D630", "#24BE60", "#1CC4CC", "#2C76EE", "#9852E4"]
+  },
+  "audio": {
+    "per_round_lufs": -15.0,
+    "sfx_only_round_lufs": -16.0,
+    "bed_lufs": -21.0,
+    "bed_fades_s": [0.6, 0.8],
+    "beds": {
+      "battle": ["battle_loop.wav", "battle_loop_lead.wav"],
+      "suspense": ["suspense_loop.wav"],
+      "outro": ["outro_loop.wav"]
+    },
+    "limiter_dbfs": -3.0,
+    "fade_in_s": 0.04,
+    "fade_out_s": 0.25,
+    "aac": "192k 48 kHz stereo",
+    "sfx_db": {
+      "pop": 2.0,
+      "whoosh": -14.0,
+      "ding": -6.0,
+      "tick": -14.0
+    }
+  },
+  "encode": {
+    "codec": "libx264",
+    "preset": "veryfast",
+    "crf": 18,
+    "pix_fmt": "yuv420p",
+    "segments": "concat demuxer, stream copy"
+  },
+  "thumbnails": {
+    "size": [1280, 720],
+    "text": "none",
+    "polish": "saturation 1.25, contrast 1.08, soft vignette",
+    "A": "twin stairs, close 16:9 camera (az 28, el 13, dist 62)",
+    "B": "staircase, close 16:9 camera (az 30, el 12, dist 46)",
+    "C": "2x2 collage with 8 px white gutters",
+    "notes": "DejaVu Sans Bold ♪/♫, 86-124 px, bolder by dilation, colour gradient, white rim, glow in the note's colour, drop shadow; on A and B, rising off the lit tiles into the empty sky"
+  }
+}

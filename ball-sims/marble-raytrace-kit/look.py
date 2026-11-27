@@ -4,10 +4,11 @@ Scene modules (one per template) do `from look import *`, set their own camera a
 below with their own camera values. Every value here is the one the shipped videos used.
 """
 import math
+import os
 import numpy as np
 
 # ===================================================================== SETTINGS (shipped values)
-W, H = 1080, 1920
+W, H = (int(v) for v in os.environ.get("MARBLE_RES", "1080x1920").split("x"))   # MARBLE_RES=1920x1080: landscape
 FPS = 30
 R = 1.0
 LIGHT_ANG = math.radians(11.0)
