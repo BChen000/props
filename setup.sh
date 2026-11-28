@@ -11,7 +11,8 @@
 #                                       Montserrat fonts
 #   ./setup.sh ball-sims --bpy          also Blender 5.3 as a Python module (bpy, OpenEXR, pybullet) for the Blender props
 #   ./setup.sh kids-songs               Story Time with Kenji: skia, Kokoro, numpy/scipy audio, DejaVu fonts,
-#                                       the int8 Kokoro narrator model (~120 MB), ffmpeg check
+#                                       the int8 Kokoro narrator model (~120 MB), moderngl + OpenCV and the display
+#                                       fonts for the 3D episodes (lowpoly-gl), ffmpeg check; --bpy adds bpy 5.3
 #   ./setup.sh all                      every channel
 #   ./setup.sh <channel> --check        only report what's missing, install nothing
 #
@@ -33,7 +34,7 @@ done
 PY="${PYTHON:-python3}"
 MISSING=()
 
-usage() { sed -n '2,19p' "$0" | sed 's/^# \{0,1\}//'; }
+usage() { sed -n '2,20p' "$0" | sed 's/^# \{0,1\}//'; }
 
 has_mod() { "$PY" -c "import $1" >/dev/null 2>&1; }
 
@@ -122,9 +123,12 @@ kids_songs() {
   echo "== kids-songs (Story Time with Kenji)"
   echo "-- Python packages"
   pkgs numpy:numpy scipy:scipy pillow:PIL soundfile:soundfile skia-python==144.1:skia kokoro-onnx:kokoro_onnx \
-       matplotlib:matplotlib
+       matplotlib:matplotlib moderngl:moderngl opencv-python-headless:cv2
+  if [ "$BPY" = 1 ]; then pkgs bpy==5.3.0:bpy; fi
   echo "-- fonts (DejaVu 2.37: Sans, Sans Bold, Serif, Serif Bold, Serif Italic, Sans Mono Bold, Sans Condensed Bold)"
   run kids-songs/storytime-kit/get_fonts.py
+  echo "-- fonts (Special Elite, Permanent Marker, Anton, for the 3D episodes)"
+  run kids-songs/dead-internet-theory/get_fonts.py
   echo "-- narrator model (Kokoro v1.0 int8)"
   if [ -n "${KOKORO_DIR:-}" ] && [ -f "$KOKORO_DIR/kokoro-v1.0.int8.onnx" ]; then echo "  ok       $KOKORO_DIR"
   elif [ -f kids-songs/storytime-narrator/models/kokoro-v1.0.int8.onnx ]; then echo "  ok       kids-songs/storytime-narrator/models"

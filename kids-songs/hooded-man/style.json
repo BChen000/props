@@ -1,0 +1,168 @@
+{
+  "units": "metres, Z up, faces -Y, his right = -X",
+  "pivots": {
+    "hips": [
+      0.0,
+      0.0,
+      0.98
+    ],
+    "head": [
+      0.0,
+      0.01,
+      1.553
+    ],
+    "shoulder_R": [
+      -0.172,
+      0.014,
+      1.402
+    ],
+    "shoulder_L": [
+      0.172,
+      0.014,
+      1.402
+    ]
+  },
+  "arm": {
+    "upper": 0.285,
+    "fore": 0.255,
+    "pole_default": "shoulder + (side*0.30, 0.22, -0.30)"
+  },
+  "head": {
+    "uv_sphere": [
+      52,
+      30
+    ],
+    "decimate": 0.13,
+    "faces": 390,
+    "skull_half_size": [
+      0.077,
+      0.097,
+      0.117
+    ]
+  },
+  "hat": {
+    "crown_segments": 16,
+    "base_radius": [
+      0.087,
+      0.104
+    ],
+    "brim_radius": [
+      0.148,
+      0.17
+    ],
+    "tilt_deg": -7
+  },
+  "colours_linear": {
+    "skin": [
+      0.4,
+      0.4,
+      0.41
+    ],
+    "hat": [
+      0.21,
+      0.21,
+      0.22
+    ],
+    "band": [
+      0.035,
+      0.035,
+      0.04
+    ],
+    "hoodie": [
+      0.03,
+      0.031,
+      0.035
+    ],
+    "hoodie_rib": [
+      0.022,
+      0.022,
+      0.026
+    ],
+    "string": [
+      0.05,
+      0.05,
+      0.055
+    ],
+    "aglet": [
+      0.55,
+      0.56,
+      0.58
+    ],
+    "pants": [
+      0.035,
+      0.04,
+      0.055
+    ],
+    "shoe": [
+      0.02,
+      0.02,
+      0.02
+    ],
+    "sole": [
+      0.35,
+      0.35,
+      0.35
+    ]
+  },
+  "hand_poses_deg": {
+    "relax": {
+      "prox": 22,
+      "dist": 28,
+      "spread": 3,
+      "thumb": [
+        25,
+        15
+      ],
+      "index": null
+    },
+    "open": {
+      "prox": 4,
+      "dist": 4,
+      "spread": 7,
+      "thumb": [
+        10,
+        5
+      ],
+      "index": null
+    },
+    "point": {
+      "prox": 88,
+      "dist": 100,
+      "spread": 0,
+      "thumb": [
+        55,
+        45
+      ],
+      "index": [
+        2,
+        2
+      ]
+    },
+    "fist": {
+      "prox": 90,
+      "dist": 105,
+      "spread": 0,
+      "thumb": [
+        60,
+        50
+      ],
+      "index": null
+    }
+  },
+  "triangles": 4407,
+  "parts": 26,
+  "materials": {
+    "head": {
+      "spec": 0.1,
+      "shin": 18
+    },
+    "hat": {
+      "spec": 0.12,
+      "shin": 20
+    },
+    "aglets": {
+      "spec": 1.2,
+      "shin": 60
+    }
+  }
+}
