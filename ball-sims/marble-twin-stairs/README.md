@@ -10,6 +10,8 @@ One command for a twin-staircase marble music Short: two rainbow staircases of 1
 - With `SPLIT=even WATERMARK="Fun House 67"`, the finished mp4's video and audio streams are bit-identical to the upload (same stream MD5).
 - The default thumbnail (frame 916) is the upload's thumbnail picture. With `--thumb-title` it matches it to within JPEG noise (41 dB PSNR); the default leaves the title off, because the channel's thumbnails have no text unless GJ asks.
 
+`canon-in-d` (Pachelbel's *Canon in D*, played in C, Nov 28 2026) is a real canon: the back lane plays the front lane's line one 16-beat phrase later. One beat is an eighth note at 132 bpm: 68 beats, 34.70 s, 1041 frames. Round 1 is the first line alone; from round 2 the back stairs echo it while the front stairs play the next line, over the ground bass C G Am Em F C F G (two beats per chord, so one cycle per phrase). For that, `VOICING` gained Am, Em and F, and a song can now set `hue`, `sat` and `bright` like the staircase template: they recolour the studio, and each look's static set is cached as `build/g_hue…` with its own scene file. The look is lavender (`hue` 60, `sat` 0.8, `bright` 0.6). Verified on a 2-core cloud session: stills 100, 500, 750 and 850 were looked at, the full build took about 5 minutes after the stills run (which traced the new look's set in about 2.5 minutes), the mp4 measures −13.1 LUFS, and the automatic thumbnail is frame 837. A song without `hue` still writes `build/scene.txt` and `build/g`, as before.
+
 ## Files
 | file | what |
 |---|---|
@@ -25,6 +27,7 @@ One command for a twin-staircase marble music Short: two rainbow staircases of 1
 ```bash
 ./setup.sh ball-sims                        # or: pip install numpy scipy pillow && python3 ../marble-raytrace-kit/get_fonts.py
 python3 make_video.py ode-to-joy            # -> build/ode-to-joy/Marble_Twin_Stairs_Ode_to_Joy.mp4 + thumbnail.png
+python3 make_video.py canon-in-d            # -> build/canon-in-d/Marble_Twin_Stairs_Canon_in_D.mp4 (lavender studio)
 python3 make_video.py ode-to-joy --stills 300,840     # PNG stills only
 python3 make_video.py ode-to-joy --thumb-only --thumb-title
 ```
@@ -33,7 +36,8 @@ On a 2-core cloud session, *Ode to Joy* takes 3.9 minutes once the static set is
 **A new song:**
 1. Add an entry to `SONGS` in `songs.py`:
    - `melody` and `harmony`: one MIDI note per beat each. A negative number holds the previous note.
-   - `chords`: one chord per beat (C or G; add more to `VOICING`).
+   - `chords`: one chord per beat (C, G, Am, Em or F; add more to `VOICING`).
+   - Optionally `hue`, `sat` and `bright`, so the video doesn't look like the others (see `../marble-raytrace-kit/look.py`'s `set_hue`).
    - `rounds`: a list of (lane, beat offset) per round. `MEL_LANE` is the front lane.
 2. The rounds play `sum(max offset + 16)` beats back to back. `make_video.py` warns if the melody is shorter than that.
 3. Render a few `--stills` first, then the full video.
@@ -48,7 +52,7 @@ On a 2-core cloud session, *Ode to Joy* takes 3.9 minutes once the static set is
 ## What it can't do
 - Exactly 2 lanes of 16 tiles. The camera, tray and pans are set up for that.
 - There's no pause between rounds, no tempo change and no camera move.
-- Only C and G voicings are defined.
+- Only C, G, Am, Em and F voicings are defined.
 - The lane colors are two fixed rainbows (the back lane starts at red, the front lane half way round the color wheel).
 
 ## Dependencies (tested)

@@ -1,0 +1,138 @@
+{
+  "prop": "marble-hourglass",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "aspect": "9:16 Short"
+  },
+  "video": {
+    "file": "Marble_Hourglass.mp4",
+    "length_s": 20.03,
+    "frames": 601,
+    "marbles": 144,
+    "seed": 37,
+    "out_order": [
+      "PURPLE",
+      "BLUE",
+      "YELLOW",
+      "ORANGE",
+      "GREEN",
+      "RED"
+    ],
+    "out_after_go_s": [
+      7.64,
+      8.36,
+      10.76,
+      11.35,
+      13.36,
+      13.45
+    ],
+    "winner": "RED",
+    "hook": "the question and PICK YOUR COLOR! are on screen from frame 0 over the full hourglass; 3-2-1 from 1.4 s, GO at 3.2 s",
+    "structure": "3.2 s at rest with the countdown; the marbles pour through the neck for 13.5 s while six counters tick down; four colours go OUT one by one, GREEN and RED duel for 2.0 s, RED's last marble falls last; the winner box, crown and confetti hold for 3 s",
+    "model": "a new-idea test for Marble Pop: a Last Color Left race in an hourglass, with the colours poured in sand-art patches"
+  },
+  "hourglass": {
+    "half_width": 13.0,
+    "top_y": 80.0,
+    "neck_y": 42.0,
+    "neck_half_width": 2.55,
+    "funnel_top_y": 64.0,
+    "funnel_bottom_y": 18.0,
+    "floor_y": 4.0,
+    "rail_thickness": 0.9,
+    "rail_depth": 2.6,
+    "marble_radius": 1.0
+  },
+  "colours": {
+    "board": "#5C3A28",
+    "rails": "#E2C08C",
+    "plinth": "#966842",
+    "gate_pin": "#CE322E",
+    "marbles": {
+      "RED": "#EC3434",
+      "ORANGE": "#FA8A1C",
+      "YELLOW": "#FACE26",
+      "GREEN": "#3CC85A",
+      "BLUE": "#3478F0",
+      "PURPLE": "#A05AE6"
+    },
+    "winner_gold": "#FFCD46"
+  },
+  "pour": {
+    "per_colour": 24,
+    "batch": 6,
+    "one_marble_every_s": 0.05,
+    "pour_speed": 45.0,
+    "gate_opens_at_sim_s": 11.6,
+    "clip_starts_before_gate_s": 3.2
+  },
+  "physics": {
+    "gravity": 80.0,
+    "drag": 2.5,
+    "sim_hz": 4000,
+    "record_hz": 120,
+    "stiffness": 300000.0,
+    "damping_ratio": {
+      "walls": 0.6,
+      "marbles": 0.6
+    },
+    "tangential_friction": {
+      "walls": 3.0,
+      "marbles": 1.5
+    }
+  },
+  "camera": {
+    "azimuth_deg": -10.0,
+    "elevation_deg": 3.0,
+    "fovy_deg": 30.0,
+    "frame_pad": 1.1
+  },
+  "text": {
+    "font": "Montserrat 800 (../marble-raytrace-kit/fonts)",
+    "title": "WHICH COLOR FALLS LAST?",
+    "subtitle": "PICK YOUR COLOR!",
+    "status": "3 / 2 / 1 / GO! / COLOR IS OUT! / N COLORS LEFT / A VS B",
+    "winner": "{c} WINS!",
+    "title_y": 0.112,
+    "status_y": 0.158,
+    "winner_box_y": 0.165,
+    "watermark_y": 0.988,
+    "counters": {
+      "x": [
+        0.093,
+        0.907
+      ],
+      "rows_y": [
+        0.31,
+        0.415,
+        0.52
+      ],
+      "radius_px": 56
+    }
+  },
+  "sound": {
+    "neck_notes_midi": {
+      "RED": 72,
+      "ORANGE": 74,
+      "YELLOW": 76,
+      "GREEN": 79,
+      "BLUE": 81,
+      "PURPLE": 84
+    },
+    "neck_gain": 0.16,
+    "knock_gain": 0.8,
+    "loudness_lufs": -13
+  },
+  "youtube": {
+    "title": "Rainbow Hourglass ⏳ Which Color Falls Last?",
+    "description": [
+      "144 marbles pour through a wooden hourglass. The last color still up top wins! ⏳",
+      "Pick your color in the comments 🔴🟠🟡🟢🔵🟣",
+      "#marbles #hourglass #satisfying #pickyourcolor",
+      "Made by Marble Pop with our own 3D physics simulation"
+    ],
+    "thumbnail": "2.5 s after GO: the top still full of patches, a stream through the neck, no text"
+  }
+}

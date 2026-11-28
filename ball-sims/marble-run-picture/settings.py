@@ -65,7 +65,11 @@ MAT_SRGB = (90, 148, 74)         # green felt
 # ----------------------------------------------------------------------------------------------- the picture
 # batches leave the rail in this order; the first batch ends up outermost
 BATCHES = [("gold", (250, 192, 36), 55), ("white", (244, 244, 244), 45), ("red", (228, 36, 46), 30)]
-SHAPE = "heart"
+SHAPE = "heart"                  # "heart" or "present" (a gift box with a bow, see PRESENT)
+N_MARBLES = None                 # default: the sum of BATCHES
+REGION_COLOURS = False           # True: colour each spot by where it is in the picture (REGION_SRGB), not by band
+REGION_SRGB = {}
+PRESENT = dict(half_w=12.5, depth=19.0, bow_r=2.6, bow_dx=1.1, bow_dy=0.8, ribbon_half=1.5, ribbon_at=0.45)
 LATTICE_GAP = 0.05               # gap between neighbouring marbles in the finished picture
 CUSP_Z = 5.6                     # the heart's notch sits this far in front of the exit hole
 SHAPE_TILT = 0.0

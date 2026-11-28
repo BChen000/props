@@ -23,6 +23,8 @@ So that they don't look like the shipped videos or like each other, each new son
 
 `joy-to-the-world` (*Joy to the World*, Nov 2026) was added the same way: the verse with one syllable per beat at 112.5 bpm (35.47 s, 1064 frames), so round 1's lone marble plays the famous descending C6–C5 scale one stair per note. Its look is a Christmas red studio (`hue` 130, `sat` 1.7, `bright` 0.45) with a mint first marble (`marble_shift` 4). Verified on a 2-core cloud session: `check_song.py joy-to-the-world` passes all 60 beats, stills 75, 560, 860 and 1010 were looked at before the full render, the full build took 5.3 minutes (the stills run had already traced the main camera's set for the new look; the thumbnail camera's set is included), the mp4 measures −13.0 LUFS, and the automatic thumbnail is frame 865 with all 8 marbles on the stairs.
 
+`silent-night` (*Silent Night*, Nov 28 2026) is the first song in 6/8: one beat per eighth note at 150 bpm (a dotted quarter of 50), 72 beats, 31.43 s, 943 frames. The dotted rhythms are evened out to eighths (G A G E), and long notes are holds, so they sparkle an octave up. To fit 72 beats, round 4 spreads its five marbles over offsets 0, 2, 5, 8 and 11. The look is a candlelight-gold studio (`hue` 172, `sat` 1.4, `bright` 0.42) with a royal-blue first marble (`marble_shift` 11). Verified on a 2-core cloud session: `check_song.py silent-night` passes all 72 beats, stills 120, 520, 800 and 900 were looked at before the full render, the full build took about 5 minutes after the stills run (which had traced the main camera's set for the new look), the mp4 measures −13.0 LUFS, and the automatic thumbnail is frame 793.
+
 ## Files
 | file | what |
 |---|---|
@@ -41,7 +43,7 @@ So that they don't look like the shipped videos or like each other, each new son
 ./setup.sh ball-sims                       # or: pip install numpy scipy pillow && python3 ../marble-raytrace-kit/get_fonts.py
 python3 make_video.py twinkle              # -> build/twinkle/Marble_Staircase_Twinkle.mp4 + thumbnail.png
 python3 make_video.py jingle-bells         # -> build/jingle-bells/Marble_Staircase_Jingle_Bells.mp4 + thumbnail.png
-python3 make_video.py mary-lamb            # also: old-macdonald, frere-jacques, joy-to-the-world
+python3 make_video.py mary-lamb            # also: old-macdonald, frere-jacques, joy-to-the-world, silent-night
 python3 check_song.py mary-lamb            # every beat's voices vs songs.py (~4 s a song)
 python3 preview_look.py 100 0.9            # or a song name: its studio colour -> build/look_previews/*.png
 python3 make_video.py twinkle --stills 300,650,900    # PNG stills only, to check a change

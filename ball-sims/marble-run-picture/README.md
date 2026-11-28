@@ -10,6 +10,15 @@ One command for a wooden marble run Short that ends in a picture: 130 glossy mar
 - `--stills 330,520,753` took 14 s with the set cached, and still 753 matches the delivered mp4's last frame to 38.9 dB PSNR (H.264 noise). `--thumb-only --thumb-frame 600` took 8 s. `python3 pile.py` draws the plan view.
 - From a fresh clone of this branch, `PREVIEW=1 python3 make_video.py --stills 300,480,750` built everything it needs (mesh, quarter-size set, bake, timeline, lighting tables) and wrote the three stills in 49 s.
 
+**The gift box** (`EPISODE=present`, Nov 28 2026, "137 Marbles Wrap a Christmas Present"; 26.17 s, 785 frames, 1080×1920, 30 fps, −13.2 LUFS) is the first picture that isn't made of bands: a red box with a gold ribbon cross and a gold bow, on the same run and mat.
+- `SHAPE = "present"` gives the outline: the box's back edge runs through the notch, and the bow's two loops sit behind it, like the heart's lobes (`PRESENT` holds the sizes).
+- With `REGION_COLOURS`, each spot is coloured by where it is: the bow behind the notch, the ribbon (a vertical strip plus the two lattice rows nearest `ribbon_at`) and the box.
+- Every marble can take any spot while the picture grows (one matching group), and each marble wears the colour of the spot it settles on. So the run shows a mix of red and gold, and the present only appears once the last marbles push it into place.
+- `N_MARBLES` 137 is a count that fills the box's rows completely (`python3 pile.py` draws the plan). `WATERMARK_Y` moves to 0.98, under the box.
+- Verified on a 2-core cloud session: `python3 pile.py` (plan view), `PREVIEW=1` stills 300, 550 and 770, then the full render. The physics put every marble exactly on its spot ("within 0.00 radii"). The full render ran while three other renders shared the 2 cores. One of its two workers was killed for memory, so frames 492–785 were re-rendered with `EPISODE=present python3 make_video.py --worker 492 785 build/part2.mp4` and the parts muxed with the kit's `pipeline.mux`. `--thumb-only` gives the finished present (frame 784).
+- The heart is unchanged: with the default settings, `python3 pile.py` gives the same 130 spots in the same three bands (55 gold, 45 white, 30 red).
+- A first try that coloured spots by region but kept per-colour matching left red marbles stranded inside the ribbon, because marbles can't swap places through the crowd. That's why region colours use one group.
+
 ## How it works
 1. **Set.** `layout.py` places 40 pieces: plain cubes, the rail, the wave piece, the end blocks that carry the U-turns, and the groove blocks. `mesh.py` turns every carved piece into triangles with marching cubes on a signed distance field (a rounded box minus the groove, hole and tunnel tubes from `layout.carves()`), so a groove that crosses several blocks lines up across the seams, and a groove under a stacked block becomes a tunnel through both. Plain cubes are analytic rounded boxes. With the wall, baseboard and mat that's 1.06 million triangles.
 2. **Static render, once.** `meshtrace` path-traces the set at 2160×3840 (25 key-light and 36 ambient samples per pixel). Then `bake.py` paints the wood grain (a different log for every block), the floor boards, the felt and the wall into the key and ambient layers. Every textured surface is traced with gloss 0, so those layers are exactly albedo × light and multiplying them by a texture is the same as tracing it.
@@ -41,6 +50,8 @@ python3 pile.py                                       # plan view of the finishe
 python3 make_video.py --stills 330,520,753            # full-size stills (traces the set the first time)
 python3 make_video.py                                 # -> build/Marble_Run_Heart.mp4 + build/thumbnail.png/.jpg
 python3 make_video.py --thumb-only --thumb-frame 600
+EPISODE=present python3 pile.py                       # plan view of the gift box -> build/present_plan.png
+EPISODE=present python3 make_video.py                 # -> build/Marble_Run_Present.mp4 + thumbnail
 ```
 The first full build takes about 22 minutes on a 2-core cloud session: about 5.5 to trace the set, which is then cached, and about 16 to render the frames. Early frames take about 1 s each and frames with 100+ marbles on the mat about 3.8 s.
 
@@ -63,7 +74,8 @@ The first full build takes about 22 minutes on a 2-core cloud session: about 5.5
 - Render time grows with the marbles on the mat: the last third of the video costs several times as much per frame as the first (see the timing above). Don't commit `build/`.
 
 ## What it can't do
-- Only the heart is built in. Another outline needs a new `heart_boundary()` in `pile.py`, star-shaped as seen from its notch.
+- Two outlines are built in, the heart and the gift box. Another needs a boundary function in `pile.py` (see `present_boundary()`), star-shaped as seen from its notch, and a branch in `boundary()`.
+- Region colours fit pictures whose parts are big blobs or strips (a ribbon, a bow). The colours only show up as the last marbles settle, so the picture can't be read halfway.
 - The course is fixed in `layout.py` (4 columns, 5 rows, these pieces). Moving pieces means checking `marble_path()`, `covered()` and the camera.
 - Marbles on the course follow a scripted path, not physics: they never bump into each other there.
 - The camera can't move (the set is rendered once), and the marbles are glossy plastic only, all one size, with no marble-on-marble reflections (the kit's limits).

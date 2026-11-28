@@ -103,7 +103,25 @@ def _joy():
     return joy + king + room + room + sing1 + sing2 + end, cj + ck + cr + cr + cs1 + cs2 + ce
 
 
+def _silent():
+    B5, D6, F6 = 83, 86, 89
+    night = [G5, A5, G5, E5, -E5, -E5]
+    calm = [D6, -D6, D6, B5, -B5, -B5]
+    bright = [C6, -C6, C6, G5, -G5, -G5]
+    round_ = [A5, -A5, A5, C6, B5, A5]
+    sleep = [D6, -D6, D6, F6, D6, B5]
+    peace = [C6, -C6, -C6, E6, -E6, -E6]
+    sleep2 = [C6, G5, E5, G5, F5, D5]
+    end = [C5, -C5, -C5, -C5, -C5, -C5]
+    mel = night + night + calm + bright + round_ + night + round_ + night + sleep + peace + sleep2 + end
+    c = lambda name: [name] * 6
+    ch = (c("C") + c("C") + c("G7") + c("C") + c("F") + c("C") + c("F") + c("C") + c("G7") + c("C")
+          + ["C"] * 3 + ["G7"] * 3 + c("C"))
+    return mel, ch
+
+
 _tw_mel, _tw_ch = _twinkle()
+_sn_mel, _sn_ch = _silent()
 _jb_mel, _jb_ch = _jingle()
 _ml_mel, _ml_ch = _mary()
 _om_mel, _om_ch = _macdonald()
@@ -177,6 +195,19 @@ SONGS = {
         offsets=[[0], [0, 3], [0, 2, 4], [0, 1, 3, 4, 6], [0, 1, 2, 3, 4, 5, 6, 7]],
         melody=_jw_mel,
         chords=_jw_ch,
+    ),
+    "silent-night": dict(
+        name="Silent Night",
+        file="Marble_Staircase_Silent_Night",
+        bpm=150.0,
+        hue=172.0,
+        sat=1.4,
+        bright=0.42,
+        marble_shift=11,
+        rounds=[1, 2, 3, 5, 8],
+        offsets=[[0], [0, 6], [0, 4, 8], [0, 2, 5, 8, 11], [0, 1, 2, 3, 4, 5, 6, 7]],
+        melody=_sn_mel,
+        chords=_sn_ch,
     ),
 }
 
