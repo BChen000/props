@@ -1,0 +1,229 @@
+{
+  "title": "The Internet Died in 2016… and Nobody Noticed",
+  "length_s": 67.381,
+  "frames": 2021,
+  "size": [
+    1080,
+    1920
+  ],
+  "fps": 30,
+  "lines": 33,
+  "scenes": [
+    {
+      "scene": "hook",
+      "start": 0.0,
+      "end": 4.45,
+      "lines": [
+        0,
+        1
+      ]
+    },
+    {
+      "scene": "name",
+      "start": 4.45,
+      "end": 6.57,
+      "lines": [
+        2
+      ]
+    },
+    {
+      "scene": "forum",
+      "start": 6.57,
+      "end": 11.45,
+      "lines": [
+        3,
+        4
+      ]
+    },
+    {
+      "scene": "bots",
+      "start": 11.45,
+      "end": 20.05,
+      "lines": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "scene": "purpose",
+      "start": 20.05,
+      "end": 23.59,
+      "lines": [
+        11,
+        12
+      ]
+    },
+    {
+      "scene": "crazy",
+      "start": 23.59,
+      "end": 26.29,
+      "lines": [
+        13,
+        14
+      ]
+    },
+    {
+      "scene": "chart",
+      "start": 26.29,
+      "end": 35.72,
+      "lines": [
+        15,
+        16,
+        17,
+        18
+      ]
+    },
+    {
+      "scene": "shrimp",
+      "start": 35.72,
+      "end": 42.12,
+      "lines": [
+        19,
+        20,
+        21
+      ]
+    },
+    {
+      "scene": "who",
+      "start": 42.12,
+      "end": 44.09,
+      "lines": [
+        22
+      ]
+    },
+    {
+      "scene": "ceo",
+      "start": 44.09,
+      "end": 50.56,
+      "lines": [
+        23,
+        24
+      ]
+    },
+    {
+      "scene": "debunk",
+      "start": 50.56,
+      "end": 53.63,
+      "lines": [
+        25
+      ]
+    },
+    {
+      "scene": "city",
+      "start": 53.63,
+      "end": 56.87,
+      "lines": [
+        26,
+        27
+      ]
+    },
+    {
+      "scene": "twist",
+      "start": 56.87,
+      "end": 60.67,
+      "lines": [
+        28,
+        29
+      ]
+    },
+    {
+      "scene": "reveal",
+      "start": 60.67,
+      "end": 67.38,
+      "lines": [
+        30,
+        31,
+        32
+      ]
+    }
+  ],
+  "remap": {
+    "5": "bots",
+    "22": "who",
+    "26": "city",
+    "27": "city"
+  },
+  "glitch_pause_s": 0.9,
+  "cut_dip_s": 0.12,
+  "end_fade_s": 1.0,
+  "voice": {
+    "prop": "../storytime-narrator",
+    "voice": "am_michael",
+    "speed": 1.0,
+    "narration_s": 66.481
+  },
+  "music": {
+    "prop": "../storytime-music",
+    "preset": "e-minor",
+    "progression": "Em C Am B | Em C D B (root, 3rd, 5th, 3rd at 0.75 s)",
+    "music_db": -4.0,
+    "loudness_lufs": -14.9,
+    "true_peak_dbtp": -1.5
+  },
+  "cues": [
+    [
+      "forum",
+      0,
+      0.1,
+      "click",
+      0.6
+    ],
+    [
+      "bots",
+      4,
+      -0.3,
+      "whoosh",
+      0.55
+    ],
+    [
+      "chart",
+      3,
+      -0.06,
+      "boom",
+      0.75
+    ],
+    [
+      "city",
+      0,
+      -0.35,
+      "whoosh",
+      0.35
+    ],
+    [
+      "reveal",
+      1,
+      0.88,
+      "glitch",
+      0.9
+    ]
+  ],
+  "captions": {
+    "style": "storytime-kit caption(): DejaVu Sans Bold 66 px, white, black outline",
+    "cap_y_per_scene": true
+  },
+  "look": {
+    "renderer": "../../shared/lowpoly-gl",
+    "room_key": "spot from the hanging lamp, energy 1.55, outer 50, soft shadow",
+    "rims": "two blue spots behind him, energy 1.2-1.5",
+    "grade": "ACES, teal shadows / warm highlights, vignette 0.55, grain 0.022",
+    "face_key": "narrow front spot (13 deg) from (0.30, -2.0, 1.95) at his head, energy 1.4, so the brim shadow doesn't hide his face"
+  },
+  "sources_checked_2026_11_28": [
+    "Imperva 2025 Bad Bot Report: automated traffic 51% of all web traffic in 2024, first time in a decade above human",
+    "Thales/Imperva 2026 Bad Bot Report: automated traffic 53% of all web traffic in 2025 (bad bots 40%, humans 47%)",
+    "'Dead Internet Theory: Most of the Internet is Fake', IlluminatiPirate, Agora Road's Macintosh Cafe, Jan 2021; claims the internet 'died' around 2016-2017",
+    "Sam Altman on X, Sept 3, 2025: 'i never took the dead internet theory that seriously but it seems like there are really a lot of LLM-run twitter accounts now'",
+    "'Shrimp Jesus' AI images on Facebook, March 2024 (NBC News, 404 Media, Stanford Internet Observatory preprint)",
+    "Wikipedia: the literature does not support the full theory, though bot traffic is measurable"
+  ],
+  "render": {
+    "minutes": 31.2,
+    "s_per_frame": 0.93,
+    "final_crf": 21,
+    "final_mb": 110
+  }
+}

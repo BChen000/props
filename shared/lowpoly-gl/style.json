@@ -1,0 +1,79 @@
+{
+  "renderer": {
+    "api": "OpenGL 3.3 core via moderngl, EGL, Mesa llvmpipe on CPU",
+    "msaa": 4,
+    "colour_target": "RGBA16F (alpha = view depth, m)",
+    "max_lights": 8,
+    "shadow": {
+      "maps": 1,
+      "size": 2048,
+      "filter": "12-tap rotated Poisson PCF",
+      "bias": "0.0006 + 0.0015*(1-NdotL)"
+    },
+    "gamma_in": 2.2
+  },
+  "material_defaults": {
+    "spec": 0.08,
+    "shin": 24.0,
+    "tmode": "1 if tex else 0",
+    "temit": 1.0,
+    "uvx": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "cast": true,
+    "wsc": [
+      1.0,
+      1.0
+    ],
+    "wcol": "(-1, -1, -1) = half the wall colour"
+  },
+  "modes": {
+    "1": "windows from world xy/xz: cell 0.9 x 1.1 m scaled by wsc; window colour wcol (default half the wall colour); 12% lit by temit",
+    "2": "cork speckle from local xz",
+    "3": "8-cell screen atlas: in_col.r = cell/8, in_col.g = phase; cellf holds a cell",
+    "4": "glowing grid, 0.5 m",
+    "5": "unlit vertex colour x temit (sky gradients, glowing signs)"
+  },
+  "post_defaults": {
+    "dof": 0,
+    "dof_levels_sigma_px": [
+      1.5,
+      3.5,
+      7.0,
+      13.0
+    ],
+    "dof_scale": 0.5,
+    "bloom": 0.35,
+    "bloom_t": 1.0,
+    "exposure": 1.0,
+    "tonemap": "ACES (Narkowicz)",
+    "sat": 1.0,
+    "shadow_tint": [
+      0.94,
+      1.0,
+      1.08
+    ],
+    "high_tint": [
+      1.05,
+      1.0,
+      0.93
+    ],
+    "vignette": 0.5,
+    "grain": 0.02,
+    "grain_frames": 12
+  },
+  "timings_2core_1080x1920": {
+    "render_s": "0.47-0.58",
+    "post_s": "0.25 (0.43 with depth of field)",
+    "episode_mean_s_per_frame": 0.93
+  },
+  "compared_same_machine": {
+    "blender_5.3_eevee_s": 41,
+    "blender_5.3_cycles_16spp_s": 44,
+    "blender_4.0_eevee_legacy_s": "6.8 (8 smp) - 12.1 (16 smp)"
+  },
+  "additive_pass": "blend ONE,ONE on RGB, ZERO,ONE on alpha; depth test on, depth writes off (framebuffer depth_mask)"
+}

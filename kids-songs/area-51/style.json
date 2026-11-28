@@ -1,0 +1,279 @@
+{
+  "title": "Area 51 Was Real… The Aliens Weren't",
+  "length_s": 65.989,
+  "frames": 1979,
+  "size": [
+    1080,
+    1920
+  ],
+  "fps": 30,
+  "lines": 34,
+  "scenes": [
+    {
+      "scene": "hook",
+      "start": 0.0,
+      "end": 5.47,
+      "lines": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "scene": "desert",
+      "start": 5.47,
+      "end": 13.55,
+      "lines": [
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "scene": "tv",
+      "start": 13.55,
+      "end": 21.03,
+      "lines": [
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "scene": "saucer",
+      "start": 21.03,
+      "end": 24.23,
+      "lines": [
+        11,
+        12
+      ]
+    },
+    {
+      "scene": "cia",
+      "start": 24.23,
+      "end": 29.77,
+      "lines": [
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "scene": "u2",
+      "start": 29.77,
+      "end": 38.62,
+      "lines": [
+        16,
+        17,
+        18,
+        19,
+        20
+      ]
+    },
+    {
+      "scene": "quote",
+      "start": 38.62,
+      "end": 46.0,
+      "lines": [
+        21,
+        22,
+        23
+      ]
+    },
+    {
+      "scene": "itwasus",
+      "start": 46.0,
+      "end": 48.24,
+      "lines": [
+        24,
+        25
+      ]
+    },
+    {
+      "scene": "storm",
+      "start": 48.24,
+      "end": 53.11,
+      "lines": [
+        26,
+        27,
+        28
+      ]
+    },
+    {
+      "scene": "gate",
+      "start": 53.11,
+      "end": 57.33,
+      "lines": [
+        29,
+        30
+      ]
+    },
+    {
+      "scene": "end",
+      "start": 57.33,
+      "end": 65.99,
+      "lines": [
+        31,
+        32,
+        33
+      ]
+    }
+  ],
+  "remap": {
+    "16": "u2",
+    "17": "u2",
+    "24": "itwasus",
+    "25": "itwasus"
+  },
+  "tail_extra_s": 2.4,
+  "cut_dip_s": 0.12,
+  "end_fade_s": 0.7,
+  "voice": {
+    "prop": "../storytime-narrator",
+    "voice": "am_michael",
+    "speed": 1.0,
+    "narration_s": 63.59
+  },
+  "music": {
+    "prop": "../storytime-music",
+    "preset": "d-minor",
+    "music_db": -4.0,
+    "loudness_lufs": -14.5,
+    "peak_dbfs": -1.4
+  },
+  "cues": [
+    [
+      "desert",
+      0,
+      -0.1,
+      "jet",
+      0.55
+    ],
+    [
+      "tv",
+      0,
+      -0.3,
+      "tvon",
+      0.5
+    ],
+    [
+      "saucer",
+      1,
+      0.25,
+      "clunk",
+      0.65
+    ],
+    [
+      "saucer",
+      1,
+      0.67,
+      "clunk",
+      0.72
+    ],
+    [
+      "saucer",
+      1,
+      1.09,
+      "clunk",
+      0.8
+    ],
+    [
+      "cia",
+      2,
+      -0.05,
+      "boom",
+      0.7
+    ],
+    [
+      "u2",
+      0,
+      -0.25,
+      "whoosh",
+      0.4
+    ],
+    [
+      "itwasus",
+      1,
+      -0.05,
+      "gavel",
+      0.55
+    ],
+    [
+      "storm",
+      1,
+      -0.05,
+      "click",
+      0.4
+    ],
+    [
+      "gate",
+      0,
+      0.0,
+      "crowd",
+      0.35,
+      "scene"
+    ],
+    [
+      "end",
+      2,
+      1.35,
+      "beam",
+      0.75
+    ],
+    [
+      "end",
+      2,
+      3.35,
+      "thud",
+      0.5
+    ],
+    [
+      "end",
+      2,
+      3.9,
+      "click",
+      0.45
+    ]
+  ],
+  "captions": {
+    "style": "storytime-kit caption(): DejaVu Sans Bold 66 px, white, black outline",
+    "cap_y_per_scene": true
+  },
+  "look": {
+    "renderer": "../../shared/lowpoly-gl",
+    "room": "as Dead Internet: lamp spot 1.55, blue rims, FACE_KEY 1.4; dust at 0.8",
+    "desert_dusk": "smooth per-vertex sky dome (DUSK stops), sun as a dir light (1.0, 0.56, 0.30) x1.1, fog 0.0009",
+    "u2": "a narrow 7-degree spot (energy 1.8 x 420^2) stands in for the sun below the horizon; ground cut at exposure 0.72",
+    "gate_night": "NIGHT sky, truck headlights as two spots (55, 26-degree cone) with glow sprites",
+    "hangar": "near black, saucers lit by their light pods and ceiling lamps; rows switch off far to near",
+    "beam": "cyan spot 7.0 from the ceiling, beam cone 0.35, emissive ceiling disc, glow sprite 0.8",
+    "grade": "ACES, teal shadows / warm highlights, vignette 0.55, grain 0.022"
+  },
+  "ending": {
+    "beam_on": "0.25 s after the last line ends",
+    "rise_start_s": 0.4,
+    "rise_s": 1.6,
+    "rise_m": 3.9,
+    "spin_deg": 90,
+    "hat_slips_s": 0.95,
+    "hat_drift_s": 1.05,
+    "beam_off_s": 2.15,
+    "light_back_s": 2.55,
+    "note": "times after the beam comes on"
+  },
+  "sources_checked_2026_11_28": [
+    "CIA history 'The Central Intelligence Agency and Overhead Reconnaissance: The U-2 and OXCART Programs, 1954-1974', declassified Aug 2013: first official acknowledgement of Area 51; U-2 silver wings caught the sun when the ground below was dark",
+    "CIA study by Gerald Haines (1997), via the New York Times: over half of all UFO reports from the late 1950s through the 1960s were accounted for by manned reconnaissance flights",
+    "CIA post, Dec 29, 2014: 'Reports of unusual activity in the skies in the '50s? It was us.'",
+    "1989 KLAS-TV interview (Bob Lazar, face hidden) claiming work on nine flying saucers near the base; not named in the video",
+    "Storm Area 51 Facebook event: about 2 million 'going'; AP, Sept 20, 2019: about 75 people at the gate, none got past it (NPR: about 40); about 1,500 at the festivals"
+  ],
+  "render": {
+    "minutes": 28.7,
+    "s_per_frame": 0.87,
+    "final_crf": 21,
+    "final_mb": 116
+  }
+}
