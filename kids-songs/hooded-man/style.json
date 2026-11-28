@@ -33,7 +33,7 @@
       30
     ],
     "decimate": 0.17,
-    "faces": 512,
+    "faces": 510,
     "skull_half_size": [
       0.088,
       0.104,
@@ -44,7 +44,7 @@
       0.004,
       0.104
     ],
-    "face": "plain: soft nose ridge (12 mm), small chin, no brow ridge or eye sockets"
+    "face": "blank: small chin, no nose (NOSE='none'), no brow ridge or eye sockets"
   },
   "hat": {
     "crown_segments": 16,
@@ -160,7 +160,7 @@
       "index": null
     }
   },
-  "triangles": 4529,
+  "triangles": 4527,
   "parts": 26,
   "materials": {
     "head": {

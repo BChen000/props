@@ -7,6 +7,7 @@ Every part is exported in the local frame of the node it hangs from (see rig.py)
   legs (world, pivot 0)
 """
 import math
+import os
 import os as _os, sys as _sys
 _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..', 'shared', 'lowpoly-gl'))
 import numpy as np
@@ -21,6 +22,7 @@ SKULL_R = np.array([0.088, 0.104, 0.126])   # half sizes x (width), y (depth), z
 HAT_TILT = math.radians(-4)  # forward tilt of the hat (about X)
 HAT_BASE = np.array([0.0, -0.002, 0.172])
 TORSO_RATIO = 0.55
+NOSE = os.environ.get('HM_NOSE', 'none')    # 'none' or 'wedge'; a long nose ridge read as phallic in close-ups
 
 
 def head_mesh():
@@ -37,11 +39,12 @@ def head_mesh():
     front = np.clip(-y, 0, 1)
     chin = np.exp(-(x / 0.35) ** 2 - ((z + 0.80) / 0.18) ** 2) * front
     Y = Y - 0.006 * chin
-    t = np.clip((0.06 - z) / 0.34, 0, 1)
-    below = np.clip((-0.28 - z) / 0.08, 0, 1)
-    prof = t ** 1.5 * (1 - below) ** 2
-    nose = prof * np.exp(-(x / 0.16) ** 2) * front ** 4
-    Y = Y - 0.012 * nose
+    if NOSE == 'wedge':                       # short triangle: narrow bridge, broad base, flat underside
+        t = np.clip((0.0 - z) / 0.22, 0, 1)
+        below = np.clip((-0.22 - z) / 0.04, 0, 1)
+        w = 0.05 + 0.15 * t
+        nose = t * (1 - below) ** 2 * np.exp(-(x / w) ** 2) * front ** 4
+        Y = Y - 0.010 * nose
     m = M(np.stack([X, Y, Z], 1) + SKULL_C, s.f)
     return decimate(m, HEAD_RATIO, True, 'head')
 
