@@ -1,0 +1,288 @@
+{
+  "prop": "marble-balance",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "aspect": "9:16 Short"
+  },
+  "video": {
+    "file": "Glass_vs_Steel_Balance.mp4",
+    "title_on_screen": [
+      "30 GLASS vs 10 STEEL",
+      "WHICH SIDE WINS?"
+    ],
+    "hook": "the seesaw starts level with the first steel ball already on the zigzag; it lands and tips the beam at 0.6 s",
+    "structure": "glass marbles arrive in three waves (8, 10, 12) and steel balls one at a time; the beam changes sides 7 times; after all 30 glass are in, steel needs all 10 and the 10th tips it; then STEEL WINS!, a crown over the basket and the fun fact",
+    "model": "the co-owner's 18 GLASS vs 2 STEEL balance Short, made physically correct (same-size steel is 3.14 times heavier than glass, so 2 steel balls can't beat 18 glass marbles)"
+  },
+  "teams": {
+    "left": {
+      "name": "GLASS",
+      "n": 30,
+      "mass": 1.0,
+      "srgb": "#EC3C40",
+      "metal": false
+    },
+    "right": {
+      "name": "STEEL",
+      "n": 10,
+      "mass": 3.1399999999999997,
+      "srgb": "#CED2DA",
+      "metal": true
+    },
+    "density_ratio": "steel 7.85 g/cm3 / glass 2.5 g/cm3 = 3.14"
+  },
+  "race": {
+    "land_left_s": [
+      1.4,
+      1.65,
+      1.9,
+      2.15,
+      2.4,
+      2.65,
+      2.9,
+      3.15,
+      6.2,
+      6.45,
+      6.7,
+      6.95,
+      7.2,
+      7.45,
+      7.7,
+      7.95,
+      8.2,
+      8.45,
+      12.8,
+      13.05,
+      13.3,
+      13.55,
+      13.8,
+      14.05,
+      14.3,
+      14.55,
+      14.8,
+      15.05,
+      15.3,
+      15.55
+    ],
+    "land_right_s": [
+      0.6,
+      4.0,
+      5.2,
+      9.4,
+      10.6,
+      11.8,
+      16.6,
+      17.6,
+      18.6,
+      20.6
+    ],
+    "designed_lead_changes": 7,
+    "final": "31.4 vs 30.0 marble masses",
+    "lead_s": 3.0,
+    "hold_s": 3.4
+  },
+  "seesaw": {
+    "pivot": [
+      0.0,
+      16.0,
+      0.0
+    ],
+    "theta_max_deg": 8.0,
+    "beam": {
+      "half_length": 16.5,
+      "thickness": 1.0,
+      "half_depth": 1.6
+    },
+    "arm": 12.5,
+    "basket_inside": {
+      "half_width": 4.6,
+      "half_depth": 3.0,
+      "wall": 0.5,
+      "height": 5.0,
+      "front_wall": 2.0
+    },
+    "beam_mass": 80.0,
+    "pivot_damping": 0.08,
+    "stop": {
+      "stiffness": 100000000.0,
+      "damping_ratio": 0.35
+    }
+  },
+  "tracks": {
+    "glass_shelf": [
+      [
+        -75.0,
+        30.4
+      ],
+      [
+        -17.0,
+        29.8
+      ]
+    ],
+    "glass_spawn_x_and_push": [
+      -42.0,
+      14.0
+    ],
+    "steel_zigzag": [
+      [
+        [
+          12.6,
+          39.0
+        ],
+        [
+          48.0,
+          41.1
+        ]
+      ],
+      [
+        [
+          9.8,
+          35.5
+        ],
+        [
+          20.4,
+          34.2
+        ]
+      ],
+      [
+        [
+          18.6,
+          29.4
+        ],
+        [
+          23.2,
+          30.2
+        ]
+      ]
+    ],
+    "steel_spawn_x_and_push": [
+      45.0,
+      -8.0
+    ],
+    "zigzag_end_stops": [
+      [
+        9.2,
+        9.8,
+        34.3,
+        42.7
+      ],
+      [
+        23.2,
+        23.8,
+        28.8,
+        37.7
+      ]
+    ],
+    "inside_half_width": 1.25,
+    "rail_height": 1.0
+  },
+  "physics": {
+    "gravity": "981 * 5/7 (rolling)",
+    "step_hz": 6000,
+    "record_hz": 240,
+    "contacts": "soft spheres: stiffness 2.5e5 per unit mass, damping 0.55 (walls) / 0.5 (marbles) of critical; rolling resistance 3 units/s2 on wood; marble-on-marble friction 0.15",
+    "beam": "turned by the vertical push of every marble on a basket at the fixed arm (like a scale pan), plus bearing friction and the stop posts at +-8 deg",
+    "front_pane": "the baskets' low front walls are full height in the physics only (like clear panes), so a tall pile can't spill toward the camera"
+  },
+  "render": {
+    "samples": [
+      16,
+      25
+    ],
+    "poses": "beam angle rounded to 0.15 deg (slow), 0.3 (medium) or 0.6 (fast); each pose path-traces only the window the seesaw changes (41% of the image), feathered 40 px into the level set",
+    "steel": {
+      "F0": 0.78,
+      "albedo_srgb": "#34363A",
+      "reflection": "dark band at the horizon, bright room above"
+    }
+  },
+  "look": {
+    "wall_srgb": "#C8D2DE",
+    "floor_srgb": "#D6B484",
+    "wood_srgb": "#DEBE8C",
+    "stand_srgb": "#96663E",
+    "left_basket_srgb": "#4078E2",
+    "right_basket_srgb": "#E2C492",
+    "key_light": {
+      "from": [
+        -0.42,
+        1.0,
+        0.62
+      ],
+      "angle_deg": 11.0,
+      "color_linear": [
+        2.15,
+        2.08,
+        1.96
+      ]
+    },
+    "sky_linear": {
+      "zenith": [
+        0.62,
+        0.66,
+        0.72
+      ],
+      "horizon": [
+        0.58,
+        0.6,
+        0.64
+      ]
+    },
+    "exposure": 0.86,
+    "vignette": 0.1
+  },
+  "camera": {
+    "target": [
+      0.0,
+      23.0,
+      0.0
+    ],
+    "azimuth_deg": 0.0,
+    "elevation_deg": 17.0,
+    "distance": 162.0,
+    "fovy_deg": 31.0
+  },
+  "text": {
+    "title": [
+      "30 GLASS vs 10 STEEL",
+      "WHICH SIDE WINS?"
+    ],
+    "title_y": 0.052,
+    "counters_y": 0.142,
+    "status_y": 0.8,
+    "callouts": [
+      "PICK A SIDE!",
+      "STEEL LEADS! / GLASS LEADS!",
+      "SO CLOSE! (a steel ball knocks the beam up 1.2+ deg without tipping it)",
+      "ALL 30 GLASS ARE IN!",
+      "LAST STEEL BALL...",
+      "STEEL WINS! (box under the counters)",
+      "1 STEEL BALL WEIGHS AS MUCH / AS 3 GLASS MARBLES!"
+    ],
+    "crown": "../crown-icon over the winning basket",
+    "font": "Montserrat 800 with a dark stroke",
+    "watermark": "Marble Pop at 0.968 of the height"
+  },
+  "sound": {
+    "bed": "suspense pulse 128 BPM, louder for the last steel ball, with a riser into the tip",
+    "glass": "bright clinks between glass marbles, light wooden knocks",
+    "steel": "metallic rings between steel balls, heavier knocks and a thunk when one lands",
+    "beam": "a deep wooden thunk each time the beam lands on a stop post",
+    "lead_change": "whoosh and ding",
+    "rolling": "noise through wood resonances 700/1400/3100 Hz following the rolling marbles",
+    "winner": "brass fanfare, crash, six claps, then a happy loop at 118 BPM",
+    "loudness": "-13 LUFS integrated"
+  },
+  "youtube": {
+    "title": "30 Glass vs 10 Steel ⚖️ Which Side Wins?",
+    "description": [
+      "30 glass marbles vs 10 steel balls on a wooden balance. Which side goes down?",
+      "Pick your side in the comments 🔴⚪",
+      "Made with a 3D physics simulation",
+      "#marbles #physics #satisfying #shorts"
+    ],
+    "thumbnail": "the moment the 10th steel ball lands, before the beam tips; no text"
+  }
+}

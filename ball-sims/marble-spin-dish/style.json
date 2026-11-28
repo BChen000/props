@@ -1,0 +1,219 @@
+{
+  "prop": "marble-spin-dish",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "aspect": "9:16 Short"
+  },
+  "video": {
+    "file": "Last_One_Spinning_Wins.mp4",
+    "length_s": 25.03,
+    "frames": 742,
+    "marbles": 8,
+    "seed": 1207,
+    "winner": "ORANGE",
+    "hook": "frame 1 already has all eight marbles spinning around the rim; the first one drops at 4.0 s",
+    "structure": "drops a few seconds apart (one triple knockout), lulls over 4.5 s played at 1.7x, FINAL 2! with a heartbeat, a 0.55x slow-motion close-up of the last drop, then the winner keeps circling under a crown for about 4 s",
+    "model": "the co-owner's LAST ONE SPINNING WINS Short (5 marbles in a wooden dish), made more interesting"
+  },
+  "marbles": [
+    {
+      "name": "RED",
+      "srgb": "#EC4144"
+    },
+    {
+      "name": "BLUE",
+      "srgb": "#3D83F7"
+    },
+    {
+      "name": "GREEN",
+      "srgb": "#32C664"
+    },
+    {
+      "name": "YELLOW",
+      "srgb": "#FBC932"
+    },
+    {
+      "name": "PURPLE",
+      "srgb": "#A75BED"
+    },
+    {
+      "name": "ORANGE",
+      "srgb": "#F78B2C"
+    },
+    {
+      "name": "PINK",
+      "srgb": "#FF69B4"
+    },
+    {
+      "name": "CYAN",
+      "srgb": "#28CDDC"
+    }
+  ],
+  "dish": {
+    "marble_radius": 1.3,
+    "rim_inner_radius": 15.5,
+    "rim_thickness": 1.6,
+    "rim_height": 3.4,
+    "floor_height": 3.4,
+    "hole_radius": 2.55,
+    "cone_slope": 0.03,
+    "bowl_curvature": 0.0035,
+    "funnel_dip": {
+      "depth": 1.4,
+      "width": 4.6
+    },
+    "pegs": {
+      "count": 3,
+      "ring_radius": 9.0,
+      "angles_deg": [
+        30,
+        150,
+        270
+      ],
+      "radius": 0.75,
+      "height": 2.6
+    }
+  },
+  "physics": {
+    "gravity": 1200.0,
+    "rolling_gravity_factor": "5/7",
+    "step_hz": 4000,
+    "record_hz": 250,
+    "launch_speed_range": [
+      31.0,
+      42.0
+    ],
+    "rolling_resistance": 0.45,
+    "drag": 0.006,
+    "rim_restitution": 0.55,
+    "peg_restitution": 0.75,
+    "near_miss_margin": 0.75
+  },
+  "timing": {
+    "lead_in_s": 4.0,
+    "lull_speedup": {
+      "gap_over_s": 4.5,
+      "speed": 1.7
+    },
+    "slowmo": 0.55,
+    "close_up_s_before_after": [
+      1.2,
+      1.6
+    ],
+    "hold_s": 3.0
+  },
+  "light_ups": {
+    "peg_flash": {
+      "strength": 1.4,
+      "decay_s": 0.26,
+      "full_at_speed": 22.0
+    },
+    "hole_glow": {
+      "strength": 1.3,
+      "decay_s": 0.35
+    }
+  },
+  "look": {
+    "dish_srgb": "#AC7648",
+    "peg_srgb": "#603C24",
+    "table_srgb": "#E2C498",
+    "textures": "baked after the trace: wood grain on the dish and pegs (rings around a horizontal log axis), whitewashed table boards",
+    "key_light": {
+      "from": [
+        -0.45,
+        1.0,
+        0.18
+      ],
+      "angle_deg": 16.0,
+      "color_linear": [
+        2.05,
+        1.98,
+        1.86
+      ]
+    },
+    "sky_linear": {
+      "zenith": [
+        0.9,
+        0.93,
+        0.98
+      ],
+      "horizon": [
+        0.78,
+        0.8,
+        0.84
+      ]
+    },
+    "exposure": 0.92,
+    "vignette": 0.12,
+    "static_samples": [
+      25,
+      36
+    ]
+  },
+  "cameras": {
+    "main": {
+      "target": [
+        0.0,
+        1.6,
+        0.5
+      ],
+      "elevation_deg": 60.0,
+      "distance": 122.0,
+      "fovy_deg": 31.0
+    },
+    "close": {
+      "target": [
+        0.0,
+        2.2,
+        0.5
+      ],
+      "elevation_deg": 48.0,
+      "distance": 64.0,
+      "fovy_deg": 31.0
+    }
+  },
+  "text": {
+    "title": [
+      "LAST ONE SPINNING",
+      "WINS"
+    ],
+    "title_y": 0.05,
+    "chips_y": 0.15,
+    "status_y": 0.765,
+    "callouts": [
+      "PICK YOUR COLOR!",
+      "<COLOUR> IS OUT!",
+      "DOUBLE KNOCKOUT!",
+      "TRIPLE KNOCKOUT!",
+      "N STILL SPINNING",
+      "FINAL 2!",
+      "WHO WILL WIN?",
+      "SO CLOSE! (over the marble)",
+      "<COLOUR> WINS! (box under the chips)"
+    ],
+    "font": "Montserrat 800 with a dark stroke",
+    "watermark": "Marble Pop at 0.968 of the height",
+    "crown": "../crown-icon over the winner, 5.6x its on-screen radius incl. glow"
+  },
+  "sound": {
+    "bed": "suspense pulse 132 BPM, louder for the final, stops at the win",
+    "rolling": "noise through wood resonances 620/1250/2950/6200 Hz following each marble's speed",
+    "hits": "clacks between marbles, knocks off the rim and pegs, a G6/B6/D7 bell per peg when it lights up",
+    "drop": "a hollow plonk, falling clacks and a two-note stinger",
+    "final": "riser and ding at FINAL 2!, heartbeat during the duel, whoosh at the cuts",
+    "winner": "brass fanfare, crash, six claps, then a happy loop at 118 BPM",
+    "loudness": "-13 LUFS integrated"
+  },
+  "youtube": {
+    "title": "Last One Spinning Wins 🌀 Pick Your Color",
+    "description": [
+      "8 marbles spin around a wooden dish. The last one still spinning wins!",
+      "Pick your color in the comments 🔴🔵🟢🟡🟣🟠🩷🩵",
+      "Made with a 3D physics simulation",
+      "#marbles #satisfying #pickyourcolor #shorts"
+    ],
+    "thumbnail": "frame 120: all eight marbles in, the first one on the edge of the hole; no text"
+  }
+}

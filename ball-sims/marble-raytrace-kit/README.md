@@ -6,6 +6,7 @@ The rendering and sound engine of the 3D marble music Shorts: C path tracers ren
 
 **Used in:** all four 3D marble music Shorts on Marble Pop (Nov 2026, uploaded while the channel was still Fun House 67): the staircase *Twinkle Twinkle Little Star* and *Jingle Bells*, the spiral *Row Row Row Your Boat* and the twin-stairs *Ode to Joy*. The three templates that use it (`../marble-stairs-song`, `../marble-spiral-round`, `../marble-twin-stairs`) rebuild those uploads from this repo; their READMEs list what was checked against the uploads. For this kit, that means:
 - `boxtrace.c` re-renders the staircase set byte-for-byte: all 6 G-buffer files match the originals.
+- Since `boxtrace` learned the optional `crop` window (for `../marble-balance`, Nov 2026), a scene without a `crop` line renders to the same bytes as before (checked on the staircase scene at 270×480: all 6 layers and the preview identical), and a crop is exactly the same window of the full render (all 6 layers).
 - `compositor.py` + `bells.py` produce pixel-identical frames and a byte-identical soundtrack for *Jingle Bells*.
 - `pipeline.py`, with `SPLIT=even`, reproduces the uploaded H.264 streams bit for bit.
 - `get_fonts.py` fetches exactly the Montserrat file the videos were made with (same SHA-256).
@@ -26,7 +27,7 @@ The rendering and sound engine of the 3D marble music Shorts: C path tracers ren
 | file | what |
 |---|---|
 | `look.py` | the shared studio look (cyclorama, key light, sky, ACES, vignette), camera and light helpers, scene-file writers; `set_hue(deg, sat, bright)` recolours the studio for a variant (call it before importing a scene module) |
-| `boxtrace.c` | path tracer for scenes made of boxes (axis-aligned or turned about z), up to 128 boxes |
+| `boxtrace.c` | path tracer for scenes made of boxes (axis-aligned or turned about z), up to 128 boxes; an optional `crop x0 y0 w h` line renders just that window of the image (for sets with moving parts) |
 | `meshtrace.c` | path tracer for triangle meshes (BVH, smooth normals, clear glass) + `env` mode that lights marble positions |
 | `tracers.py` | compiles the tracers, renders a G-buffer once per scene (cached by the scene's SHA-256), runs `env` queries |
 | `compositor.py` | `configure(scene)` + `Compositor(...)`: marbles, shadows, AO, glass, tile glow, titles, watermark; `render_video()` |
@@ -61,14 +62,15 @@ python3 get_fonts.py      # Montserrat into fonts/ (./setup.sh ball-sims runs it
 ## Gotchas
 - The compositor needs the G-buffer at exactly 2× the output size (2160×3840 for 1080×1920).
 - The render cache is keyed on the scene file (and the mesh, via `deps`), not on the tracer binary. After editing a `.c` file, delete `build/*_scene.sha` to re-render.
+- A `crop` matches the full render only where the scene inside the window is the same. With moving parts, pixels outside the window whose ambient rays would have hit the parts keep the level pose's light; the difference is a little noise, so blend the window's edge into the full render (see `../marble-balance/balance_comp.py`).
 - `compositor` is configured per process with one scene (`configure()` sets module globals). Render a second camera, like the staircase thumbnail, in its own process.
 - Render time grows with the number of marbles on screen, resting ones included: their shadows and AO are redrawn every frame, even though the lighting of a marble at rest is cached. The busiest rounds render several times slower than the first, so `run_workers()` splits the frames by `frame_costs()` (1.4 + marbles on screen) unless `SPLIT=even`.
 - `bells.rng` is shared. Call `bells.reset_rng()` before building a soundtrack, so it's identical every time. Each template also keeps its own generator for levels and pans.
 - Object ids are `uint8`. A scene can have up to 255 ids, and 255 is the sky.
 
 ## What it can't do
-- The camera can't move: the static set is rendered once from one camera.
-- Marbles are glossy plastic only (no glass or metal marbles), all the same radius (1.0).
+- The camera can't move: the static set is rendered once from one camera. Moving set pieces are possible with `boxtrace`'s `crop` (render the window they touch once per pose and swap it in per frame, as `../marble-balance` does), but each pose costs a path trace of that window.
+- Marbles are glossy plastic only (no glass marbles; `../marble-balance` subclasses the compositor for polished steel), all the same radius (1.0).
 - There are no marble-on-marble reflections, and no caustics through the glass.
 - Glass is one clear sheet: no refraction, no frosted or colored glass.
 - `boxtrace` takes at most 128 boxes, with rotation only about the z axis.

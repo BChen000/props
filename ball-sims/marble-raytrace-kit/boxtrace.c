@@ -8,7 +8,10 @@
  *   res W H | cam pos fwd right up tan(fovy/2) shiftx shifty | light dir angle(rad) rgb | sky zenith horizon
  *   floor rgb | fog start dist | bg top bottom glow glowx glowy glowrad vignette exposure | samples key ambient
  *   box min max rotz pivot albedo gloss rough oid      (up to 128 boxes; rotz turns the box about z at pivot)
- * Sampling is seeded per pixel, so a scene always renders to the same bytes on the same machine.
+ *   crop x0 y0 w h       (optional) render only this window of the W x H image; the files are w x h
+ * Sampling is seeded per pixel of the whole image, so a scene always renders to the same bytes on the same machine,
+ * and a crop matches the same window of the full render wherever the scene inside it is the same (sets with moving
+ * parts render the full image once and only the window the parts can touch for each pose).
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -22,6 +25,7 @@ typedef struct {
 } Box;
 
 static int W = 0, H = 0, NS = 16, NA = 16, NB = 0;
+static int CX = 0, CY = 0, CW = -1, CH = -1;
 static double cpos[3], cf[3], cr[3], cu[3], th, shx, shy;
 static double L[3], Lang, Lc[3];
 static double skyZ[3], skyH[3], flo[3];
@@ -185,6 +189,8 @@ int main(int argc, char **argv) {
     } else if (!strcmp(key, "bg")) {
       if (fscanf(f, "%lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf", &bgT[0], &bgT[1], &bgT[2], &bgB[0], &bgB[1],
                  &bgB[2], &bgG[0], &bgG[1], &bgG[2], &gpx, &gpy, &grad, &vig, &expo) != 14) return 2;
+    } else if (!strcmp(key, "crop")) {
+      if (fscanf(f, "%d %d %d %d", &CX, &CY, &CW, &CH) != 4) return 2;
     } else if (!strcmp(key, "samples")) {
       if (fscanf(f, "%d %d", &NS, &NA) != 2) return 2;
     } else if (!strcmp(key, "box")) {
@@ -220,7 +226,9 @@ int main(int argc, char **argv) {
     cross3(L, Lb1, Lb2);
   }
 
-  size_t NP = (size_t)W * H;
+  if (CW < 0) { CX = 0; CY = 0; CW = W; CH = H; }
+  if (CX < 0 || CY < 0 || CW <= 0 || CH <= 0 || CX + CW > W || CY + CH > H) { fprintf(stderr, "bad crop\n"); return 2; }
+  size_t NP = (size_t)CW * CH;
   float *bD = calloc(NP * 3, 4), *bA = calloc(NP * 3, 4), *bO = calloc(NP * 3, 4), *bZ = calloc(NP, 4),
         *bN = calloc(NP * 3, 4);
   uint8_t *bI = calloc(NP, 1), *pv = calloc(NP * 3, 1);
@@ -230,10 +238,11 @@ int main(int argc, char **argv) {
   double asp = (double)W / H;
 
 #pragma omp parallel for schedule(dynamic, 2)
-  for (int py = 0; py < H; py++) {
-    for (int px = 0; px < W; px++) {
-      size_t ix = (size_t)py * W + px;
-      uint32_t seed = hsh((uint32_t)ix * 2654435761U + 12345U);
+  for (int py = CY; py < CY + CH; py++) {
+    for (int px = CX; px < CX + CW; px++) {
+      size_t ixf = (size_t)py * W + px;                 /* index in the whole image: seeds the sampling */
+      size_t ix = (size_t)(py - CY) * CW + (px - CX);   /* index in the output window */
+      uint32_t seed = hsh((uint32_t)ixf * 2654435761U + 12345U);
       double nx = (px + 0.5) / W * 2 - 1 + shx, ny = 1 - (py + 0.5) / H * 2 + shy;
       double d[3];
       for (int k = 0; k < 3; k++) d[k] = cf[k] + nx * th * asp * cr[k] + ny * th * cu[k];
@@ -350,7 +359,7 @@ int main(int argc, char **argv) {
   DUMP(bI, NP, "I.u8");
   snprintf(fn, sizeof fn, "%s_preview.ppm", argv[2]);
   f = fopen(fn, "wb");
-  fprintf(f, "P6\n%d %d\n255\n", W, H);
+  fprintf(f, "P6\n%d %d\n255\n", CW, CH);
   fwrite(pv, 1, NP * 3, f);
   fclose(f);
   return 0;
