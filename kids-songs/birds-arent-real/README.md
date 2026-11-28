@@ -10,7 +10,16 @@ The complete code behind "Birds Aren't Real… Supposedly" (Story Time with Kenj
 
 **Used in:** Birds Aren't Real, Story Time with Kenji, Nov 2026 (delivered as `birds_arent_real.mp4`).
 - **Render time:** 25.9 min for the 1,665 frames (0.93 s a frame) on a 2-core cloud session, then about 2 min for the final encode (81 MB at CRF 21, −14.6 LUFS).
-- **Verified from this folder:** VERIFIED
+- **Verified from this folder:** the delivered video was built here, end to end:
+  - `build_all.py` (124 mesh parts, 33,305 triangles, 22 textures)
+  - `make_video.py narrate`, then `make_audio.py`
+  - `make_video.py render` (all 12 scenes)
+  - `final`, `preview` and `thumb.py`
+- **From a fresh clone of the branch**, after `./setup.sh kids-songs` (which fetches the fonts; bpy was already installed):
+  - `build_all.py` gave identical meshes and textures
+  - `narrate` gave a byte-identical narration and timeline
+  - `make_audio.py` gave a byte-identical mix
+  - `render car slogan` gave scene files byte-identical to the delivered `s04.mp4` and `s05.mp4`
 
 ## Files
 - `story.py`: the 31 caption lines, as (scene, caption[, spoken text]).

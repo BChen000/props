@@ -15,6 +15,11 @@ The complete code behind "Area 51 Was Real… The Aliens Weren't" (Story Time wi
   - `make_video.py narrate`, then `make_audio.py`
   - `make_video.py render` (all 11 scenes)
   - `final`, `preview` and `thumb.py`
+- **From a fresh clone of the branch**, after `./setup.sh kids-songs` (which fetches the fonts; bpy was already installed):
+  - `build_all.py` gave identical meshes and textures
+  - `narrate` gave a byte-identical narration and timeline
+  - `make_audio.py` gave a byte-identical mix
+  - `render itwasus gate` gave scene files byte-identical to the delivered `s07.mp4` and `s09.mp4`
 
 ## Files
 - `story.py`: the 34 caption lines, as (scene, caption[, spoken text]).

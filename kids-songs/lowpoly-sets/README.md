@@ -7,7 +7,7 @@ Reusable low-poly set pieces for the 3D Story Time with Kenji episodes, built wi
 **Used in:** Area 51 and Birds Aren't Real (Story Time with Kenji, Nov 2026; `../area-51`, `../birds-arent-real`).
 - **Area 51:** the terrain (with a flattened disc at the gate), the mountain ridges, the runway, hangars, U-2, airliner, saucers, guard truck, fence and protesters.
 - **Birds Aren't Real:** the pigeons (perched, flying and on his hat), the car, poles, billboard, placards and both crowds.
-- **Verified:** `preview.py` drew `preview.png` from this folder without Blender. Both episodes built their assets from this file.
+- **Verified:** `preview.py` draws `preview.png` without Blender; a fresh clone of the branch drew it byte-identical. Both episodes built their assets from `sets.py`, and the fresh clone rebuilt both episodes' meshes identically.
 
 ## Files
 - `sets.py`: one function per piece. Each returns meshkit meshes in local coordinates (metres, Z up, the front faces -Y), or a dict of parts. The docstring at the top lists them.
