@@ -71,6 +71,7 @@ uniform int nl; uniform vec4 Lp[MAXL]; uniform vec4 Lc[MAXL]; uniform vec4 Ld[MA
 uniform sampler2DShadow shmap; uniform mat4 SVP; uniform float sh_soft; uniform int has_sh;
 uniform vec3 amb_top; uniform vec3 amb_bot;
 uniform sampler2D tex; uniform int tmode; uniform vec3 emit; uniform float temit; uniform float spec; uniform float shin;
+uniform vec2 wsc; uniform vec3 wcol;
 uniform vec3 tint; uniform int mode; uniform float seed; uniform float t; uniform float cellf; uniform float tt; uniform float rate;
 uniform vec3 fog_col; uniform float fog_d; uniform float fog_h;
 in vec3 v_w; in vec3 v_n; in vec2 v_uv; in vec3 v_c; in vec3 v_l;
@@ -97,12 +98,12 @@ void main(){
   if (tmode==3){ vec4 tx = texture(tex, v_uv); if (tx.a < 0.5) discard; alb *= pow(tx.rgb, vec3(2.2)); }
   if (mode==1){ // building windows from world position
     vec3 an = abs(N); vec2 q = an.x>an.y ? v_w.yz : v_w.xz; if (an.z>0.7) q = vec2(-1.0);
-    vec2 cell = floor(q/vec2(0.9,1.1)); vec2 f = fract(q/vec2(0.9,1.1));
+    vec2 cs = vec2(0.9,1.1)*wsc; vec2 cell = floor(q/cs); vec2 f = fract(q/cs);
     float win = step(0.18,f.x)*step(f.x,0.82)*step(0.22,f.y)*step(f.y,0.78)*step(0.0,q.y);
     float h = hash(cell + seed*vec2(13.1, 7.7) + floor(v_w.xy*0.01));
     float lit = step(0.88, h);
-    alb = mix(alb, alb*0.5, win);
-    E += win*lit*vec3(1.0,0.62,0.28)*(1.2+1.5*hash(cell*1.7));
+    alb = wcol.x >= 0.0 ? mix(alb, wcol, win) : mix(alb, alb*0.5, win);
+    E += win*lit*vec3(1.0,0.62,0.28)*(1.2+1.5*hash(cell*1.7))*temit;
   }
   if (mode==3){ // phone-farm screen: in_col.r = atlas cell / 8, in_col.g = random phase
     float c0 = floor(v_c.r*8.0); float ph = v_c.g;
@@ -115,6 +116,9 @@ void main(){
     vec2 q = v_w.xy*2.0; vec2 gg = abs(fract(q - 0.5) - 0.5)/max(fwidth(q), vec2(1e-4));
     float line = 1.0 - min(min(gg.x, gg.y), 1.0);
     E += line*vec3(0.04, 0.20, 0.30)*seed;
+  }
+  if (mode==5){ // unlit vertex colour (sky dome, sun, signs that glow)
+    E += v_c*temit; alb = vec3(0.0);
   }
   if (mode==2){ // cork
     float n1 = hash(floor(v_l.xz*420.0)); float n2 = hash(floor(v_l.xz*90.0)+3.1);
@@ -332,13 +336,14 @@ class Renderer:
             _set(pr, 'tint', tuple(map(float, mat.get('tint', (1, 1, 1)))))
             _set(pr, 'spec', float(mat.get('spec', 0.08))); _set(pr, 'shin', float(mat.get('shin', 24.0)))
             _set(pr, 'mode', int(mat.get('mode', 0))); _set(pr, 'seed', float(mat.get('seed', 0.0)))
+            _set(pr, 'wsc', tuple(map(float, mat.get('wsc', (1.0, 1.0))))); _set(pr, 'wcol', tuple(map(float, mat.get('wcol', (-1.0, -1.0, -1.0)))))
             _set(pr, 'cellf', float(mat.get('cellf', -1.0))); _set(pr, 'tt', float(mat.get('tt', 0.0))); _set(pr, 'rate', float(mat.get('rate', 2.0)))
             uvx = mat.get('uvx', (0, 0, 1, 1)); _set(pr, 'uvx', tuple(map(float, uvx)))
             self.meshes[mesh].vao.render(vertices=self.meshes[mesh].n)
         if adds:
             c.enable(moderngl.BLEND)
             c.blend_func = (moderngl.ONE, moderngl.ONE, moderngl.ZERO, moderngl.ONE)
-            c.depth_mask = False
+            self.msfbo.depth_mask = False
             ap = self.aprog
             _write(ap, 'VP', VP.T.tobytes()); _set(ap, 'cam', tuple(map(float, cam['eye'])))
             for mesh, M, a in adds:
@@ -346,7 +351,7 @@ class Renderer:
                 _set(ap, 'amode', int(a.get('amode', 0))); _set(ap, 'acol', tuple(map(float, a.get('col', (1, 1, 1)))))
                 _set(ap, 'aint', float(a.get('int', 1.0)))
                 self.meshes[mesh].avao.render(vertices=self.meshes[mesh].n)
-            c.depth_mask = True
+            self.msfbo.depth_mask = True
             c.disable(moderngl.BLEND)
         c.copy_framebuffer(self.outfbo, self.msfbo)
         raw = self.outfbo.read(components=4, dtype='f2')

@@ -129,6 +129,8 @@ kids_songs() {
   run kids-songs/storytime-kit/get_fonts.py
   echo "-- fonts (Special Elite, Permanent Marker, Anton, for the 3D episodes)"
   run kids-songs/dead-internet-theory/get_fonts.py
+  run kids-songs/area-51/get_fonts.py
+  run kids-songs/birds-arent-real/get_fonts.py
   echo "-- narrator model (Kokoro v1.0 int8)"
   if [ -n "${KOKORO_DIR:-}" ] && [ -f "$KOKORO_DIR/kokoro-v1.0.int8.onnx" ]; then echo "  ok       $KOKORO_DIR"
   elif [ -f kids-songs/storytime-narrator/models/kokoro-v1.0.int8.onnx ]; then echo "  ok       kids-songs/storytime-narrator/models"

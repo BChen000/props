@@ -3,8 +3,8 @@
 A small OpenGL 3.3 renderer for flat-shaded low-poly 3D scenes that runs headless on a CPU (moderngl over EGL, on Mesa's llvmpipe), at about 1 s a frame for 1080×1920 including the post pass on a 2-core cloud session. On the same machine and a simpler scene, Blender 5.3 EEVEE took 41 s a frame, Cycles 44 s, and Blender 4.0 EEVEE Legacy 7–12 s. It has:
 - **Shading:** forward shading with up to 8 point, spot and directional lights, hemisphere ambient, Blinn-Phong specular, light wrap, and exponential height fog.
 - **Shadows:** one soft spot-light shadow map, 12 rotated Poisson PCF taps on a 2048² depth map.
-- **Materials:** a colour per vertex, an albedo or emissive texture with a scrolling UV window (`uvx`), and four procedural modes: lit city windows, cork speckle, an 8-cell phone-screen atlas that cycles or holds a cell, and a glowing floor grid.
-- **Additive pass:** light-beam cones, glow sprites and dust motes. It leaves the depth stored in alpha untouched.
+- **Materials:** a colour per vertex, an albedo or emissive texture with a scrolling UV window (`uvx`), and five procedural modes: building windows (lit at night, dark glass by day, any window size), cork speckle, an 8-cell phone-screen atlas that cycles or holds a cell, a glowing floor grid, and unlit vertex colour (for smooth sky gradients).
+- **Additive pass:** light-beam cones, glow sprites and dust motes. It writes neither the depth buffer nor the depth stored in alpha.
 - **Dynamic meshes:** `set_dynamic()` rewrites a mesh each frame, for red strings, dust or an exploding head.
 - **Post (`post.py`):**
   - depth of field from the depth in alpha, made at half size; the background blur ignores the in-focus foreground, so there are no halos around a sharp subject
@@ -16,11 +16,12 @@ A small OpenGL 3.3 renderer for flat-shaded low-poly 3D scenes that runs headles
 
 ![preview](preview.png)
 
-**Used in:** The Dead Internet Theory (Story Time with Kenji, Nov 2026, `../../kids-songs/dead-internet-theory`).
+**Used in:** The Dead Internet Theory, Area 51 and Birds Aren't Real (Story Time with Kenji, Nov 2026; `../../kids-songs/dead-internet-theory`, `../../kids-songs/area-51`, `../../kids-songs/birds-arent-real`).
 - **Scope:** every frame of the 67.4 s Short (2,021 frames at 1080×1920, 30 fps) came from this renderer, in 31 min (0.93 s a frame, post pass included).
 - **Verified:**
   - `demo.py` runs from this folder without Blender, in 0.38 s render + 0.19 s post at 540×960
-  - two of the episode's scenes, rendered again from the repo, came out byte-identical to the delivered scene files
+  - two of the Dead Internet scenes, rendered again from the repo, came out byte-identical to the delivered scene files (before the depth-mask fix below)
+  - Area 51 and Birds Aren't Real were rendered entirely with the current version
 - **Preview:** four frames from the episode: the hooded man, the phone farm, the bar chart and the city.
 
 ## Files
@@ -58,7 +59,8 @@ frame = post.finish(img, dict(dof=4, focus=3.0, exposure=1.1, bloom=0.4, vignett
 - **Material keys:**
   - texture: `tex`, `tmode` (1 albedo, 2 emissive, 3 cut-out), `temit`, `uvx` = (u offset, v offset, u scale, v scale)
   - colour: `emit`, `tint`, `spec`, `shin`
-  - procedural: `mode` (1 windows, 2 cork, 3 screen atlas, 4 grid), with `seed`, `cellf` (atlas cell to hold, -1 cycles), `tt` and `rate`
+  - procedural: `mode` (1 windows, 2 cork, 3 screen atlas, 4 grid, 5 unlit vertex colour), with `seed`, `cellf` (atlas cell to hold, -1 cycles), `tt` and `rate`
+  - windows (mode 1): `wsc` scales the 0.9×1.1 m window cell, e.g. (2.2, 3.0) for storeys; `wcol` sets the window colour (default: half the wall colour); `temit` lights a random 12% of them
   - `cast=False` keeps a part out of the shadow map
 - **Light keys:**
   - `type` (`point`, `spot`, `dir`), `pos`, `dir`, `col`, `energy`, `range`, `outer` / `inner` (spot cone, degrees), `spec`, `wrap`
@@ -73,6 +75,7 @@ frame = post.finish(img, dict(dof=4, focus=3.0, exposure=1.1, bloom=0.4, vignett
 - **Flat shading** comes from per-triangle normals, which `meshkit.add` writes. Shared vertices would shade smooth.
 - **Depth of field:** the foreground isn't masked, so objects nearer than the focus blur with background colour bleeding into them. Keep big blur for the background.
 - **Glitch above about 0.5 hides the subject.** The episode used 0.42 at the peak.
+- **Depth writes in the additive pass (fixed Nov 28, 2026):** moderngl 5.13's `Context` has no `depth_mask`, so `c.depth_mask = False` did nothing and every sprite wrote depth. A sprite drawn first then hid the sprites behind it; in Area 51 the switched-off lamp glow cut a black square out of the tractor beam. The mask is now set on the framebuffer. Re-rendered Dead Internet frames change only where dust motes sat behind the lamp's beam cone: 0.7% of the hook frame's pixels; the `who` and `city` frames tested were identical.
 - **Textures** are uploaded as sRGB uint8 and turned linear in the shader with a 2.2 power. Emissive textures use `temit` as their brightness.
 - **EGL:** `create_standalone_context(backend='egl')` needs Mesa's EGL (`libegl1`, `libgl1-mesa-dri`). There is no GPU in the cloud sessions; on a Mac, moderngl uses the GPU and is far faster.
 

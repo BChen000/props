@@ -15,6 +15,7 @@ The complete code behind "The Internet Died in 2016… and Nobody Noticed" (Stor
   - `make_audio.py` gave a byte-identical `mix.wav` (−14.9 LUFS)
   - `make_video.py render who debunk` gave scene files byte-identical to the delivered `s08.mp4` and `s10.mp4`
 - **Not re-run from this folder:** the other 12 scenes and `final`.
+- **Since then:** `../../shared/lowpoly-gl` stopped its additive pass from writing depth (Nov 28, 2026). Re-rendered frames now differ from the delivered ones where dust motes sat behind the lamp's beam cone: 0.7% of the hook frame's pixels. The `who` and `city` frames tested were identical.
 
 ## Files
 - `story.py`: the 33 caption lines, as (scene, caption[, spoken text]).

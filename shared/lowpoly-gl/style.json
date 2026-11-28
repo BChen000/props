@@ -23,13 +23,19 @@
       1,
       1
     ],
-    "cast": true
+    "cast": true,
+    "wsc": [
+      1.0,
+      1.0
+    ],
+    "wcol": "(-1, -1, -1) = half the wall colour"
   },
   "modes": {
-    "1": "lit windows from world xy/xz (0.9 x 1.1 m cells, 12% lit)",
+    "1": "windows from world xy/xz: cell 0.9 x 1.1 m scaled by wsc; window colour wcol (default half the wall colour); 12% lit by temit",
     "2": "cork speckle from local xz",
     "3": "8-cell screen atlas: in_col.r = cell/8, in_col.g = phase; cellf holds a cell",
-    "4": "glowing grid, 0.5 m"
+    "4": "glowing grid, 0.5 m",
+    "5": "unlit vertex colour x temit (sky gradients, glowing signs)"
   },
   "post_defaults": {
     "dof": 0,
@@ -68,5 +74,6 @@
     "blender_5.3_eevee_s": 41,
     "blender_5.3_cycles_16spp_s": 44,
     "blender_4.0_eevee_legacy_s": "6.8 (8 smp) - 12.1 (16 smp)"
-  }
+  },
+  "additive_pass": "blend ONE,ONE on RGB, ZERO,ONE on alpha; depth test on, depth writes off (framebuffer depth_mask)"
 }

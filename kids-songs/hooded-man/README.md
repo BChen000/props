@@ -7,7 +7,8 @@ The low-poly hooded man from The Dead Internet Theory: a faceless faceted manneq
 
 ![preview](preview.png)
 
-**Used in:** every shot with the man in The Dead Internet Theory (Story Time with Kenji, Nov 2026, `../dead-internet-theory`).
+**Used in:** every shot with the man in The Dead Internet Theory, Area 51 and Birds Aren't Real (Story Time with Kenji, Nov 2026; `../dead-internet-theory`, `../area-51`, `../birds-arent-real`).
+- **Also:** Area 51's ending takes the hat off as its own three parts (`hat_crown`, `hat_band`, `hat_brim`) and floats it to the floor, and Birds Aren't Real lands a pigeon on top of the crown.
 - **Verified:** `pose_sheet.py` rebuilt the 26 parts (4,527 triangles) from this folder, byte-identical to the man in the episode's `assets.npz`, and drew `preview.png`.
 
 ## Files
