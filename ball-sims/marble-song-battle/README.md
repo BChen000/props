@@ -6,10 +6,17 @@ Blender marble-music Shorts in the "X or Y?" song-battle format (modeled on the 
 
 ![preview](preview.png)
 
+**Fire or Ice?** (`EPISODE=fire-or-ice`, Nov 28 2026; VERIFY_FIREICE_FACTS) is the second matchup, three wild classical pieces against three calm ones. 🔥 FIRE: *In the Hall of the Mountain King* (Grieg), *Turkish March* (Mozart), *Flight of the Bumblebee* (Rimsky-Korsakov). ❄️ ICE: *Swan Lake* (Tchaikovsky), *Für Elise* (Beethoven), *Brahms' Lullaby*. All six are public domain.
+- Fire rounds glow orange and red in ember-dark moods (coal, dark slabs). Ice rounds glow cyan and ice blue in cold blue moods (slabs, ornaments, discs).
+- `settings.py` now runs `episodes/<name>.py` when `EPISODE` is set and builds in `build_<name>/`, so a matchup no longer replaces the shipped one. The songs are added to `music.py`'s `LIBRARY`.
+- Verified on a 2-core cloud session: `EPISODE=fire-or-ice python3 plan.py` prints `issues: 0`, and test frames 60, 315, 700, 1327 and 1750 were rendered and finished with `post.py test` before the full render. VERIFY_FIREICE_RENDER
+- Without `EPISODE`, `plan.py` prints exactly what it did before this change, and `export.py` writes a byte-identical `plan.json` for Naughty or Nice.
+
 *Rounds 1, 2, 4 and 5: slab funnel, gift stairs, ornament zigzag, coal funnel.*
 
 ## Files
 - `settings.py`: the matchup (`TITLE`, `TEAMS`, `ROUNDS`: song, team, course style and its shape, obstacle, glow colour, target bounciness), the lighting `MOODS`, camera offsets and lens, render size and samples, HUD dot positions, fonts and thumbnail picks. Everything else reads from here.
+- `episodes/fire-or-ice.py`: the Fire or Ice? matchup (`EPISODE=fire-or-ice`), only what differs from `settings.py`.
 - `music.py`: the song library. Each song is written in beats: melody notes (each one a marble hit, or a flourish), chords with bass notes, tempo, meter and a backing style.
 - `plan.py`: the physics. It turns hit times into a marble path: an exact ballistic arc between hits, and each obstacle tilted so its normal is along the velocity change (a true reflection). Course styles are `helix` (a narrowing funnel), `stairs` (forward with a sway) and `zigzag`. Rounds are joined by two-rail ramps that set the next round's speed. Prints bounce stats and collision checks.
 - `export.py`: the camera (top-down over funnels, a chase cam elsewhere, smoothed), the loop seam (obstacles and rails seen in the first and last frames are copied by the course's end-to-start offset), the global note list, and occlusion/near-camera checks. Writes `build/plan.json`.
@@ -23,6 +30,7 @@ Blender marble-music Shorts in the "X or Y?" song-battle format (modeled on the 
 ## Reuse
 ```bash
 BLENDER=blender ./make_video.sh      # BLENDER must be 4.0/4.1
+EPISODE=fire-or-ice ./make_video.sh  # another matchup, from episodes/fire-or-ice.py -> build_fire-or-ice/
 ```
 Step by step:
 ```bash
@@ -39,6 +47,7 @@ blender -b build/scene.blend --python thumb_render.py
 python3 thumb.py                                    # build/out/thumbnail.jpg
 ```
 To make a new matchup:
+- Put `TITLE`, `TEAMS`, `ROUNDS`, `MOODS` (and `THUMB` if the rounds change) in `episodes/<name>.py` and run every step with `EPISODE=<name>`, as `episodes/fire-or-ice.py` does; the shipped matchup stays in `settings.py`.
 - Add songs to `music.py` and its `LIBRARY`. Only public-domain melodies (published before 1929); trending pop songs are copyrighted and get claimed. Notes closer than ~0.15 s can't each get a bounce, so mark them `False` and they play as a flourish from the previous hit.
 - In `settings.py`, set `TITLE`, `TEAMS` and one `ROUNDS` entry per song (alternate the teams), plus a mood per round. A helix round's `turns` and radii, or a stairs/zigzag round's speed, set how far apart the obstacles are.
 - Run `plan.py` until it prints `issues: 0`, then `export.py` and check the occlusion list (a few frames is fine).

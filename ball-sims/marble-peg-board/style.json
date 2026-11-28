@@ -1,0 +1,120 @@
+{
+  "prop": "marble-peg-board",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "aspect": "9:16 Short"
+  },
+  "video": {
+    "file": "Marble_Peg_Board.mp4",
+    "length_s": 23.9,
+    "frames": 717,
+    "marbles": 72,
+    "seed": 2,
+    "final_counts": [
+      1,
+      9,
+      22,
+      21,
+      14,
+      4,
+      1
+    ],
+    "winner": "BIN 3",
+    "margin": 1,
+    "last_lead_change_s": 20.12,
+    "hook": "the question is on screen from frame 0 and the first marble leaves the hopper at 0.55 s",
+    "structure": "72 marbles drop at 5 a second; the counts pop over the piles and the lead changes or is tied 17 times; bin 3 passes bin 4 near the end; the winner box, crown and confetti hold for 3.2 s",
+    "model": "a classic bean-machine (Galton board) challenge, new to the channel"
+  },
+  "board": {
+    "bins": 7,
+    "bin_width": 5.0,
+    "row_spacing": 4.4,
+    "rows": 8,
+    "pegs": 44,
+    "peg_half_side": 0.62,
+    "peg_depth": 2.6,
+    "bin_height": 27.0,
+    "wall_thickness": 0.5,
+    "marble_radius": 1.0
+  },
+  "colours": {
+    "board": "#EEC084",
+    "rails": "#966038",
+    "pegs": "#D4A030",
+    "peg_flash": "#FFD678",
+    "plinth": "#784A2A",
+    "marbles": [
+      "#EC3434",
+      "#FA8A1C",
+      "#FACE26",
+      "#3CC85A",
+      "#28AAEB",
+      "#4664F0",
+      "#A05AE6",
+      "#F55AAA"
+    ],
+    "winner_gold": "#FFCD46"
+  },
+  "physics": {
+    "gravity": 120.0,
+    "drag": 6.0,
+    "sim_hz": 4000,
+    "record_hz": 120,
+    "stiffness": 300000.0,
+    "damping_ratio": {
+      "pegs": 0.6,
+      "walls": 0.6,
+      "marbles": 0.6
+    },
+    "rate_per_s": 5.0,
+    "spawn_jitter": 0.35,
+    "spawn_speed": 6.0
+  },
+  "camera": {
+    "azimuth_deg": 12.0,
+    "elevation_deg": 4.0,
+    "fovy_deg": 30.0,
+    "frame_pad": 1.075
+  },
+  "text": {
+    "font": "Montserrat 800 (../marble-raytrace-kit/fonts)",
+    "title": "WHICH BIN WINS?",
+    "subtitle": "PICK 1 TO 7",
+    "leader": "BIN n TAKES THE LEAD! / TIED! / BIN n IS WINNING",
+    "winner": "BIN {n} WINS!",
+    "title_y": 0.112,
+    "status_y": 0.158,
+    "winner_box_y": 0.205,
+    "watermark_y": 0.988
+  },
+  "sound": {
+    "peg_scale_midi": [
+      72,
+      74,
+      76,
+      79,
+      81,
+      84,
+      86,
+      88,
+      91,
+      93
+    ],
+    "peg_gain": 0.2,
+    "landing_gain": 0.55,
+    "loudness_lufs": -13
+  },
+  "youtube": {
+    "title": "Which Bin Gets the Most Marbles? 🏆 Pick 1 to 7",
+    "description": [
+      "72 marbles bounce down through brass pegs into 7 bins. Which bin gets the most? 🏆",
+      "Pick a bin from 1 to 7 in the comments",
+      "#marbles #physics #satisfying #pickone",
+      "Made by Marble Pop with our own 3D physics simulation"
+    ],
+    "thumbnail": "late in the drop with marbles among the pegs, no text"
+  }
+}

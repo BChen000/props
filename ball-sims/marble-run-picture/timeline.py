@@ -60,7 +60,7 @@ def build(outdir, log=print):
     pts, s, tags = LY.marble_path()
     tau, v, drops = time_along(pts, s, tags)
     tau_end = tau[-1]
-    cols, names = pile.colours_for(sum(b[2] for b in C.BATCHES))
+    _, cols, names, _ = pile.picture(pile.n_marbles())
     n = len(cols)
     t_start = C.T_FIRST + np.arange(n) / C.RATE
     t_exit = t_start + tau_end
@@ -74,7 +74,9 @@ def build(outdir, log=print):
     n_frames = int(math.ceil((t_last + C.HOLD_S) * C.FPS))
     ft = np.arange(n_frames) / C.FPS
 
-    pile_xz, fin = pile.simulate(t_arrive, t_exit, ft, (C.V_TRACK, t_run, t_brake, run), log=log)
+    pile_xz, fin, slot = pile.simulate(t_arrive, t_exit, ft, (C.V_TRACK, t_run, t_brake, run), log=log)
+    if C.REGION_COLOURS:   # each marble wears the colour of the spot it settles on
+        cols, names = [cols[k] for k in slot], [names[k] for k in slot]
     pos = np.full((n_frames, n, 3), np.nan)
     vis = np.zeros((n_frames, n), bool)
     sarr = np.full((n_frames, n), np.nan)

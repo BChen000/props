@@ -11,7 +11,8 @@ Songs live in music.py (public-domain melodies only). Everything generated goes 
 import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-BUILD = os.environ.get('BUILD_DIR', os.path.join(HERE, 'build'))
+EPISODE = os.environ.get('EPISODE', '')          # another matchup: episodes/<name>.py, built in build_<name>/
+BUILD = os.environ.get('BUILD_DIR', os.path.join(HERE, 'build' + ('_' + EPISODE if EPISODE else '')))
 PLAN_JSON = os.path.join(BUILD, 'plan.json')
 LUT_JSON = os.path.join(BUILD, 'lut.json')
 AUDIO = os.path.join(BUILD, 'audio.wav')
@@ -75,3 +76,9 @@ FONT_CANDIDATES = [
 
 THUMB = dict(top=dict(round=1, hit=5, mood=1, dy=-400, t=13.7), bottom=dict(round=0, hit=8, mood=0, dy=190, t=3.6),
              after_frames=7, zoom=0.32, samples=10)
+
+if EPISODE:
+    import runpy
+    for _k, _v in runpy.run_path(os.path.join(HERE, 'episodes', EPISODE + '.py'), init_globals=dict(globals())).items():
+        if not _k.startswith('_') and _k.isupper():
+            globals()[_k] = _v

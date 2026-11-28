@@ -87,7 +87,11 @@ class Episode:
         rest = [int(b) for b in o[:-3] if dr[b] >= 0]
         cand = [b for b in rest if S.FOURTH_OUT_AT - 0.5 < dr[b] < S.FOURTH_OUT_AT + 0.5] or rest
         fourth = min(cand, key=lambda b: abs(dr[b] - S.FOURTH_OUT_AT))
-        self.picks = [int(o[-1]), int(o[-2]), int(o[-3]), fourth][:len(S.PLACES)]
+        picks = [int(o[-1]), int(o[-2]), int(o[-3]), fourth]
+        for t_out in getattr(S, "MORE_OUT_AT", []):   # 5th, 6th, ... place: the marble draining closest to t_out
+            cand = [b for b in rest if b not in picks]
+            picks.append(min(cand, key=lambda b: abs(dr[b] - t_out)))
+        self.picks = picks[:len(S.PLACES)]
         self.btype = np.zeros(self.N, np.int64)
         self.bcol = np.zeros((self.N, 3), np.float64)
         for k, b in enumerate(self.picks):

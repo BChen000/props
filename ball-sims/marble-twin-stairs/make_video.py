@@ -51,6 +51,9 @@ os.environ.setdefault("MARBLE_BPM", str(SONG["bpm"]))
 import numpy as np
 from PIL import Image
 
+import look
+HUE, SAT, BRIGHT = float(SONG.get("hue", 0.0)), float(SONG.get("sat", 1.0)), float(SONG.get("bright", 1.0))
+look.set_hue(HUE, SAT, BRIGHT)  # before importing scene, which copies the studio colours
 import scene as S
 import timeline
 import music
@@ -59,12 +62,14 @@ import compositor as C
 import pipeline as P
 
 SONG_DIR = os.path.join(BUILD, args.song)
-GPREFIX = os.path.join(BUILD, "g")
+LOOK_TAG = ((f"_hue{HUE:g}" if HUE else "") + (f"_sat{SAT:g}" if SAT != 1.0 else "")
+            + (f"_bright{BRIGHT:g}" if BRIGHT != 1.0 else ""))
+GPREFIX = os.path.join(BUILD, "g" + LOOK_TAG)
 log = P.log
 
 
 def static_render():
-    scene_txt = os.path.join(BUILD, "scene.txt")
+    scene_txt = os.path.join(BUILD, "scene%s.txt" % LOOK_TAG)
     S.write_scene(scene_txt, 2 * S.W, 2 * S.H, *STATIC_SAMPLES)
     binary = tracers.build("boxtrace", BUILD)
     log("static set: path tracing (cached after the first run)...")

@@ -26,8 +26,26 @@ def heart_boundary(n=20000):
     return np.stack([x, 5.0 - y], 1)          # notch at the origin, +v toward the camera (down the picture)
 
 
+def present_boundary(n=20000):
+    """A gift box seen from above with a bow: the box's back edge runs through the notch (box below it, toward the
+    camera) and the bow's two loops sit behind it, like the heart's lobes. Sizes in marble radii (PRESENT)."""
+    P = C.PRESENT
+    wb, hb, rl = P["half_w"], P["depth"], P["bow_r"]
+    k = n // 3
+    t = np.linspace(0, 1, k, endpoint=False)
+    box = np.concatenate([np.stack([wb * (2 * t - 1), np.zeros(k)], 1), np.stack([np.full(k, wb), hb * t], 1),
+                          np.stack([wb * (1 - 2 * t), np.full(k, hb)], 1), np.stack([np.full(k, -wb), hb * (1 - t)], 1)])
+    a = np.linspace(0, 2 * np.pi, k, endpoint=False)
+    loops = [np.stack([sx * P["bow_dx"] * rl + rl * np.cos(a), -P["bow_dy"] * rl + rl * np.sin(a)], 1) for sx in (-1, 1)]
+    return np.concatenate([box] + loops)
+
+
+def boundary():
+    return present_boundary() if C.SHAPE == "present" else heart_boundary()
+
+
 def _radius_table(nb=7200):
-    b = heart_boundary()
+    b = boundary()
     th = np.arctan2(b[:, 1], b[:, 0])
     r = np.hypot(b[:, 0], b[:, 1])
     idx = ((th + np.pi) / (2 * np.pi) * nb).astype(int) % nb
@@ -92,11 +110,50 @@ def slots(n):
         xs = np.sort(sel[:, 0])
         asym = np.abs(xs + xs[::-1]).sum()
         if best is None or asym < best[0] - 1e-9:
-            best = (asym, sel, g[order], off)
-    _, sel, rho, off = best
+            best = (asym, sel, g[order], off, hi)
+    _, sel, rho, off, _ = best
     xz = sel + nc[None]
     out = np.argsort(-rho, kind="stable")
+    global SCALE
+    SCALE = best[4]
     return xz[out], rho[out]
+
+
+SCALE = 1.0
+
+
+def n_marbles():
+    return C.N_MARBLES or sum(b[2] for b in C.BATCHES)
+
+
+def region_names(rel):
+    """Colour names of the final spots (u, v) relative to the notch, for pictures coloured by region: the present's
+    bow (behind the notch), its ribbon (a vertical strip and the two lattice rows nearest RIBBON_AT) and its box."""
+    P = C.PRESENT
+    u, v = rel[:, 0], rel[:, 1]
+    rows = np.unique(np.round(v[v >= 0], 3))
+    mid = P["ribbon_at"] * P["depth"] * SCALE
+    band = rows[np.argsort(np.abs(rows - mid))[:P.get("ribbon_rows", 2)]]
+    names = np.where(np.abs(u) < P["ribbon_half"], "ribbon", "box").astype(object)
+    names[np.isin(np.round(v, 3), band)] = "ribbon"
+    names[v < 0] = "bow"
+    return list(names)
+
+
+def picture(n):
+    """Final spots (outermost first, i.e. in the order the marbles arrive), their sRGB colours and names, and the
+    matching group of each (marbles of one group are interchangeable). With REGION_COLOURS the colours belong to the
+    spots, and simulate() gives each marble the colour of the spot it ends up on."""
+    fin, _ = slots(n)
+    if not C.REGION_COLOURS:
+        fin = fix_strays(fin)
+        cols, names = colours_for(n)
+    else:
+        names = region_names(fin - notch()[None])
+        cols = [C.REGION_SRGB[nm] for nm in names]
+    keys = sorted(set(map(tuple, cols)))
+    groups = np.array([keys.index(tuple(c)) for c in cols])
+    return fin, cols, names, groups
 
 
 def colours_for(n_total):
@@ -234,12 +291,12 @@ def simulate(t_arrive, t_exit, frames_t, roll, log=print):
     from scipy.optimize import linear_sum_assignment
     n = len(t_arrive)
     ta, te = np.asarray(t_arrive, float), np.asarray(t_exit, float)
-    fin, _ = slots(n)
-    fin = fix_strays(fin)
+    fin, _, _, band = picture(n)
+    if C.REGION_COLOURS:
+        band = np.zeros(n, np.int64)   # one group: any marble can take any spot; colours are given at the end
     nc = notch()
     rel = fin - nc[None]
     ex = LY.EXIT[0]
-    band = np.concatenate([[i] * b[2] for i, b in enumerate(C.BATCHES)])
     left = np.maximum(n - np.arange(n), 1).astype(float)
     w = 2 * math.pi * C.PILE_HZ
     prm = (ex, *roll, 2 * C.R + 0.02, C.R + 0.1, ex - C.MAT_HALF_W + C.R, ex + C.MAT_HALF_W - C.R, w * w,
@@ -257,7 +314,7 @@ def simulate(t_arrive, t_exit, frames_t, roll, log=print):
         frac = np.sqrt(np.clip((k_after + settle) / left, 0, 1))
         T = nc[None] + rel * frac[:, None]
         tgt = T.copy()
-        for b in range(len(C.BATCHES)):
+        for b in range(band.max() + 1):
             idx = np.nonzero((band == b) & (state == 2))[0]
             if len(idx) > 1:
                 cost = ((x[idx][:, None, :] - T[idx][None, :, :]) ** 2).sum(-1)
@@ -268,23 +325,27 @@ def simulate(t_arrive, t_exit, frames_t, roll, log=print):
             t = float(tf)
         here = state > 0
         out[fi, here] = x[here]
-    return out, fin
+    cost = ((x[:, None, :] - fin[None, :, :]) ** 2).sum(-1)
+    r, c = linear_sum_assignment(cost)
+    slot = np.empty(n, np.int64)
+    slot[r] = c
+    log(f"picture: every marble within {np.sqrt(cost[r, c].max()):.2f} radii of its final spot")
+    return out, fin, slot
 
 
 if __name__ == "__main__":
-    n = sum(b[2] for b in C.BATCHES)
-    fin, rho = slots(n)
-    fin = fix_strays(fin)
-    print("marbles", n, "x range", fin[:, 0].min(), fin[:, 0].max(), "z range", fin[:, 1].min(), fin[:, 1].max())
+    n = n_marbles()
+    fin, cols, names, _ = picture(n)
+    print("marbles", n, "x range", fin[:, 0].min(), fin[:, 0].max(), "z range", fin[:, 1].min(), fin[:, 1].max(),
+          "scale", round(SCALE, 3), {k: names.count(k) for k in sorted(set(names))})
     from PIL import Image, ImageDraw
     import os
     os.makedirs(C.BUILD, exist_ok=True)
-    cols, _ = colours_for(n)
     s = 20
     img = Image.new("RGB", (int(40 * s), int(40 * s)), (110, 170, 90))
     dr = ImageDraw.Draw(img)
     for (x, z), c in zip(fin, cols):
         X, Z = (x - LY.EXIT[0] + 20) * s, z * s
         dr.ellipse([X - s, Z - s, X + s, Z + s], fill=c, outline=(40, 40, 40))
-    img.save(C.BUILD + "/heart_plan.png")
-    print(C.BUILD + "/heart_plan.png")
+    img.save(C.BUILD + "/%s_plan.png" % C.SHAPE)
+    print(C.BUILD + "/%s_plan.png" % C.SHAPE)
