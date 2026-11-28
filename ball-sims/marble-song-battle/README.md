@@ -6,10 +6,10 @@ Blender marble-music Shorts in the "X or Y?" song-battle format (modeled on the 
 
 ![preview](preview.png)
 
-**Fire or Ice?** (`EPISODE=fire-or-ice`, Nov 28 2026; VERIFY_FIREICE_FACTS) is the second matchup, three wild classical pieces against three calm ones. 🔥 FIRE: *In the Hall of the Mountain King* (Grieg), *Turkish March* (Mozart), *Flight of the Bumblebee* (Rimsky-Korsakov). ❄️ ICE: *Swan Lake* (Tchaikovsky), *Für Elise* (Beethoven), *Brahms' Lullaby*. All six are public domain.
+**Fire or Ice?** (`EPISODE=fire-or-ice`, Nov 28 2026; 66.93 s, 2008 frames, 1080×1920, 30 fps) is the second matchup, three wild classical pieces against three calm ones. 🔥 FIRE: *In the Hall of the Mountain King* (Grieg), *Turkish March* (Mozart), *Flight of the Bumblebee* (Rimsky-Korsakov). ❄️ ICE: *Swan Lake* (Tchaikovsky), *Für Elise* (Beethoven), *Brahms' Lullaby*. All six are public domain.
 - Fire rounds glow orange and red in ember-dark moods (coal, dark slabs). Ice rounds glow cyan and ice blue in cold blue moods (slabs, ornaments, discs).
 - `settings.py` now runs `episodes/<name>.py` when `EPISODE` is set and builds in `build_<name>/`, so a matchup no longer replaces the shipped one. The songs are added to `music.py`'s `LIBRARY`.
-- Verified on a 2-core cloud session: `EPISODE=fire-or-ice python3 plan.py` prints `issues: 0`, and test frames 60, 315, 700, 1327 and 1750 were rendered and finished with `post.py test` before the full render. VERIFY_FIREICE_RENDER
+- Verified on a 2-core cloud session: `EPISODE=fire-or-ice python3 plan.py` prints `issues: 0`, and test frames 60, 315, 700, 1327 and 1750 were rendered and finished with `post.py test` before the full render. The full render took about 2 h 10 min while other renders shared the 2 cores. The mp4 measures −11.2 LUFS integrated with a +0.3 dBFS true peak, since this pipeline doesn't normalize loudness; the copy delivered for posting was turned down 1.8 dB to −13.0 LUFS.
 - Without `EPISODE`, `plan.py` prints exactly what it did before this change, and `export.py` writes a byte-identical `plan.json` for Naughty or Nice.
 
 *Rounds 1, 2, 4 and 5: slab funnel, gift stairs, ornament zigzag, coal funnel.*
@@ -69,6 +69,7 @@ To make a new matchup:
 - The loop needs three things: the seam copies in `export.py`, the HUD reset finishing exactly on the last frame, and the audio tail wrapped to the start.
 - `scene.py -- full` skips finished frames, so rerun it after a crash. Its 0-byte placeholders count as unfinished in `post.py watch`.
 - Blender leaves ~15% of 2 cores idle, so `nice -n 19 python3 post.py watch` alongside it barely slows the render.
+- `post.py watch` gives up after 15 min without a new frame, and then `make_video.sh` stops while Blender keeps rendering. That happened to Fire or Ice? when Blender was paused (`kill -STOP`) to let shorter renders finish. Once the frames are done, run `post.py all` (or `post.py chunk a b out` in two processes, as was done here), then `post.py concat`, `thumb_render.py` and `thumb.py` by hand, with the same `EPISODE`.
 
 ## What it can't do
 - It isn't a physics simulation: the arcs are computed and keyframed. The marble doesn't visibly spin (plain gold), and there's no motion blur.
