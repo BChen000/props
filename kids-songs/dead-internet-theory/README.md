@@ -29,6 +29,7 @@ The complete code behind "The Internet Died in 2016… and Nobody Noticed" (Stor
   - The settings at the top hold `GLITCH_PAUSE`, `REMAP`, the cut dip, the end fade and the encoder.
 - `make_audio.py`: the E minor organ preset, the effect cues, a synthesized digital-glitch effect, and the mix at −14 LUFS.
 - `thumb.py`: three no-text thumbnail candidates; the shattering head (`b`) is the pick.
+- `banner.py`: the 2560×1440 channel banner, with the man at his board and the title "CONSPIRACY THEORIES / explained by a man with no face" kept inside YouTube's 1546×423 safe area. It also writes a preview of the TV, desktop and phone crops. `BANNER_TITLE` (lines split by `|`) and `BANNER_SUB` change the text, for example to add the channel's new name. Since the depth-mask fix in `../../shared/lowpoly-gl`, more dust shows at the top edge than in the delivered banner (0.5% of pixels, outside the safe area).
 - `get_fonts.py`: Special Elite, Permanent Marker and Anton from google/fonts at a pinned commit, SHA-256 checked.
 - `paths.py`: puts the sibling props on `sys.path`.
 - `style.json`: the episode's facts: timing, scenes, lights, music, cues and sources.
@@ -46,6 +47,7 @@ python3 make_video.py render                # build/scenes/s00.mp4 ... s13.mp4, 
 python3 make_video.py final                 # build/dead_internet.mp4 (BT.709, tagged, CRF 21, about 110 MB)
 python3 make_video.py preview               # redraws preview.png from the finished video
 python3 thumb.py                            # build/thumb_a.png, thumb_b.png, thumb_c.png
+python3 banner.py                           # build/banner/channel_banner.png, .jpg, preview.png
 ```
 - **A new episode in this format:** copy the folder, then:
   - rewrite `story.py`, keeping pieces of 2–7 words
