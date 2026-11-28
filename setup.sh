@@ -12,6 +12,9 @@
 #   ./setup.sh ball-sims --bpy          also Blender 5.3 as a Python module (bpy, OpenEXR, pybullet) for the Blender props
 #   ./setup.sh kids-songs               Story Time with Kenji: skia, Kokoro, numpy/scipy audio, DejaVu fonts,
 #                                       the int8 Kokoro narrator model (~120 MB), ffmpeg check
+#   ./setup.sh cartoon-shorts           the cartoon Shorts engine (shared/cartoon-shorts, shared/stickman-style): the
+#                                       kids-songs set above, sherpa-onnx, Poppins + Caveat Brush + Bangers fonts,
+#                                       the Whisper checker model (~375 MB) for check_lines.py
 #   ./setup.sh all                      every channel
 #   ./setup.sh <channel> --check        only report what's missing, install nothing
 #
@@ -33,7 +36,7 @@ done
 PY="${PYTHON:-python3}"
 MISSING=()
 
-usage() { sed -n '2,19p' "$0" | sed 's/^# \{0,1\}//'; }
+usage() { sed -n '2,22p' "$0" | sed 's/^# \{0,1\}//'; }
 
 has_mod() { "$PY" -c "import $1" >/dev/null 2>&1; }
 
@@ -135,11 +138,26 @@ kids_songs() {
   tool ffmpeg "apt-get install -y ffmpeg / brew install ffmpeg"
 }
 
+cartoon_shorts() {
+  kids_songs
+  echo "== cartoon-shorts (shared/cartoon-shorts, shared/stickman-style)"
+  echo "-- Python packages"
+  pkgs sherpa-onnx:sherpa_onnx
+  echo "-- fonts (Poppins ExtraBold, Caveat Brush, Bangers)"
+  run shared/cartoon-shorts/get_fonts.py
+  echo "-- narration checker model (Whisper small.en int8, shared/narration-check)"
+  if [ -n "${WHISPER_DIR:-}" ] && [ -f "$WHISPER_DIR/small.en-encoder.int8.onnx" ]; then echo "  ok       $WHISPER_DIR"
+  elif [ -f shared/narration-check/models/whisper-small.en/small.en-encoder.int8.onnx ]; then echo "  ok       shared/narration-check/models"
+  elif [ "$NO_MODELS" = 1 ]; then echo "  skipped (--no-models)"
+  else run shared/narration-check/get_models.py; fi
+}
+
 case "$CH" in
   animal-docs) animal_docs ;;
   ball-sims) ball_sims ;;
   kids-songs) kids_songs ;;
-  all) animal_docs; ball_sims; kids_songs ;;
+  cartoon-shorts) cartoon_shorts ;;
+  all) animal_docs; ball_sims; cartoon_shorts ;;
   -h|--help|"") usage; exit 0 ;;
   *) echo "unknown channel '$CH'"; usage; exit 2 ;;
 esac
