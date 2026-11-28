@@ -1,0 +1,398 @@
+{
+  "prop": "cartoon-shorts",
+  "channel": "motivational Shorts test channel (new, Nov 2026); the five looks are for any channel",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "renderer": "skia-python 144.1 raster surface over a numpy RGBA array (../../kids-songs/storytime-kit)"
+  },
+  "encode": "ffmpeg libx264 one file per scene, joined with the concat demuxer -c copy; AAC 192k; loudnorm I=-14 TP=-1.5",
+  "post": {
+    "vignette": 0.72,
+    "grain_alpha": 0.06,
+    "scene_dip_from_black_s": 0.08,
+    "end_fade_s": 0.9
+  },
+  "fonts": {
+    "pop": "Poppins-ExtraBold.ttf",
+    "brush": "CaveatBrush-Regular.ttf",
+    "punch": "Bangers-Regular.ttf"
+  },
+  "looks": {
+    "lit": "white bean person (humanoid.py): bald round head, dot eyes with a catch-light, thick brows, lit tube body, no outlines; far limbs darker. The shadow is the same rig in near-black with a red rim and red slit eyes",
+    "stick": {
+      "how": "python make_short.py <episode> --style stick",
+      "settings": {
+        "width": 15,
+        "head": 46,
+        "neck": 12,
+        "color": "#F4F2EC",
+        "back": "#C9C6D4",
+        "edge": "#20202A",
+        "edge_a": 0.45,
+        "glow": 0.16
+      }
+    },
+    "whatif": "black round head with big white eyes, stick limbs, coloured top, trousers, white sneakers",
+    "palace": "big skin-tone head with a thick brown outline, rosy cheeks, headband or crown, robe with a sash",
+    "castle": "white round head, peg body in a stitched tunic, curly hair or a kettle helmet, thin black legs",
+    "desert": "small skin-tone head, black hair or a head cloth, tunic and belt, thin stick limbs",
+    "pill": "white round head with a black bowl cut, a pill-shaped body with buttons, thin stick limbs"
+  },
+  "look_proportions_px_at_s1": {
+    "whatif": {
+      "head": 60,
+      "neck": 8,
+      "torso": 122,
+      "torso_w": 78,
+      "hip_w": 17,
+      "upper": 70,
+      "fore": 66,
+      "thigh": 88,
+      "shin": 84,
+      "foot": 12
+    },
+    "palace": {
+      "head": 96,
+      "neck": 0,
+      "torso": 118,
+      "torso_w": 112,
+      "hip_w": 20,
+      "upper": 58,
+      "fore": 54,
+      "thigh": 56,
+      "shin": 52,
+      "foot": 10
+    },
+    "castle": {
+      "head": 82,
+      "neck": 0,
+      "torso": 150,
+      "torso_w": 118,
+      "hip_w": 20,
+      "upper": 60,
+      "fore": 56,
+      "thigh": 60,
+      "shin": 58,
+      "foot": 10
+    },
+    "desert": {
+      "head": 56,
+      "neck": 2,
+      "torso": 104,
+      "torso_w": 66,
+      "hip_w": 12,
+      "upper": 60,
+      "fore": 56,
+      "thigh": 66,
+      "shin": 62,
+      "foot": 8
+    },
+    "pill": {
+      "head": 70,
+      "neck": 0,
+      "torso": 150,
+      "torso_w": 118,
+      "hip_w": 18,
+      "upper": 66,
+      "fore": 62,
+      "thigh": 76,
+      "shin": 72,
+      "foot": 8
+    }
+  },
+  "look_ink": {
+    "whatif": "#121216",
+    "palace": "#2A1A14",
+    "castle": "#1E1A1C",
+    "desert": "#1A1412",
+    "pill": "#1B1B1F"
+  },
+  "props_per_look": {
+    "whatif": [
+      "dumbbell",
+      "phone",
+      "backpack",
+      "trophy",
+      "basketball",
+      "water_bottle"
+    ],
+    "palace": [
+      "goblet",
+      "sword",
+      "scroll",
+      "torch",
+      "potion",
+      "coin_pouch"
+    ],
+    "castle": [
+      "door",
+      "bowl",
+      "axe",
+      "candle",
+      "barrel",
+      "key"
+    ],
+    "desert": [
+      "block_sled",
+      "jug",
+      "palm",
+      "basket",
+      "rope",
+      "oil_lamp"
+    ],
+    "pill": [
+      "mug",
+      "umbrella",
+      "balloon",
+      "newspaper",
+      "ice_cream",
+      "briefcase"
+    ]
+  },
+  "captions": {
+    "gold": {
+      "settings": {
+        "size": 92,
+        "words": 2,
+        "max_chars": 15,
+        "white": "#FFFFFF",
+        "key": "#FFC93C",
+        "pop": 0.09,
+        "hold": 0.35
+      },
+      "note": "two or three words at a time ('|' sets the breaks), key words gold"
+    },
+    "punch": {
+      "size": 150,
+      "skew": -0.13,
+      "fill": "#FFFFFF",
+      "key": "#FFD23F",
+      "edge": "#101018",
+      "edge_w": 15,
+      "y": 1430,
+      "pop": 0.09
+    },
+    "outline": {
+      "size": 86,
+      "fill": "#FFFFFF",
+      "key": "#FFD84A",
+      "edge": "#000000",
+      "edge_w": 11,
+      "y": 1440,
+      "words": 2
+    },
+    "karaoke": {
+      "size": 62,
+      "fill": "#FFFFFF",
+      "dim": 0.34,
+      "spacing": 1.5,
+      "width": 900,
+      "y": 1480,
+      "lead": 1.18
+    },
+    "shadow_handwriting": {
+      "size": 104,
+      "color": "#E8302E",
+      "glow": "#FF2A2A",
+      "write": 0.45
+    },
+    "title_beats": {
+      "size": 150,
+      "color": "#FFFFFF",
+      "glow": 0.75
+    },
+    "day_counter": {
+      "y": 232,
+      "size": 58,
+      "color": "#FFFFFF",
+      "spacing": 8
+    },
+    "hud": {
+      "x": 46,
+      "y": 150,
+      "h": 104,
+      "gap": 14,
+      "pad": 24,
+      "bg": "#0E1B25",
+      "bg_a": 0.86,
+      "edge": "#2E5A70",
+      "label": "#8DB9CB",
+      "value": "#5FE3FF"
+    }
+  },
+  "voices": {
+    "nar": {
+      "voice": "am_michael",
+      "speed": 0.94,
+      "pitch": 0.94,
+      "pitch_len": 1.0,
+      "lp": 9500,
+      "reverb": 0.16,
+      "gain": 1.0,
+      "extra_gap": 0.14,
+      "breath": 0.0
+    },
+    "sha": {
+      "voice": "am_michael",
+      "speed": 0.9,
+      "pitch": 0.86,
+      "pitch_len": 0.93,
+      "lp": 8000,
+      "reverb": 0.28,
+      "gain": 0.95,
+      "extra_gap": 0.12,
+      "breath": 0.2
+    },
+    "old": {
+      "voice": "am_onyx",
+      "speed": 0.88,
+      "pitch": 0.97,
+      "pitch_len": 1.0,
+      "lp": 7500,
+      "reverb": 0.2,
+      "gain": 1.05,
+      "extra_gap": 0.25,
+      "breath": 0.06,
+      "trem": [
+        5.0,
+        0.07
+      ]
+    },
+    "story": {
+      "voice": "am_michael",
+      "speed": 1.0,
+      "pitch": 1.0,
+      "pitch_len": 1.0,
+      "lp": 12000,
+      "reverb": 0.07,
+      "gain": 1.0,
+      "extra_gap": 0.02,
+      "breath": 0.0
+    }
+  },
+  "lead_in_s": 0.15,
+  "tail_s": 1.2,
+  "palettes": {
+    "NIGHT": {
+      "wall": [
+        "#2B3062",
+        "#1B1E3E"
+      ],
+      "floor": [
+        "#1A1C3A",
+        "#0F1024"
+      ],
+      "trim": "#252950",
+      "frame": "#3B4174",
+      "sky": [
+        "#141C4A",
+        "#33448A"
+      ],
+      "moon": "#EEF1FF",
+      "beam": "#B9C6FF",
+      "bed": [
+        "#3A3F72",
+        "#262A55"
+      ],
+      "blanket": [
+        "#5260AE",
+        "#2F3774"
+      ],
+      "pillow": [
+        "#E4E6F6",
+        "#A3A8D0"
+      ],
+      "stand": [
+        "#2A2E5C",
+        "#1A1D3D"
+      ],
+      "lit": "#F1F2FF",
+      "shade": "#8C91C2",
+      "rim": "#7F8FFF",
+      "dust": "#C9D3FF"
+    },
+    "WARM": {
+      "wall": [
+        "#9E623F",
+        "#6A3F2C"
+      ],
+      "floor": [
+        "#4C2E22",
+        "#26160F"
+      ],
+      "trim": "#5A3628",
+      "lamp": "#FFD28A",
+      "dome": "#E9C06F",
+      "lit": "#FFF5E6",
+      "shade": "#B48E7B",
+      "rim": "#FFB36B",
+      "dust": "#FFE2B0",
+      "mat": [
+        "#3D5C7A",
+        "#2A4157"
+      ]
+    },
+    "DUSK": {
+      "sky": [
+        "#232A64",
+        "#56488F",
+        "#C06D86",
+        "#F4A36C"
+      ],
+      "sun": "#FFD69A",
+      "far": "#4A3F7E",
+      "win": "#FFC37A",
+      "mid": "#2E2A5E",
+      "near": "#1B193C",
+      "ground": [
+        "#1A1838",
+        "#0D0C20"
+      ],
+      "lamp": "#FFC77A",
+      "lit": "#FFF1E8",
+      "shade": "#A894B8",
+      "rim": "#FFB07A",
+      "dust": "#FFE0C2"
+    },
+    "DAWN": {
+      "sky": [
+        "#1B2255",
+        "#4A3E86",
+        "#C46A8A",
+        "#F7B46C"
+      ],
+      "sun": "#FFE3AA",
+      "ridges": [
+        "#77609E",
+        "#54447F",
+        "#352D62",
+        "#1A1736"
+      ],
+      "mist": "#F3D6E6",
+      "lit": "#FFF3EA",
+      "shade": "#A996BC",
+      "rim": "#FFC080"
+    },
+    "GREY": {
+      "sky": [
+        "#232937",
+        "#434C5C",
+        "#6A7385"
+      ],
+      "far": "#3A4150",
+      "mid": "#2B303C",
+      "near": "#1E222B",
+      "win": "#C9A866",
+      "ground": [
+        "#1D2028",
+        "#111318"
+      ],
+      "lit": "#D6DBE6",
+      "shade": "#7C8396",
+      "rim": "#9AA6C0"
+    }
+  },
+  "thumbnail": "a frame with captions, counters, HUD and bubbles turned off (no text); THUMB_T picks the time, THUMB_CROP zooms"
+}
