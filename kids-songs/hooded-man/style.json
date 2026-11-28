@@ -32,13 +32,19 @@
       52,
       30
     ],
-    "decimate": 0.13,
-    "faces": 390,
+    "decimate": 0.17,
+    "faces": 512,
     "skull_half_size": [
-      0.077,
-      0.097,
-      0.117
-    ]
+      0.088,
+      0.104,
+      0.126
+    ],
+    "skull_centre": [
+      0.0,
+      0.004,
+      0.104
+    ],
+    "face": "plain: soft nose ridge (12 mm), small chin, no brow ridge or eye sockets"
   },
   "hat": {
     "crown_segments": 16,
@@ -50,7 +56,12 @@
       0.148,
       0.17
     ],
-    "tilt_deg": -7
+    "tilt_deg": -4,
+    "base": [
+      0.0,
+      -0.002,
+      0.172
+    ]
   },
   "colours_linear": {
     "skin": [
@@ -149,7 +160,7 @@
       "index": null
     }
   },
-  "triangles": 4407,
+  "triangles": 4529,
   "parts": 26,
   "materials": {
     "head": {

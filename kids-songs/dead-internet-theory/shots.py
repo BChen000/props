@@ -84,6 +84,9 @@ def spot(pos, target, **k):
     return dict(type='spot', pos=tuple(pos), dir=tuple(np.subtract(target, pos)), **k)
 
 
+FACE_KEY = 1.4                  # soft front light on his face, under the hat brim
+
+
 def room_lights(t, bulb=1.0, swing=0.0, crt=1.0):
     lx, ly, lz = L.LAMP
     sw = swing * math.sin(2 * math.pi * 0.35 * t)
@@ -95,7 +98,8 @@ def room_lights(t, bulb=1.0, swing=0.0, crt=1.0):
             spot((-0.85, 0.95, 2.15), (0, 0, 1.55), col=(0.30, 0.52, 1.0), energy=1.5, outer=28, inner=14, range=5, spec=2.0),
             spot((0.85, 0.9, 2.05), (0, 0, 1.5), col=(0.30, 0.52, 1.0), energy=1.2, outer=28, inner=14, range=5, spec=2.0),
             dict(type='point', pos=tuple(CRT_C + CRT_N * 0.35), col=(0.45, 0.85, 0.8), energy=0.07 * crt, range=2.2, spec=0.3),
-            dict(type='point', pos=(0.0, -2.2, 1.6), col=(0.75, 0.82, 1.0), energy=0.12, range=6, spec=0.0)]
+            dict(type='point', pos=(0.0, -2.2, 1.6), col=(0.75, 0.82, 1.0), energy=0.12, range=6, spec=0.0),
+            spot((0.30, -2.0, 1.95), (0, 0, 1.68), col=(1.0, 0.9, 0.8), energy=FACE_KEY, outer=13, inner=6, range=6, spec=0.2)]
 
 
 ROOM_ENV = dict(amb_top=(0.012, 0.014, 0.02), amb_bot=(0.003, 0.003, 0.004), fog_col=(0.006, 0.007, 0.011), fog_d=0.05, bg=(0, 0, 0))

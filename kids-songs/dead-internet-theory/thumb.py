@@ -9,8 +9,8 @@ from poses import G
 R, tl = mv.setup()
 shots.GLOBAL['env'] = None
 variants = {
-    'a': dict(c=cam((0.06, -1.18, 1.52), (0, 0, 1.62), 31, 0, 0), keys=[(0, dict(head=(-3, 4, -5)))], glitch=0.0),
-    'b': dict(c=cam((0.06, -1.18, 1.52), (0, 0, 1.62), 31, 0, 0), keys=[(0, dict(head=(-3, 4, -5)))], glitch=0.22),
+    'a': dict(c=cam((0.16, -1.30, 1.66), (0, 0, 1.60), 31, 0, 0), keys=[(0, dict(head=(2, 6, -4)))], glitch=0.0),
+    'b': dict(c=cam((0.16, -1.30, 1.66), (0, 0, 1.60), 31, 0, 0), keys=[(0, dict(head=(2, 6, -4)))], glitch=0.16),
     'c': dict(c=cam((0.55, -2.45, 1.40), (0.05, 0.6, 1.62), 44, 0, 0), keys=[(0, dict(G['present_R'], head=(-2, -6, 0)))], glitch=0.0),
 }
 for k, v in variants.items():

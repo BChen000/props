@@ -15,42 +15,33 @@ from rig import HIPS, HEAD, SHOULDER, UPPER, FORE, COLORS, HAND_POSES
 
 # ------------------------------------------------------------------ settings
 HEAD_RES = (52, 30)          # UV-sphere resolution before decimation
-HEAD_RATIO = 0.13            # decimate ratio (about 400 faces)
-SKULL_C = np.array([0.0, 0.004, 0.096])     # skull centre in head-local coords
-SKULL_R = np.array([0.077, 0.097, 0.117])   # half sizes x (width), y (depth), z (height)
-HAT_TILT = math.radians(-7)  # forward tilt of the hat (about X)
-HAT_BASE = np.array([0.0, -0.004, 0.152])
+HEAD_RATIO = 0.17            # decimate ratio (about 520 faces)
+SKULL_C = np.array([0.0, 0.004, 0.104])     # skull centre in head-local coords
+SKULL_R = np.array([0.088, 0.104, 0.126])   # half sizes x (width), y (depth), z (height)
+HAT_TILT = math.radians(-4)  # forward tilt of the hat (about X)
+HAT_BASE = np.array([0.0, -0.002, 0.172])
 TORSO_RATIO = 0.55
 
 
 def head_mesh():
+    """A calm mannequin head: egg-shaped skull, flat broad face, soft nose ridge, small chin. No brow ridge or eye
+    sockets (they rendered as dark slanted facets that read as an angry frown)."""
     s = uvsphere(*HEAD_RES)
     d = s.v / np.linalg.norm(s.v, axis=1, keepdims=True)
     x, y, z = d.T
     X, Y, Z = x * SKULL_R[0], y * SKULL_R[1], z * SKULL_R[2]
     lo = np.clip(-z, 0, 1)
-    X = X * (1 - 0.30 * lo ** 1.6)
-    Y = np.where(y > 0, Y * (1 - 0.40 * lo ** 1.4), Y * (1 - 0.10 * lo))
+    X = X * (1 - 0.17 * lo ** 1.8)
+    Y = np.where(y > 0, Y * (1 - 0.32 * lo ** 1.4), Y * (1 - 0.06 * lo))
     Y = np.where(y < 0, Y * 0.90, Y)
     front = np.clip(-y, 0, 1)
-    chin = np.exp(-(x / 0.30) ** 2 - ((z + 0.80) / 0.16) ** 2) * front
-    Y = Y - 0.010 * chin
-    t = np.clip((0.10 - z) / 0.40, 0, 1)
-    below = np.clip((-0.30 - z) / 0.07, 0, 1)
-    prof = t ** 1.3 * (1 - below) ** 2
-    nose = prof * np.exp(-(x / (0.13 + 0.07 * t)) ** 2) * front ** 4
-    Y = Y - 0.017 * nose
-    brow = np.exp(-((z - 0.17) / 0.09) ** 2) * np.exp(-(x / 0.55) ** 2) * front ** 3
-    Y = Y - 0.007 * brow
-    for sx in (-1, 1):
-        eye = np.exp(-((x - sx * 0.33) / 0.15) ** 2 - ((z - 0.03) / 0.10) ** 2) * front ** 2
-        Y = Y + 0.010 * eye
-        cheek = np.exp(-((x - sx * 0.60) / 0.17) ** 2 - ((z + 0.16) / 0.15) ** 2) * front
-        X = X + sx * 0.004 * cheek; Y = Y - 0.004 * cheek
-        temple = np.exp(-((x - sx * 0.85) / 0.15) ** 2 - ((z - 0.25) / 0.2) ** 2)
-        X = X - sx * 0.004 * temple
-    mouth = np.exp(-(x / 0.25) ** 2 - ((z + 0.50) / 0.07) ** 2) * front ** 4
-    Y = Y + 0.004 * mouth
+    chin = np.exp(-(x / 0.35) ** 2 - ((z + 0.80) / 0.18) ** 2) * front
+    Y = Y - 0.006 * chin
+    t = np.clip((0.06 - z) / 0.34, 0, 1)
+    below = np.clip((-0.28 - z) / 0.08, 0, 1)
+    prof = t ** 1.5 * (1 - below) ** 2
+    nose = prof * np.exp(-(x / 0.16) ** 2) * front ** 4
+    Y = Y - 0.012 * nose
     m = M(np.stack([X, Y, Z], 1) + SKULL_C, s.f)
     return decimate(m, HEAD_RATIO, True, 'head')
 
@@ -203,7 +194,7 @@ def legs_meshes():
 def build():
     h = head_mesh()
     add('head', h, COLORS['skin'])
-    neck = cyl(0.052, 0.049, 0.15, 8, -0.10)
+    neck = cyl(0.057, 0.054, 0.15, 8, -0.10)
     add('neck', neck.moved((0, 0.012, 0)), COLORS['skin'])
     crown, band, brim = hat_meshes()
     add('hat_crown', crown, COLORS['hat']); add('hat_band', band, COLORS['band']); add('hat_brim', brim, COLORS['hat'])

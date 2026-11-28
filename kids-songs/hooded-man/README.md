@@ -8,7 +8,7 @@ The low-poly hooded man from The Dead Internet Theory: a faceless faceted manneq
 ![preview](preview.png)
 
 **Used in:** every shot with the man in The Dead Internet Theory (Story Time with Kenji, Nov 2026, `../dead-internet-theory`).
-- **Verified:** `pose_sheet.py` rebuilt the 26 parts (4,407 triangles) from this folder, byte-identical to the man in the episode's `assets.npz`, and drew `preview.png`.
+- **Verified:** `pose_sheet.py` rebuilt the 26 parts (4,529 triangles) from this folder, byte-identical to the man in the episode's `assets.npz`, and drew `preview.png`.
 
 ## Files
 - `rig.py`: the rest pose (hip, head and shoulder pivots, arm lengths), the colours, and the hand poses as finger curl angles.
@@ -48,6 +48,11 @@ items = man.items(pose)                                   # + your set's items -
 - **Glitch:** `explode(parts['head'], a)` for each name in `man.HEAD_PARTS`, then `renderer.set_dynamic(name + '_x', ...)` and `items(pose, glitch_head={name: name + '_x'})`.
 
 ## Gotchas
+- **His face (GJ's notes on the first version):**
+  - Eye-socket dents and a brow ridge rendered as dark, slanted facets under the brim, which read as an angry frown.
+  - A 15 cm-wide skull under the wide brim and the big hood ring read as a really small face.
+  - The head is now 17.6 cm wide, with a fuller jaw, a plain face, a soft nose ridge and a slightly higher hat.
+  - Keep the face plain, and light it from the front (the episode's `FACE_KEY` spot) so the brim shadow doesn't hide its top half.
 - **Portrait frames are narrow.** At 1.2 m with a 30° lens, the frame is only about 0.36 m wide. A hand held out at arm's length leaves it, so keep gestures near the body's centre line for close shots.
 - **Pointing straight at the camera** reads as a claw, because the finger is foreshortened. The episode switched that beat to a temple tap.
 - **The hat brim shadows the face** when the key light is more than about 45° above it. That's the noir look; a weak front fill keeps the facets readable.

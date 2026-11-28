@@ -61,6 +61,7 @@ python3 thumb.py                            # build/thumb_a.png, thumb_b.png, th
 - **Phone screens all showed one cell** until the `cellf`, `tt` and `rate` uniforms were actually set. A dropped uniform fails silently.
 - **Dust near the camera** turned into huge bright blobs in close-ups. Motes within about 1 m of the camera now fade out.
 - **Narrow frame:** in close-ups a hand at arm's length is outside the portrait frame. "Ask yourself who wrote it" became a temple tap, and the reveal's hat tip became a small shrug.
+- **His face:** the lamp's brim shadow hid the top half of the face, so a narrow spot from in front (`FACE_KEY` = 1.4 in `shots.py`, 13° cone) lights it. It's narrow enough to stay off the board.
 - **Exposure:** the lamp is a 1.55-energy spot about 1 m above his head. Above about 2.5 the black hoodie reads grey and the hat blows out.
 - **Caption heights** are set per scene in `shots.SCENES`. The chart uses y = 1230 so the HUMANS / BOTS labels stay visible.
 - **Facts** were checked on Nov 28, 2026; see `style.json`. The script frames the theory as a theory and says researchers don't support the full version.

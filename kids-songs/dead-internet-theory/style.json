@@ -209,7 +209,8 @@
     "renderer": "../../shared/lowpoly-gl",
     "room_key": "spot from the hanging lamp, energy 1.55, outer 50, soft shadow",
     "rims": "two blue spots behind him, energy 1.2-1.5",
-    "grade": "ACES, teal shadows / warm highlights, vignette 0.55, grain 0.022"
+    "grade": "ACES, teal shadows / warm highlights, vignette 0.55, grain 0.022",
+    "face_key": "narrow front spot (13 deg) from (0.30, -2.0, 1.95) at his head, energy 1.4, so the brim shadow doesn't hide his face"
   },
   "sources_checked_2026_11_28": [
     "Imperva 2025 Bad Bot Report: automated traffic 51% of all web traffic in 2024, first time in a decade above human",
