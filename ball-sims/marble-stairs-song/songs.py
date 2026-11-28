@@ -86,11 +86,29 @@ def _frere():
     return mel, ca + ca + cb + cb + cc + cc + cd + cd + cc + cc + cd + cd
 
 
+def _joy():
+    B5 = 83
+    joy = [C6, B5, A5, G5, F5, E5, D5, C5]
+    king = [G5, A5, A5, B5, B5, C6, -C6, -C6]
+    room = [C6, C6, B5, A5, G5, G5, F5, E5]
+    sing1 = [E5, E5, E5, E5, E5, F5, G5, -G5]
+    sing2 = [D5, D5, D5, D5, D5, E5, F5, -F5]
+    end = [C5, C6, A5, G5, F5, E5, F5, E5, D5, C5, -C5, -C5]
+    cj = ["C", "G", "F", "C", "F", "C", "G", "C"]
+    ck = ["C", "F", "F", "G", "G", "C", "C", "C"]
+    cr = ["C", "C", "G", "F", "C", "C", "G7", "C"]
+    cs1 = ["C"] * 5 + ["G7", "C", "C"]
+    cs2 = ["G"] * 5 + ["C", "G7", "G7"]
+    ce = ["C", "C", "F", "C", "F", "C", "G7", "C", "G7", "C", "C", "C"]
+    return joy + king + room + room + sing1 + sing2 + end, cj + ck + cr + cr + cs1 + cs2 + ce
+
+
 _tw_mel, _tw_ch = _twinkle()
 _jb_mel, _jb_ch = _jingle()
 _ml_mel, _ml_ch = _mary()
 _om_mel, _om_ch = _macdonald()
 _fj_mel, _fj_ch = _frere()
+_jw_mel, _jw_ch = _joy()
 
 SONGS = {
     "twinkle": dict(
@@ -146,6 +164,19 @@ SONGS = {
         offsets=[[0], [0, 2], [0, 1, 2], [0, 1, 2, 4, 5], [0, 1, 2, 3, 4, 5, 6, 7]],
         melody=_fj_mel,
         chords=_fj_ch,
+    ),
+    "joy-to-the-world": dict(
+        name="Joy to the World",
+        file="Marble_Staircase_Joy_to_the_World",
+        bpm=112.5,
+        hue=130.0,
+        sat=1.7,
+        bright=0.45,
+        marble_shift=4,
+        rounds=[1, 2, 3, 5, 8],
+        offsets=[[0], [0, 3], [0, 2, 4], [0, 1, 3, 4, 6], [0, 1, 2, 3, 4, 5, 6, 7]],
+        melody=_jw_mel,
+        chords=_jw_ch,
     ),
 }
 
